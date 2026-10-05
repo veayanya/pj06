@@ -79,13 +79,13 @@ const logoPositions = [
 ];
 const LOGO_MOVE_STEP = 10;
 const TTE_MOVE_STEP = 10;
-const SIGNER_LAYOUT_VERSION = '2026-10-05-signer-tte-space-1';
+const SIGNER_LAYOUT_VERSION = '2026-10-05-signer-tte-center-2';
 const TEXT_MOVE_STEP = 10;
 let tteImg = null;
 let tteData = null;
 const tteSize = { value: 100 };
-const ttePosition = {x: 1090, y: 655};
-const tteDefaultPosition = {x: 1090, y: 655};
+const ttePosition = {x: 1245, y: 655};
+const tteDefaultPosition = {x: 1245, y: 655};
 const textBaseSizes = {number:18,name:34,body:15,period:15,tanggalTtd:13,jabatanTtd:12,penandatangan:17};
 const textSizes = {number:100,name:100,body:100,period:100,tanggalTtd:100,jabatanTtd:100,penandatangan:100};
 const textPositions = {
@@ -147,9 +147,10 @@ function renderCertificate() {
   drawCenter('period',document.getElementById('period').value,'#ed791d',true);
   drawRight('tanggalTtd',document.getElementById('tanggalTtd').value.trim(),'#075b3e',false);
   drawWrappedRight('jabatanTtd',document.getElementById('jabatanTtd').value.trim(),'#075b3e',true);
-  // TTE ditampilkan tepat di atas nama penandatangan.
+  // Sediakan ruang TTE di tengah area tanda tangan, di antara jabatan dan nama penandatangan.
+  const signerCenterX = pos('penandatangan').x;
   const tteW = 200 * tteSize.value / 100, tteH = 60 * tteSize.value / 100;
-  drawTransparentLogo(ctx, tteImg, ttePosition.x - tteW/2, ttePosition.y - tteH/2, tteW, tteH);
+  drawTransparentLogo(ctx, tteImg, signerCenterX + (ttePosition.x - tteDefaultPosition.x) - tteW/2, ttePosition.y - tteH/2, tteW, tteH);
   drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
 
   const signerPos=pos('penandatangan');
@@ -243,8 +244,8 @@ function applyState(state) {
   if (state.ttePosition) { ttePosition.x = Number(state.ttePosition.x) || tteDefaultPosition.x; ttePosition.y = Number(state.ttePosition.y) || tteDefaultPosition.y; }
   // Migrasi sekali: beri ruang khusus di antara jabatan dan nama untuk TTE.
   if (state.signerLayoutVersion !== SIGNER_LAYOUT_VERSION) {
-    textPositions.jabatanTtd = {x:1245,y:607};
-    textPositions.penandatangan = {x:1245,y:710};
+    textPositions.jabatanTtd = {x:1245,y:575};
+    textPositions.penandatangan = {x:1245,y:750};
     ttePosition.x = tteDefaultPosition.x;
     ttePosition.y = tteDefaultPosition.y;
   }
