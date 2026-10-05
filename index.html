@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generator Sertifikat Bapperida</title>
+<style>
+:root{--green:#075b3e;--orange:#ed791d;--cream:#f7f4e9}
+*{box-sizing:border-box}body{margin:0;background:#f2f4f1;color:#193b2e;font:15px/1.45 Inter,system-ui,Arial,sans-serif}
+header{background:linear-gradient(110deg,#075b3e,#08734a);color:white;padding:22px max(20px,calc((100% - 1200px)/2))}
+header h1{font-size:22px;margin:0 0 4px}header p{margin:0;color:#d9eee3}
+main{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start}
+.panel,.preview{background:white;border:1px solid #e0e8e2;border-radius:16px;box-shadow:0 5px 22px #173c2410}
+.panel{padding:20px}.panel h2{font-size:17px;margin:0 0 16px}.field{margin:0 0 14px}.field label{display:block;font-weight:650;font-size:13px;margin-bottom:6px}
+input[type=text],textarea{width:100%;border:1px solid #ccd9d0;border-radius:9px;padding:10px 11px;font:inherit;color:#173d2e;background:#fff}
+textarea{min-height:88px;resize:vertical}.field small{display:block;color:#728178;margin-top:4px;font-size:11px}
+input[type=file]{width:100%;font-size:12px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}
+.primary{background:var(--green);color:white}.secondary{background:#edf3ef;color:#14583d}
+.preview{padding:16px;min-width:0}.previewtop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.previewtop strong{font-size:15px}.previewtop span{font-size:12px;color:#738077}
+canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
+.note{font-size:12px;color:#6d7b72;margin:12px 2px 0}
+@media(max-width:850px){main{grid-template-columns:1fr}.panel{order:2}.preview{order:1}}
+</style></head>
+<body>
+<header><h1>Generator Sertifikat Bapperida</h1><p>Unggah tiga logo, ubah nama dan isi sertifikat, lalu unduh hasilnya.</p></header>
+<main>
+<section class="panel">
+<h2>Pengaturan Sertifikat</h2>
+<div class="field"><label>Logo 1 (kiri)</label><input id="logo1" type="file" accept="image/*"></div>
+<div class="field"><label>Logo 2 (tengah)</label><input id="logo2" type="file" accept="image/*"></div>
+<div class="field"><label>Logo 3 (kanan)</label><input id="logo3" type="file" accept="image/*"></div>
+<div class="field"><label>Nama penerima</label><input id="name" type="text" value="Nama Penerima"></div>
+<div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon.</textarea></div>
+<div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"></div>
+<div class="field"><label>Tempat dan tanggal penerbitan</label><input id="date" type="text" value="Sumber, [tanggal penerbitan]"></div>
+<div class="field"><label>Nomor sertifikat</label><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"></div>
+<div class="actions"><button class="primary" id="download">Unduh Sertifikat PNG</button><button class="secondary" id="reset">Atur Ulang</button></div>
+<p class="note">Tips: gunakan logo PNG transparan. File diproses langsung di browser dan tidak dikirim ke server.</p>
+</section>
+<section class="preview">
+<div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Rasio landscape</span></div>
+<canvas id="cert" width="1312" height="811"></canvas>
+<p class="note">Tampilan pratinjau mengikuti ukuran gambar template. Periksa kembali ejaan dan data sebelum mengunduh.</p>
+</section>
+</main>
+<script>
+const canvas=document.getElementById('cert'),ctx=canvas.getContext('2d');
+const template=new Image();template.src='/template.jpg';
+const ids=['logo1','logo2','logo3'];const logos=[null,null,null];
+function roundedRect(x,y,w,h,r,fill){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill()}
+function fitText(text,x,y,maxWidth,font,color,align='left'){ctx.font=font;ctx.fillStyle=color;ctx.textAlign=align;let words=text.split(/\s+/),line='',lines=[];for(const word of words){let test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);lines.forEach((l,i)=>ctx.fillText(l,x,y+i*31));return lines.length}
+function draw(){
+ if(!template.complete||!template.naturalWidth)return;
+ ctx.clearRect(0,0,1312,811);ctx.drawImage(template,0,0,1312,811);
+ // Replace the existing logo area with a clean strip for the three uploaded logos.
+ ctx.fillStyle='#fffefa';ctx.fillRect(116,68,432,148);
+ const name=document.getElementById('name').value.trim()||'Nama Penerima';
+ const body=document.getElementById('body').value.trim();
+ const period=document.getElementById('period').value.trim();
+ const date=document.getElementById('date').value.trim();
+ const number=document.getElementById('number').value.trim();
+ // Restore a neutral certificate-paper panel inside the original right-hand ornamental frame.
+ roundedRect(622,229,644,317,13,'#f8f6ed');
+ // Top logos: evenly distributed, contained without distortion.
+ logos.forEach((img,i)=>{if(!img)return;let x=132+i*137,y=91,maxW=120,maxH=88,s=Math.min(maxW/img.width,maxH/img.height);ctx.drawImage(img,x+(maxW-img.width*s)/2,y+(maxH-img.height*s)/2,img.width*s,img.height*s)});
+ // Recipient label and name.
+ roundedRect(626,180,258,42,16,'#ed791d');ctx.fillStyle='white';ctx.font='bold 23px Arial';ctx.textAlign='center';ctx.fillText('Diberikan kepada',755,209);
+ ctx.textAlign='left';ctx.fillStyle='#075b3e';ctx.font='bold 49px Arial';let nameSize=49;while(ctx.measureText(name).width>575&&nameSize>28){nameSize-=1;ctx.font=`bold ${nameSize}px Arial`}ctx.fillText(name,628,282);
+ ctx.fillStyle='#df812c';ctx.fillRect(629,300,571,4);
+ ctx.fillStyle='#244d3b';ctx.font='20px Arial';let lines=body.split('\n').flatMap(p=>{let words=p.split(/\s+/),out=[],line='';for(let w of words){let t=line?line+' '+w:w;if(ctx.measureText(t).width>600&&line){out.push(line);line=w}else line=t}if(line)out.push(line);return out});lines.slice(0,4).forEach((l,i)=>ctx.fillText(l,628,342+i*29));
+ ctx.font='20px Arial';ctx.fillText(period,628,Math.min(468,354+Math.min(lines.length,4)*29));
+ roundedRect(624,462,235,34,14,'#ed791d');ctx.fillStyle='white';ctx.font='18px Arial';ctx.textAlign='center';ctx.fillText(date,741,485);
+ // Number is placed discreetly below the title, retaining the certificate's left layout.
+ ctx.textAlign='left';ctx.fillStyle='#1e4b37';ctx.font='bold 19px Arial';ctx.fillText('Nomor :',92,540);ctx.font='19px Arial';ctx.fillText(number,218,540);
+}
+template.onload=draw;
+ids.forEach((id,i)=>document.getElementById(id).addEventListener('change',e=>{let f=e.target.files[0];if(!f)return;let img=new Image();img.onload=()=>{logos[i]=img;draw()};img.src=URL.createObjectURL(f)}));
+['name','body','period','date','number'].forEach(id=>document.getElementById(id).addEventListener('input',draw));
+document.getElementById('download').onclick=()=>{draw();let a=document.createElement('a');a.download='sertifikat-bapperida.png';a.href=canvas.toDataURL('image/png');a.click()};
+document.getElementById('reset').onclick=()=>{document.getElementById('name').value='Nama Penerima';document.getElementById('body').value='Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon.';document.getElementById('period').value='Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]';document.getElementById('date').value='Sumber, [tanggal penerbitan]';document.getElementById('number').value='400.14.5.4/[nomor]/BAPPERIDA';draw()};
+</script></body></html>
