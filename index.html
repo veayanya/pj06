@@ -37,7 +37,9 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <div class="field"><label>Nama penerima</label><input id="name" type="text" value="Nama Penerima"></div>
 <div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon.</textarea></div>
 <div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"></div>
-
+<div class="field"><label>Sumber</label><input id="sumber" type="text" value="Sumber"></div>
+<div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="[Tanggal penandatanganan]"></div>
+<div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea></div>
 <div class="field"><label>Nomor sertifikat</label><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"></div><div class="field"><label>Nama Penandatangan</label><input id="penandatangan" type="text" value="Bambang Sudaryanto, S.H., M.H."></div>
 <div class="actions"><button class="primary" id="download">Unduh Sertifikat PNG</button><button class="secondary" id="reset">Atur Ulang</button></div>
 <div class="history-actions"><button class="secondary" id="saveLast">Simpan Terakhir</button><button class="secondary" id="undo" disabled>Urungkan</button><button class="secondary" id="redo" disabled>Ulangi</button></div>
@@ -62,7 +64,7 @@ let customTemplateData = null;
 let logo1Img = null, logo2Img = null, logo3Img = null, logo4Img = null;
 const logoSizes = [100, 100, 100, 100];
 const STORAGE_KEY = 'bapperida_generator_sertifikat_v1';
-const fields = ['name','body','period','number','penandatangan'];
+const fields = ['name','body','period','sumber','tanggalTtd','jabatanTtd','number','penandatangan'];
 let undoStack = [], redoStack = [];
 let applyingHistory = false, saveTimer = null;
 
@@ -124,20 +126,32 @@ function renderCertificate() {
   ctx.fillStyle = '#ed791d';
   ctx.fillText(document.getElementById('period').value, centerX, 465);
 
-  // Nama pejabat/penandatangan berada DI BAWAH teks jabatan yang sudah tercetak
-  // pada template. Dibuat bold, lebih besar, hijau, lalu diberi garis bawah.
+  // Blok penandatanganan: Sumber dan tanggal di kanan, kemudian jabatan, lalu nama pejabat.
   const signerX = 1050;
+  const source = document.getElementById('sumber').value.trim();
+  const signingDate = document.getElementById('tanggalTtd').value.trim();
+  const position = document.getElementById('jabatanTtd').value.trim();
   const signerName = document.getElementById('penandatangan').value.trim();
-  ctx.font = 'bold 21px Arial';
+
+  ctx.textAlign = 'right';
   ctx.fillStyle = '#075b3e';
-  ctx.fillText(signerName, signerX, 617);
+  ctx.font = '16px Arial';
+  ctx.fillText(source, signerX + 185, 540);
+  ctx.fillText(signingDate, signerX + 185, 563);
+
+  ctx.font = 'bold 15px Arial';
+  wrapTextRight(ctx, position, signerX + 185, 590, 370, 20);
+
+  ctx.font = 'bold 21px Arial';
+  ctx.fillText(signerName, signerX + 185, 660);
 
   ctx.beginPath();
-  ctx.moveTo(865, 628);
-  ctx.lineTo(1235, 628);
+  ctx.moveTo(865, 671);
+  ctx.lineTo(1235, 671);
   ctx.strokeStyle = '#075b3e';
   ctx.lineWidth = 2;
   ctx.stroke();
+  ctx.textAlign = 'center';
 }
 
 // Menggambar PNG transparan secara proporsional tanpa merusak alpha channel.
@@ -150,6 +164,22 @@ function drawTransparentLogo(context, img, x, y, maxW, maxH) {
 }
 
 // Fungsi bantu untuk membungkus teks panjang (multiline)
+function wrapTextRight(context, text, rightX, y, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '';
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    if (context.measureText(testLine).width > maxWidth && n > 0) {
+      context.fillText(line.trim(), rightX, y);
+      line = words[n] + ' ';
+      y += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  if (line.trim()) context.fillText(line.trim(), rightX, y);
+}
+
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
   const words = text.split(' ');
   let line = '';
