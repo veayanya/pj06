@@ -42,6 +42,7 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="[Tanggal penandatanganan]"><div class="text-control" data-text="tanggalTtd"><div class="text-size"><span>Ukuran</span><input id="tanggalTtdSize" type="range" min="50" max="200" value="100"><output id="tanggalTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="tanggalTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="tanggalTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="tanggalTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="tanggalTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="tanggalTtd" data-dir="down">▼ Bawah</button></div></div></div>
 <div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea><div class="text-control" data-text="jabatanTtd"><div class="text-size"><span>Ukuran</span><input id="jabatanTtdSize" type="range" min="50" max="200" value="100"><output id="jabatanTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="jabatanTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="jabatanTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="jabatanTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="jabatanTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="jabatanTtd" data-dir="down">▼ Bawah</button></div></div></div>
 <div class="field"><label>Nomor sertifikat</label><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"><div class="text-control" data-text="number"><div class="text-size"><span>Ukuran</span><input id="numberSize" type="range" min="50" max="200" value="100"><output id="numberSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="number" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="number" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="number" data-dir="center">● Tengah</button><button type="button" class="right" data-text="number" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="number" data-dir="down">▼ Bawah</button></div></div></div><div class="field"><label>Nama Penandatangan</label><input id="penandatangan" type="text" value="Dangi, S.Si., M.Sc., MT."><div class="text-control" data-text="penandatangan"><div class="text-size"><span>Ukuran</span><input id="penandatanganSize" type="range" min="50" max="200" value="100"><output id="penandatanganSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="penandatangan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="penandatangan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="penandatangan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="penandatangan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="penandatangan" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Upload TTE / Tanda Tangan Elektronik</label><input id="tte" type="file" accept="image/png,image/jpeg,image/webp"><small>TTE akan ditempatkan di atas nama penandatangan dan dapat diatur posisinya.</small><div class="size-control"><span>Ukuran</span><input id="tteSize" type="range" min="50" max="170" value="100" step="1"><output id="tteSizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-tte-dir="up">▲ Atas</button><button type="button" class="left" data-tte-dir="left">◀ Kiri</button><button type="button" class="center" data-tte-dir="center">● Tengah</button><button type="button" class="right" data-tte-dir="right">Kanan ▶</button><button type="button" class="down" data-tte-dir="down">▼ Bawah</button></div></div>
 <div class="actions"><button class="primary" id="download">Unduh Sertifikat PNG</button><button class="secondary" id="reset">Atur Ulang</button></div>
 <div class="history-actions"><button class="secondary" id="saveLast">Simpan Terakhir</button><button class="secondary" id="undo" disabled>Urungkan</button><button class="secondary" id="redo" disabled>Ulangi</button></div>
 <p class="save-status" id="saveStatus" role="status">Penyimpanan otomatis aktif di perangkat ini.</p>
@@ -70,7 +71,13 @@ const logoPositions = [
   {x:72,y:72},{x:172,y:72},{x:272,y:72},{x:372,y:72}
 ];
 const LOGO_MOVE_STEP = 10;
+const TTE_MOVE_STEP = 10;
 const TEXT_MOVE_STEP = 10;
+let tteImg = null;
+let tteData = null;
+const tteSize = { value: 100 };
+const ttePosition = {x: 1090, y: 625};
+const tteDefaultPosition = {x: 1090, y: 625};
 const textBaseSizes = {number:18,name:34,body:15,period:15,tanggalTtd:13,jabatanTtd:12,penandatangan:17};
 const textSizes = {number:100,name:100,body:100,period:100,tanggalTtd:100,jabatanTtd:100,penandatangan:100};
 const textPositions = {
@@ -80,7 +87,7 @@ const textPositions = {
 const textDefaults = JSON.parse(JSON.stringify(textPositions));
 
 const STORAGE_KEY = 'bapperida_generator_sertifikat_v1';
-const TEMPLATE_VERSION = '2026-10-05-template-3';
+const TEMPLATE_VERSION = '2026-10-05-template-4-tte';
 const fields = ['name','body','period','tanggalTtd','jabatanTtd','number','penandatangan'];
 let undoStack = [], redoStack = [];
 let applyingHistory = false, saveTimer = null;
@@ -132,6 +139,9 @@ function renderCertificate() {
   drawCenter('period',document.getElementById('period').value,'#ed791d',true);
   drawRight('tanggalTtd',document.getElementById('tanggalTtd').value.trim(),'#075b3e',false);
   drawWrappedRight('jabatanTtd',document.getElementById('jabatanTtd').value.trim(),'#075b3e',true);
+  // TTE ditampilkan tepat di atas nama penandatangan.
+  const tteW = 220 * tteSize.value / 100, tteH = 90 * tteSize.value / 100;
+  drawTransparentLogo(ctx, tteImg, ttePosition.x - tteW/2, ttePosition.y - tteH/2, tteW, tteH);
   drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
 
   const signerPos=pos('penandatangan');
@@ -193,7 +203,10 @@ function currentState() {
     textSizes: {...textSizes},
     textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}])),
     templateVersion: TEMPLATE_VERSION,
-    template: customTemplateData
+    template: customTemplateData,
+    tte: tteData,
+    tteSize: tteSize.value,
+    ttePosition: {x: ttePosition.x, y: ttePosition.y}
   };
 }
 function imageToDataURL(img) {
@@ -217,7 +230,10 @@ function applyState(state) {
   }
   if (state.textSizes) Object.keys(textSizes).forEach(id => { if (state.textSizes[id] !== undefined) textSizes[id] = Math.max(50, Math.min(200, Number(state.textSizes[id]) || 100)); });
   if (state.textPositions) Object.keys(textPositions).forEach(id => { const p=state.textPositions[id]; if(p){ textPositions[id].x=Number(p.x)||0; textPositions[id].y=Number(p.y)||0; } });
+  if (state.tteSize !== undefined) tteSize.value = Math.max(50, Math.min(170, Number(state.tteSize) || 100));
+  if (state.ttePosition) { ttePosition.x = Number(state.ttePosition.x) || tteDefaultPosition.x; ttePosition.y = Number(state.ttePosition.y) || tteDefaultPosition.y; }
   updateTextControls();
+  updateTteControls();
 
   if (state.template) {
     customTemplateData = state.template;
@@ -245,7 +261,17 @@ function applyState(state) {
     img.src = src;
   });
   if (!pending) finishApply();
-  function finishApply() { applyingHistory = false; renderCertificate(); updateHistoryButtons(); }
+  // Pulihkan TTE yang tersimpan.
+  tteData = state.tte || null;
+  if (tteData) {
+    const tte = new Image();
+    tte.onload = () => { tteImg = tte; scheduleRender(); };
+    tte.onerror = () => { tteImg = null; tteData = null; scheduleRender(); };
+    tte.src = tteData;
+  } else {
+    tteImg = null;
+  }
+  function finishApply() { applyingHistory = false; renderCertificate(); updateHistoryButtons(); updateTteControls(); }
 }
 function saveFieldsOnly() {
   if (applyingHistory) return;
@@ -256,7 +282,9 @@ function saveFieldsOnly() {
       logoSizes: [...logoSizes],
       logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
       textSizes: {...textSizes},
-      textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}]))
+      textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}])),
+      tteSize: tteSize.value,
+      ttePosition: {x: ttePosition.x, y: ttePosition.y}
     };
     localStorage.setItem(STORAGE_KEY + '_fields', JSON.stringify(fieldsState));
     const status = document.getElementById('saveStatus');
@@ -322,6 +350,8 @@ function loadSavedState() {
       if (Array.isArray(light.logoPositions)) light.logoPositions.forEach((pos,i)=>{ if(i<4 && pos){logoPositions[i].x=Number(pos.x)||0; logoPositions[i].y=Number(pos.y)||0;} });
       if (light.textSizes) Object.keys(textSizes).forEach(id=>{ if(light.textSizes[id]!==undefined) textSizes[id]=Math.max(50,Math.min(200,Number(light.textSizes[id])||100)); });
       if (light.textPositions) Object.keys(textPositions).forEach(id=>{ const pos=light.textPositions[id]; if(pos){textPositions[id].x=Number(pos.x)||0;textPositions[id].y=Number(pos.y)||0;} });
+      if (light.tteSize !== undefined) tteSize.value = Math.max(50, Math.min(170, Number(light.tteSize) || 100));
+      if (light.ttePosition) { ttePosition.x=Number(light.ttePosition.x)||tteDefaultPosition.x; ttePosition.y=Number(light.ttePosition.y)||tteDefaultPosition.y; }
       updateLogoSizeControls();
       updateTextControls();
     }
@@ -392,6 +422,61 @@ document.getElementById('logo1').addEventListener('change', e => handleLogoUploa
 document.getElementById('logo2').addEventListener('change', e => handleLogoUpload(e, img => logo2Img = img));
 document.getElementById('logo3').addEventListener('change', e => handleLogoUpload(e, img => logo3Img = img));
 document.getElementById('logo4').addEventListener('change', e => handleLogoUpload(e, img => logo4Img = img));
+
+document.getElementById('tte').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const before = currentState();
+  const reader = new FileReader();
+  reader.onload = event => {
+    const src = event.target.result;
+    const img = new Image();
+    img.onload = () => {
+      tteImg = img;
+      tteData = src;
+      undoStack.push(before); if (undoStack.length > 50) undoStack.shift(); redoStack = [];
+      updateHistoryButtons(); scheduleRender(); saveState(false);
+    };
+    img.onerror = () => alert('TTE tidak dapat dibaca. Gunakan PNG/JPG/WEBP yang valid.');
+    img.src = src;
+  };
+  reader.readAsDataURL(file);
+});
+
+function updateTteControls() {
+  const slider = document.getElementById('tteSize');
+  const output = document.getElementById('tteSizeValue');
+  if (slider) slider.value = tteSize.value;
+  if (output) output.value = `${tteSize.value}%`;
+}
+updateTteControls();
+
+const tteSlider = document.getElementById('tteSize');
+tteSlider.addEventListener('input', () => {
+  const before = currentState();
+  tteSize.value = Number(tteSlider.value);
+  document.getElementById('tteSizeValue').value = `${tteSize.value}%`;
+  scheduleRender(); scheduleSave();
+  tteSlider.dataset.beforeState = JSON.stringify(before);
+});
+tteSlider.addEventListener('change', () => {
+  try { if (tteSlider.dataset.beforeState) { undoStack.push(JSON.parse(tteSlider.dataset.beforeState)); if (undoStack.length > 50) undoStack.shift(); redoStack=[]; updateHistoryButtons(); } } catch(e) {}
+  saveState(false);
+});
+
+document.querySelectorAll('[data-tte-dir]').forEach(button => {
+  button.addEventListener('click', () => {
+    const dir = button.dataset.tteDir;
+    const before = currentState();
+    if (dir === 'up') ttePosition.y -= TTE_MOVE_STEP;
+    if (dir === 'down') ttePosition.y += TTE_MOVE_STEP;
+    if (dir === 'left') ttePosition.x -= TTE_MOVE_STEP;
+    if (dir === 'right') ttePosition.x += TTE_MOVE_STEP;
+    if (dir === 'center') { ttePosition.x = tteDefaultPosition.x; ttePosition.y = tteDefaultPosition.y; }
+    undoStack.push(before); if (undoStack.length > 50) undoStack.shift(); redoStack=[];
+    updateHistoryButtons(); scheduleRender(); saveState(false);
+  });
+});
 
 function updateLogoSizeControls() {
   for (let i = 0; i < 4; i++) {
