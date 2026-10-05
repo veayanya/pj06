@@ -13,7 +13,7 @@ main{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template
 .panel{padding:20px}.panel h2{font-size:17px;margin:0 0 16px}.field{margin:0 0 14px}.field label{display:block;font-weight:650;font-size:13px;margin-bottom:6px}
 input[type=text],textarea,select{width:100%;border:1px solid #ccd9d0;border-radius:9px;padding:10px 11px;font:inherit;color:#173d2e;background:#fff}
 textarea{min-height:88px;resize:vertical}.field small{display:block;color:#728178;margin-top:4px;font-size:11px}
-input[type=file]{width:100%;font-size:12px}.size-control{display:grid;grid-template-columns:52px 1fr 45px;align-items:center;gap:7px;margin-top:7px;color:#728178;font-size:11px}.size-control input[type=range]{width:100%;accent-color:var(--green)}.size-control output{text-align:right;font-weight:700;color:#14583d}
+input[type=file]{width:100%;font-size:12px}.size-control{display:grid;grid-template-columns:52px 1fr 45px;align-items:center;gap:7px;margin-top:7px;color:#728178;font-size:11px}.size-control input[type=range]{width:100%;accent-color:var(--green)}.logo-position{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}.logo-position button{padding:5px 0;font-size:12px;border:1px solid #d6e2da;background:#f5f8f6;color:#14583d;border-radius:6px;cursor:pointer}.logo-position button:hover{background:#e4efe9}.logo-position .up{grid-column:2}.logo-position .left{grid-column:1}.logo-position .down{grid-column:2}.logo-position .right{grid-column:3}.logo-position .center{grid-column:2}.size-control output{text-align:right;font-weight:700;color:#14583d}
 .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
 .history-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .history-actions button{flex:1;min-width:110px}
@@ -30,10 +30,10 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <main>
 <section class="panel">
 <h2>Pengaturan Sertifikat</h2>
-<div class="field"><label>Template Sertifikat</label><button type="button" class="secondary" id="uploadTemplateBtn" style="width:100%;margin-bottom:6px">Upload Template Sertifikat</button><input id="templateFile" type="file" accept="image/*" hidden><small id="templateStatus">Template bawaan baru sedang digunakan.</small></div><div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo1Size" type="range" min="50" max="170" value="100" step="1"><output id="logo1SizeValue">100%</output></div></div>
-<div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo2Size" type="range" min="50" max="170" value="100" step="1"><output id="logo2SizeValue">100%</output></div></div>
-<div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo3Size" type="range" min="50" max="170" value="100" step="1"><output id="logo3SizeValue">100%</output></div></div>
-<div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo4Size" type="range" min="50" max="170" value="100" step="1"><output id="logo4SizeValue">100%</output></div></div>
+<div class="field"><label>Template Sertifikat</label><button type="button" class="secondary" id="uploadTemplateBtn" style="width:100%;margin-bottom:6px">Upload Template Sertifikat</button><input id="templateFile" type="file" accept="image/*" hidden><small id="templateStatus">Template bawaan baru sedang digunakan.</small></div><div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo1Size" type="range" min="50" max="170" value="100" step="1"><output id="logo1SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="1" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="1" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="1" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="1" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="1" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo2Size" type="range" min="50" max="170" value="100" step="1"><output id="logo2SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="2" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="2" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="2" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="2" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="2" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo3Size" type="range" min="50" max="170" value="100" step="1"><output id="logo3SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="3" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="3" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="3" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="3" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="3" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo4Size" type="range" min="50" max="170" value="100" step="1"><output id="logo4SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="4" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="4" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="4" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="4" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="4" data-dir="down">▼ Bawah</button></div></div>
 <div class="field"><label>Nama penerima</label><input id="name" type="text" value="Nama Penerima"></div>
 <div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon.</textarea></div>
 <div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"></div>
@@ -65,6 +65,10 @@ let renderTimer = null;
 
 let logo1Img = null, logo2Img = null, logo3Img = null, logo4Img = null;
 const logoSizes = [100, 100, 100, 100];
+const logoPositions = [
+  {x:72,y:72},{x:172,y:72},{x:272,y:72},{x:372,y:72}
+];
+const LOGO_MOVE_STEP = 10;
 const STORAGE_KEY = 'bapperida_generator_sertifikat_v1';
 const TEMPLATE_VERSION = '2026-10-05-template-2';
 const fields = ['name','body','period','sumber','tanggalTtd','jabatanTtd','number','penandatangan'];
@@ -85,10 +89,10 @@ function renderCertificate() {
 
   // Empat logo opsional di area kosong kiri atas.
   const logoSlots = [
-    { img: logo1Img, x: 72,  y: 72, w: 90 * logoSizes[0] / 100, h: 72 * logoSizes[0] / 100 },
-    { img: logo2Img, x: 172, y: 72, w: 90 * logoSizes[1] / 100, h: 72 * logoSizes[1] / 100 },
-    { img: logo3Img, x: 272, y: 72, w: 90 * logoSizes[2] / 100, h: 72 * logoSizes[2] / 100 },
-    { img: logo4Img, x: 372, y: 72, w: 90 * logoSizes[3] / 100, h: 72 * logoSizes[3] / 100 }
+    { img: logo1Img, x: logoPositions[0].x, y: logoPositions[0].y, w: 90 * logoSizes[0] / 100, h: 72 * logoSizes[0] / 100 },
+    { img: logo2Img, x: logoPositions[1].x, y: logoPositions[1].y, w: 90 * logoSizes[1] / 100, h: 72 * logoSizes[1] / 100 },
+    { img: logo3Img, x: logoPositions[2].x, y: logoPositions[2].y, w: 90 * logoSizes[2] / 100, h: 72 * logoSizes[2] / 100 },
+    { img: logo4Img, x: logoPositions[3].x, y: logoPositions[3].y, w: 90 * logoSizes[3] / 100, h: 72 * logoSizes[3] / 100 }
   ];
   logoSlots.forEach(({img,x,y,w,h}) => drawTransparentLogo(ctx, img, x, y, w, h));
 
@@ -198,6 +202,7 @@ function currentState() {
     fields: Object.fromEntries(fields.map(id => [id, document.getElementById(id).value])),
     logos: [...logoDataCache],
     logoSizes: [...logoSizes],
+    logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
     templateVersion: TEMPLATE_VERSION,
     template: customTemplateData
   };
@@ -212,6 +217,9 @@ function applyState(state) {
   if (!state) return;
   applyingHistory = true;
   fields.forEach(id => { if (state.fields && state.fields[id] !== undefined) document.getElementById(id).value = state.fields[id]; });
+  if (Array.isArray(state.logoPositions)) {
+    state.logoPositions.slice(0,4).forEach((pos,i)=>{ if(pos){ logoPositions[i].x=Number(pos.x)||0; logoPositions[i].y=Number(pos.y)||0; }});
+  }
   if (Array.isArray(state.logoSizes)) {
     state.logoSizes.slice(0, 4).forEach((size, i) => {
       logoSizes[i] = Math.max(50, Math.min(170, Number(size) || 100));
@@ -252,7 +260,8 @@ function saveFieldsOnly() {
     // Autosave ringan: jangan stringify template/base64 besar saat mengetik.
     const fieldsState = {
       fields: Object.fromEntries(fields.map(id => [id, document.getElementById(id).value])),
-      logoSizes: [...logoSizes]
+      logoSizes: [...logoSizes],
+      logoPositions: logoPositions.map(p => ({x:p.x,y:p.y}))
     };
     localStorage.setItem(STORAGE_KEY + '_fields', JSON.stringify(fieldsState));
     const status = document.getElementById('saveStatus');
@@ -315,6 +324,7 @@ function loadSavedState() {
       const light = JSON.parse(lightSaved);
       if (light.fields) fields.forEach(id => { if (light.fields[id] !== undefined) document.getElementById(id).value = light.fields[id]; });
       if (Array.isArray(light.logoSizes)) light.logoSizes.forEach((size, i) => { if (i < 4) logoSizes[i] = Math.max(50, Math.min(170, Number(size) || 100)); });
+      if (Array.isArray(light.logoPositions)) light.logoPositions.forEach((pos,i)=>{ if(i<4 && pos){logoPositions[i].x=Number(pos.x)||0; logoPositions[i].y=Number(pos.y)||0;} });
       updateLogoSizeControls();
     }
   } catch (err) {
@@ -417,6 +427,22 @@ for (let i = 0; i < 4; i++) {
   });
 }
 updateLogoSizeControls();
+
+document.querySelectorAll('.logo-position button').forEach(button => {
+  button.addEventListener('click', () => {
+    const i = Number(button.dataset.logo) - 1;
+    const dir = button.dataset.dir;
+    if (i < 0 || i > 3) return;
+    const before = currentState();
+    if (dir === 'up') logoPositions[i].y -= LOGO_MOVE_STEP;
+    if (dir === 'down') logoPositions[i].y += LOGO_MOVE_STEP;
+    if (dir === 'left') logoPositions[i].x -= LOGO_MOVE_STEP;
+    if (dir === 'right') logoPositions[i].x += LOGO_MOVE_STEP;
+    if (dir === 'center') logoPositions[i] = [{x:72,y:72},{x:172,y:72},{x:272,y:72},{x:372,y:72}][i];
+    undoStack.push(before); if (undoStack.length > 50) undoStack.shift(); redoStack=[];
+    updateHistoryButtons(); scheduleRender(); saveState(false);
+  });
+});
 
 document.getElementById('saveLast').addEventListener('click', () => saveState(true));
 document.getElementById('undo').addEventListener('click', () => {
