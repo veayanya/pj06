@@ -20,6 +20,8 @@ input[type=file]{width:100%;font-size:12px}.size-control{display:grid;grid-templ
 .history-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .history-actions button{flex:1;min-width:110px}
 .save-status{font-size:12px;color:#557366;margin:8px 2px 0;min-height:18px}
+[hidden]{display:none!important}
+.share-actions button{font-size:13px}
 button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}
 .primary{background:var(--green);color:white}.secondary{background:#edf3ef;color:#14583d}
 .preview{padding:16px;min-width:0}.previewtop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.previewtop strong{font-size:15px}.previewtop span{font-size:12px;color:#738077}
@@ -49,7 +51,10 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <div class="actions"><button class="primary" id="download">Unduh Sertifikat PNG</button><button class="secondary" id="reset">Atur Ulang</button></div>
 <div class="history-actions"><button class="secondary" id="saveLast">Simpan Terakhir</button><button class="secondary" id="undo" disabled>Urungkan</button><button class="secondary" id="redo" disabled>Ulangi</button></div>
 <p class="save-status" id="saveStatus" role="status">Penyimpanan otomatis aktif di perangkat ini.</p>
-<p class="note">Tips: gunakan logo PNG transparan. File diproses langsung di browser dan tidak dikirim ke server.</p>
+<div class="history-actions share-actions"><button class="secondary" id="exportCfg" type="button">Ekspor Pengaturan</button><button class="secondary" id="importCfg" type="button">Impor Pengaturan</button><input id="importCfgFile" type="file" accept="application/json,.json" hidden></div>
+<div class="history-actions share-actions" id="serverActions" hidden><button class="primary" id="publishCfg" type="button">Simpan ke Server (semua browser)</button></div>
+<p class="save-status" id="serverStatus" role="status"></p>
+<p class="note">Tips: gunakan logo PNG transparan. File diproses langsung di browser. Data hanya dikirim ke server jika Anda menekan &quot;Simpan ke Server&quot;.</p>
 </section>
 <section class="preview">
 <div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Rasio landscape</span></div>
@@ -288,7 +293,7 @@ function applyState(state) {
   } else {
     tteImg = null;
   }
-  function finishApply() { applyingHistory = false; renderCertificate(); updateHistoryButtons(); updateTteControls(); }
+  function finishApply() { applyingHistory = false; renderCertificate(); updateHistoryButtons(); updateTteControls(); if (afterApplyCb) { const cb = afterApplyCb; afterApplyCb = null; cb(); } }
 }
 function saveFieldsOnly() {
   if (applyingHistory) return;
@@ -378,8 +383,160 @@ function loadSavedState() {
   }
 }
 
+// ===== Pengaturan bersama: default di kode, ekspor/impor, dan server =====
+// Field yang bersifat per-sertifikat TIDAK disamakan lewat server (tiap orang mengisi sendiri).
+const LOCAL_ONLY_FIELDS = ['name', 'body', 'period', 'number'];
+const DEFAULT_HASH_KEY = STORAGE_KEY + '_defhash';
+const ADMIN_KEY_SESSION = 'bapperida_admin_key';
+const BUILTIN_TEMPLATE_SRC = template.src;
+let afterApplyCb = null, serverAvailable = false, skipUnloadSave = false;
+
+function setServerStatus(msg) { const el = document.getElementById('serverStatus'); if (el) el.textContent = msg; }
+function hashStr(s) { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return String(h >>> 0); }
+async function fetchJson(url) {
+  try { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) return null; return await r.json(); }
+  catch (e) { return null; }
+}
+
+// Terapkan konfigurasi (dari default-config.json, server, atau file impor).
+function applyConfig(cfg, keepLocal = []) {
+  if (!cfg || typeof cfg !== 'object') return false;
+  const keep = {};
+  keepLocal.forEach(id => { const el = document.getElementById(id); if (el) keep[id] = el.value; });
+  const state = Object.assign({}, cfg, { templateVersion: TEMPLATE_VERSION, signerLayoutVersion: SIGNER_LAYOUT_VERSION });
+  state.fields = Object.assign({}, cfg.fields || {}, keep);
+  const hadCustomTemplate = !!customTemplateData;
+  afterApplyCb = () => saveState(false);
+  applyState(state);
+  if (!state.template && hadCustomTemplate) template.src = BUILTIN_TEMPLATE_SRC;
+  return true;
+}
+
+async function loadServerConfig() {
+  const j = await fetchJson('/api/config');
+  if (!j || !j.configured) { serverAvailable = false; return null; }
+  serverAvailable = true;
+  document.getElementById('serverActions').hidden = false;
+  if (!j.config) return null;
+  const cfg = j.config;
+  cfg.logos = [null, null, null, null]; cfg.template = null; cfg.tte = null;
+  await Promise.all((j.images || []).map(async name => {
+    const r = await fetchJson('/api/config?img=' + encodeURIComponent(name));
+    if (!r || !r.data) return;
+    if (name === 'template') cfg.template = r.data;
+    else if (name === 'tte') cfg.tte = r.data;
+    else { const m = /^logo([0-3])$/.exec(name); if (m) cfg.logos[Number(m[1])] = r.data; }
+  }));
+  return cfg;
+}
+
+// Urutan prioritas: server (jika aktif) > default-config.json (jika berubah) > simpanan lokal > bawaan kode.
+async function syncRemote() {
+  let cfg = null, source = null, defHash = null;
+  const def = await fetchJson('default-config.json');
+  if (def && typeof def === 'object' && Object.keys(def).length) {
+    defHash = hashStr(JSON.stringify(def));
+    if (localStorage.getItem(DEFAULT_HASH_KEY) !== defHash) { cfg = def; source = 'default'; }
+  }
+  const srv = await loadServerConfig();
+  if (srv) { cfg = srv; source = 'server'; }
+  try { if (defHash) localStorage.setItem(DEFAULT_HASH_KEY, defHash); } catch (e) {}
+  if (serverAvailable && !srv) setServerStatus('Server aktif, tetapi belum ada pengaturan bersama. Klik "Simpan ke Server" untuk membuatnya.');
+  if (!cfg) return;
+  applyConfig(cfg, source === 'server' ? LOCAL_ONLY_FIELDS : []);
+  if (source === 'server') setServerStatus('Pengaturan bersama dimuat dari server.');
+  else if (source === 'default') document.getElementById('saveStatus').textContent = 'Pengaturan default terbaru diterapkan.';
+}
+
+// Ekspor / impor file JSON.
+document.getElementById('exportCfg').addEventListener('click', () => {
+  const data = Object.assign({ exportedAt: new Date().toISOString() }, currentState());
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }));
+  a.download = 'default-config.json';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  document.getElementById('saveStatus').textContent = 'Pengaturan diekspor ke default-config.json.';
+});
+document.getElementById('importCfg').addEventListener('click', () => document.getElementById('importCfgFile').click());
+document.getElementById('importCfgFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const cfg = JSON.parse(reader.result);
+      if (!cfg || typeof cfg !== 'object' || !(cfg.fields || cfg.textPositions || cfg.logos || cfg.ttePosition)) throw new Error('format');
+      const before = currentState();
+      applyConfig(cfg);
+      undoStack.push(before); if (undoStack.length > 50) undoStack.shift(); redoStack = []; updateHistoryButtons();
+      document.getElementById('saveStatus').textContent = 'Pengaturan berhasil diimpor.';
+    } catch (err) { alert('File pengaturan tidak valid. Gunakan file JSON hasil "Ekspor Pengaturan".'); }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+});
+
+// Simpan ke server bersama (butuh kunci admin).
+async function shrinkDataURL(src, maxLen, asJpeg) {
+  if (!src || src.length <= maxLen) return src;
+  const img = await new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = src; });
+  let scale = 0.9;
+  for (let k = 0; k < 8; k++) {
+    const c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(img.naturalWidth * scale)); c.height = Math.max(1, Math.round(img.naturalHeight * scale));
+    const x = c.getContext('2d');
+    if (asJpeg) { x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); }
+    x.drawImage(img, 0, 0, c.width, c.height);
+    const out = asJpeg ? c.toDataURL('image/jpeg', 0.88) : c.toDataURL('image/png');
+    if (out.length <= maxLen) return out;
+    scale *= 0.8;
+  }
+  throw new Error('gambar terlalu besar, kecilkan ukurannya');
+}
+async function apiPost(key, body) {
+  const r = await fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': key }, body: JSON.stringify(body) });
+  let j = null; try { j = await r.json(); } catch (e) {}
+  if (!r.ok) { const err = new Error((j && j.error) || ('HTTP ' + r.status)); err.status = r.status; throw err; }
+  return j;
+}
+async function publishConfig() {
+  let key = null;
+  try { key = sessionStorage.getItem(ADMIN_KEY_SESSION); } catch (e) {}
+  if (!key) key = prompt('Masukkan kunci admin untuk menyimpan ke server:');
+  if (!key) return;
+  const btn = document.getElementById('publishCfg'); btn.disabled = true;
+  try {
+    setServerStatus('Mengirim pengaturan ke server...');
+    const s = currentState();
+    const imgs = { template: s.template, tte: s.tte };
+    (s.logos || []).forEach((l, i) => { imgs['logo' + i] = l; });
+    for (let i = 0; i < 4; i++) if (!('logo' + i in imgs)) imgs['logo' + i] = null;
+    const present = [];
+    for (const [name, data] of Object.entries(imgs)) {
+      if (data) { await apiPost(key, { part: 'img', name, data: await shrinkDataURL(data, 900000, name === 'template') }); present.push(name); }
+      else await apiPost(key, { part: 'img', name, data: null });
+    }
+    const meta = Object.assign({}, s); delete meta.logos; delete meta.template; delete meta.tte;
+    meta.fields = Object.fromEntries(Object.entries(s.fields).filter(([id]) => !LOCAL_ONLY_FIELDS.includes(id)));
+    await apiPost(key, { part: 'meta', data: { config: meta, images: present } });
+    try { sessionStorage.setItem(ADMIN_KEY_SESSION, key); } catch (e) {}
+    setServerStatus('Tersimpan di server. Browser lain memakai pengaturan ini saat halaman dibuka/dimuat ulang.');
+  } catch (err) {
+    if (err.status === 401) { try { sessionStorage.removeItem(ADMIN_KEY_SESSION); } catch (e) {} }
+    setServerStatus('Gagal menyimpan ke server: ' + err.message);
+  } finally { btn.disabled = false; }
+}
+document.getElementById('publishCfg').addEventListener('click', publishConfig);
+
 // Live preview, simpan otomatis, dan riwayat undo/redo.
-template.onload = () => { try { loadSavedState(); renderCertificate(); } catch (err) { console.error(err); } };
+let initDone = false;
+template.onload = () => {
+  try {
+    if (!initDone) { initDone = true; loadSavedState(); syncRemote().catch(err => console.warn('Sinkronisasi:', err)); }
+    renderCertificate();
+  } catch (err) { console.error(err); }
+};
 document.querySelectorAll('input[type="text"], textarea').forEach(element => {
   element.addEventListener('focus', () => { element.dataset.beforeEdit = element.value; element.dataset.beforeState = JSON.stringify(currentState()); });
   element.addEventListener('change', () => {
@@ -582,11 +739,13 @@ document.getElementById('download').addEventListener('click', () => {
 // Atur Ulang
 document.getElementById('reset').addEventListener('click', () => {
   if (!confirm('Atur ulang sertifikat ke data awal? Data simpanan terakhir juga akan dihapus.')) return;
-  localStorage.removeItem(STORAGE_KEY); location.reload();
+  skipUnloadSave = true;
+  localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(STORAGE_KEY + '_fields'); localStorage.removeItem(DEFAULT_HASH_KEY);
+  location.reload();
 });
 
 // Simpan perubahan saat tab ditutup atau halaman berpindah.
-window.addEventListener('beforeunload', () => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {} });
+window.addEventListener('beforeunload', () => { if (skipUnloadSave) return; try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {} });
 </script>
 </body>
 </html>
