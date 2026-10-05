@@ -73,17 +73,18 @@ const logoPositions = [
 ];
 const LOGO_MOVE_STEP = 10;
 const TTE_MOVE_STEP = 10;
+const SIGNER_LAYOUT_VERSION = '2026-10-05-signer-tte-space-1';
 const TEXT_MOVE_STEP = 10;
 let tteImg = null;
 let tteData = null;
 const tteSize = { value: 100 };
-const ttePosition = {x: 1090, y: 625};
-const tteDefaultPosition = {x: 1090, y: 625};
+const ttePosition = {x: 1090, y: 655};
+const tteDefaultPosition = {x: 1090, y: 655};
 const textBaseSizes = {number:18,name:34,body:15,period:15,tanggalTtd:13,jabatanTtd:12,penandatangan:17};
 const textSizes = {number:100,name:100,body:100,period:100,tanggalTtd:100,jabatanTtd:100,penandatangan:100};
 const textPositions = {
   number:{x:306,y:500}, name:{x:995,y:345}, body:{x:995,y:405}, period:{x:995,y:485},
-  tanggalTtd:{x:1245,y:588}, jabatanTtd:{x:1245,y:607}, penandatangan:{x:1245,y:670}
+  tanggalTtd:{x:1245,y:588}, jabatanTtd:{x:1245,y:607}, penandatangan:{x:1245,y:710}
 };
 const textDefaults = JSON.parse(JSON.stringify(textPositions));
 
@@ -141,7 +142,7 @@ function renderCertificate() {
   drawRight('tanggalTtd',document.getElementById('tanggalTtd').value.trim(),'#075b3e',false);
   drawWrappedRight('jabatanTtd',document.getElementById('jabatanTtd').value.trim(),'#075b3e',true);
   // TTE ditampilkan tepat di atas nama penandatangan.
-  const tteW = 220 * tteSize.value / 100, tteH = 90 * tteSize.value / 100;
+  const tteW = 200 * tteSize.value / 100, tteH = 60 * tteSize.value / 100;
   drawTransparentLogo(ctx, tteImg, ttePosition.x - tteW/2, ttePosition.y - tteH/2, tteW, tteH);
   drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
 
@@ -204,6 +205,7 @@ function currentState() {
     textSizes: {...textSizes},
     textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}])),
     templateVersion: TEMPLATE_VERSION,
+    signerLayoutVersion: SIGNER_LAYOUT_VERSION,
     template: customTemplateData,
     tte: tteData,
     tteSize: tteSize.value,
@@ -233,6 +235,13 @@ function applyState(state) {
   if (state.textPositions) Object.keys(textPositions).forEach(id => { const p=state.textPositions[id]; if(p){ textPositions[id].x=Number(p.x)||0; textPositions[id].y=Number(p.y)||0; } });
   if (state.tteSize !== undefined) tteSize.value = Math.max(50, Math.min(170, Number(state.tteSize) || 100));
   if (state.ttePosition) { ttePosition.x = Number(state.ttePosition.x) || tteDefaultPosition.x; ttePosition.y = Number(state.ttePosition.y) || tteDefaultPosition.y; }
+  // Migrasi sekali: beri ruang khusus di antara jabatan dan nama untuk TTE.
+  if (state.signerLayoutVersion !== SIGNER_LAYOUT_VERSION) {
+    textPositions.jabatanTtd = {x:1245,y:607};
+    textPositions.penandatangan = {x:1245,y:710};
+    ttePosition.x = tteDefaultPosition.x;
+    ttePosition.y = tteDefaultPosition.y;
+  }
   updateTextControls();
   updateTteControls();
 
