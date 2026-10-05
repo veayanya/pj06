@@ -8,9 +8,10 @@
 *{box-sizing:border-box}body{margin:0;background:#f2f4f1;color:#193b2e;font:15px/1.45 Inter,system-ui,Arial,sans-serif}
 header{background:linear-gradient(110deg,#075b3e,#08734a);color:white;padding:22px max(20px,calc((100% - 1200px)/2))}
 header h1{font-size:22px;margin:0 0 4px}header p{margin:0;color:#d9eee3}
-main{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start}
+main{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:stretch;height:calc(100vh - 140px);overflow:hidden}
 .panel,.preview{background:white;border:1px solid #e0e8e2;border-radius:16px;box-shadow:0 5px 22px #173c2410}
-.panel{padding:20px}.panel h2{font-size:17px;margin:0 0 16px}.field{margin:0 0 14px}.field label{display:block;font-weight:650;font-size:13px;margin-bottom:6px}
+.panel{padding:20px;height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+.preview{height:fit-content;position:sticky;top:0;align-self:start}.panel h2{font-size:17px;margin:0 0 16px}.field{margin:0 0 14px}.field label{display:block;font-weight:650;font-size:13px;margin-bottom:6px}
 input[type=text],textarea,select{width:100%;border:1px solid #ccd9d0;border-radius:9px;padding:10px 11px;font:inherit;color:#173d2e;background:#fff}
 textarea{min-height:88px;resize:vertical}.field small{display:block;color:#728178;margin-top:4px;font-size:11px}
 input[type=file]{width:100%;font-size:12px}.size-control{display:grid;grid-template-columns:52px 1fr 45px;align-items:center;gap:7px;margin-top:7px;color:#728178;font-size:11px}.size-control input[type=range]{width:100%;accent-color:var(--green)}.logo-position{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}.logo-position button{padding:5px 0;font-size:12px;border:1px solid #d6e2da;background:#f5f8f6;color:#14583d;border-radius:6px;cursor:pointer}.logo-position button:hover{background:#e4efe9}.logo-position .up{grid-column:2}.logo-position .left{grid-column:1}.logo-position .down{grid-column:2}.logo-position .right{grid-column:3}.logo-position .center{grid-column:2}.size-control output{text-align:right;font-weight:700;color:#14583d}
@@ -24,7 +25,7 @@ button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:point
 .preview{padding:16px;min-width:0}.previewtop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.previewtop strong{font-size:15px}.previewtop span{font-size:12px;color:#738077}
 canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 .note{font-size:12px;color:#6d7b72;margin:12px 2px 0}
-@media(max-width:850px){main{grid-template-columns:1fr}.panel{order:2}.preview{order:1}}
+@media(max-width:850px){body{overflow:auto}main{grid-template-columns:1fr;height:auto;overflow:visible}.panel{order:2;height:auto;overflow:visible}.preview{order:1;position:static;height:auto}}
 </style></head>
 <body>
 <header><h1>Generator Sertifikat Bapperida</h1><p>Unggah empat logo, ubah nama dan isi sertifikat, lalu unduh hasilnya.</p></header>
