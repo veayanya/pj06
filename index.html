@@ -30,7 +30,7 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <main>
 <section class="panel">
 <h2>Pengaturan Sertifikat</h2>
-<div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo1Size" type="range" min="50" max="170" value="100" step="1"><output id="logo1SizeValue">100%</output></div></div>
+<div class="field"><label>Template Sertifikat</label><button type="button" class="secondary" id="uploadTemplateBtn" style="width:100%;margin-bottom:6px">Upload Template Sertifikat</button><input id="templateFile" type="file" accept="image/*" hidden><small id="templateStatus">Template bawaan sedang digunakan.</small></div><div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo1Size" type="range" min="50" max="170" value="100" step="1"><output id="logo1SizeValue">100%</output></div></div>
 <div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo2Size" type="range" min="50" max="170" value="100" step="1"><output id="logo2SizeValue">100%</output></div></div>
 <div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo3Size" type="range" min="50" max="170" value="100" step="1"><output id="logo3SizeValue">100%</output></div></div>
 <div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo4Size" type="range" min="50" max="170" value="100" step="1"><output id="logo4SizeValue">100%</output></div></div>
@@ -53,6 +53,7 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <script>
 const canvas=document.getElementById('cert'),ctx=canvas.getContext('2d');
 const template=new Image();
+let customTemplateData = null;
 
 // Template sertifikat dari gambar yang dilampirkan pengguna.
   // Gambar disematkan langsung ke HTML agar file tetap mandiri (tanpa path eksternal).
@@ -172,7 +173,8 @@ function currentState() {
   return {
     fields: Object.fromEntries(fields.map(id => [id, document.getElementById(id).value])),
     logos: [logo1Img, logo2Img, logo3Img, logo4Img].map(img => img ? imageToDataURL(img) : null),
-    logoSizes: [...logoSizes]
+    logoSizes: [...logoSizes],
+    template: customTemplateData
   };
 }
 function imageToDataURL(img) {
@@ -191,6 +193,20 @@ function applyState(state) {
     });
     updateLogoSizeControls();
   }
+  if (state.template) {
+    customTemplateData = state.template;
+    const customImg = new Image();
+    customImg.onload = () => {
+      template.src = customTemplateData;
+      document.getElementById('templateStatus').textContent = 'Template custom sedang digunakan.';
+    };
+    customImg.onerror = () => { customTemplateData = null; };
+    customImg.src = state.template;
+  } else {
+    customTemplateData = null;
+    document.getElementById('templateStatus').textContent = 'Template bawaan sedang digunakan.';
+  }
+
   const logoSetters = [img => logo1Img = img, img => logo2Img = img, img => logo3Img = img, img => logo4Img = img];
   let pending = 0;
   (state.logos || []).forEach((src, i) => {
@@ -264,6 +280,36 @@ function handleLogoUpload(e, callback) {
     reader.readAsDataURL(file);
   }
 }
+
+
+document.getElementById('uploadTemplateBtn').addEventListener('click', () => {
+  document.getElementById('templateFile').click();
+});
+
+document.getElementById('templateFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const before = currentState();
+  const reader = new FileReader();
+  reader.onload = event => {
+    const src = event.target.result;
+    const img = new Image();
+    img.onload = () => {
+      customTemplateData = src;
+      template.src = src;
+      document.getElementById('templateStatus').textContent = `Template: ${file.name}`;
+      undoStack.push(before);
+      if (undoStack.length > 50) undoStack.shift();
+      redoStack = [];
+      updateHistoryButtons();
+      renderCertificate();
+      saveState(false);
+    };
+    img.onerror = () => alert('Template tidak dapat dibaca. Gunakan file PNG atau JPG yang valid.');
+    img.src = src;
+  };
+  reader.readAsDataURL(file);
+});
 
 document.getElementById('logo1').addEventListener('change', e => handleLogoUpload(e, img => logo1Img = img));
 document.getElementById('logo2').addEventListener('change', e => handleLogoUpload(e, img => logo2Img = img));
