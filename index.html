@@ -30,10 +30,10 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <main>
 <section class="panel">
 <h2>Pengaturan Sertifikat</h2>
-<div class="field"><label>Logo 1 (kiri)</label><input id="logo1" type="file" accept="image/*"></div>
-<div class="field"><label>Logo 2 (tengah)</label><input id="logo2" type="file" accept="image/*"></div>
-<div class="field"><label>Logo 3 (kanan/tengah)</label><input id="logo3" type="file" accept="image/*"></div>
-<div class="field"><label>Logo 4 (kanan)</label><input id="logo4" type="file" accept="image/*"></div>
+<div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"></div>
+<div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"></div>
+<div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"></div>
+<div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"></div>
 <div class="field"><label>Nama penerima</label><input id="name" type="text" value="Nama Penerima"></div>
 <div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon.</textarea></div>
 <div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"></div>
@@ -72,13 +72,14 @@ function renderCertificate() {
 
   const centerX = 952;
 
-  // Empat logo PNG transparan ditampilkan pada area atas panel kanan.
-  // Logo tidak diberi background sehingga alpha/transparency PNG tetap terlihat.
+  // Empat logo PNG transparan ditempatkan berjajar di area putih kosong
+  // paling atas sertifikat, sebelum area utama isi sertifikat.
+  // Tidak diberi background agar transparansi PNG tetap terlihat.
   const logoSlots = [
-    { img: logo1Img, x: 700, y: 70, w: 120, h: 105 },
-    { img: logo2Img, x: 840, y: 70, w: 120, h: 105 },
-    { img: logo3Img, x: 980, y: 70, w: 120, h: 105 },
-    { img: logo4Img, x: 1120, y: 70, w: 120, h: 105 }
+    { img: logo1Img, x: 40,  y: 45, w: 120, h: 105 },
+    { img: logo2Img, x: 180, y: 45, w: 120, h: 105 },
+    { img: logo3Img, x: 320, y: 45, w: 120, h: 105 },
+    { img: logo4Img, x: 460, y: 45, w: 120, h: 105 }
   ];
   logoSlots.forEach(({img,x,y,w,h}) => drawTransparentLogo(ctx, img, x, y, w, h));
 
@@ -259,6 +260,7 @@ function handleLogoUpload(e, callback) {
 document.getElementById('logo1').addEventListener('change', e => handleLogoUpload(e, img => logo1Img = img));
 document.getElementById('logo2').addEventListener('change', e => handleLogoUpload(e, img => logo2Img = img));
 document.getElementById('logo3').addEventListener('change', e => handleLogoUpload(e, img => logo3Img = img));
+document.getElementById('logo4').addEventListener('change', e => handleLogoUpload(e, img => logo4Img = img));
 document.getElementById('logo4').addEventListener('change', e => handleLogoUpload(e, img => logo4Img = img));
 
 document.getElementById('saveLast').addEventListener('click', () => saveState(true));
