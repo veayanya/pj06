@@ -14,6 +14,7 @@ main{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template
 input[type=text],textarea,select{width:100%;border:1px solid #ccd9d0;border-radius:9px;padding:10px 11px;font:inherit;color:#173d2e;background:#fff}
 textarea{min-height:88px;resize:vertical}.field small{display:block;color:#728178;margin-top:4px;font-size:11px}
 input[type=file]{width:100%;font-size:12px}.size-control{display:grid;grid-template-columns:52px 1fr 45px;align-items:center;gap:7px;margin-top:7px;color:#728178;font-size:11px}.size-control input[type=range]{width:100%;accent-color:var(--green)}.logo-position{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}.logo-position button{padding:5px 0;font-size:12px;border:1px solid #d6e2da;background:#f5f8f6;color:#14583d;border-radius:6px;cursor:pointer}.logo-position button:hover{background:#e4efe9}.logo-position .up{grid-column:2}.logo-position .left{grid-column:1}.logo-position .down{grid-column:2}.logo-position .right{grid-column:3}.logo-position .center{grid-column:2}.size-control output{text-align:right;font-weight:700;color:#14583d}
+.text-control{margin-top:7px;padding:8px;border:1px solid #e0e9e3;border-radius:8px;background:#f8fbf9}.text-size{display:grid;grid-template-columns:52px 1fr 45px;align-items:center;gap:7px;color:#728178;font-size:11px}.text-size input[type=range]{width:100%;accent-color:var(--green)}.text-size output{text-align:right;font-weight:700;color:#14583d}.text-position{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:6px}.text-position button{padding:5px 0;font-size:11px;border:1px solid #d6e2da;background:#f5f8f6;color:#14583d;border-radius:6px;cursor:pointer}.text-position button:hover{background:#e4efe9}.text-position .up{grid-column:2}.text-position .left{grid-column:1}.text-position .center{grid-column:2}.text-position .right{grid-column:3}.text-position .down{grid-column:2}
 .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
 .history-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .history-actions button{flex:1;min-width:110px}
@@ -34,13 +35,13 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo2Size" type="range" min="50" max="170" value="100" step="1"><output id="logo2SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="2" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="2" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="2" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="2" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="2" data-dir="down">▼ Bawah</button></div></div>
 <div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo3Size" type="range" min="50" max="170" value="100" step="1"><output id="logo3SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="3" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="3" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="3" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="3" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="3" data-dir="down">▼ Bawah</button></div></div>
 <div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo4Size" type="range" min="50" max="170" value="100" step="1"><output id="logo4SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="4" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="4" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="4" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="4" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="4" data-dir="down">▼ Bawah</button></div></div>
-<div class="field"><label>Nama penerima</label><input id="name" type="text" value="Nama Penerima"></div>
-<div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon.</textarea></div>
-<div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"></div>
-<div class="field"><label>Sumber</label><input id="sumber" type="text" value="Sumber"></div>
-<div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="[Tanggal penandatanganan]"></div>
-<div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea></div>
-<div class="field"><label>Nomor sertifikat</label><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"></div><div class="field"><label>Nama Penandatangan</label><input id="penandatangan" type="text" value="Dangi, S.Si., M.Sc., MT."></div>
+<div class="field"><label>Nama penerima</label><input id="name" type="text" value="Nama Penerima"><div class="text-control" data-text="name"><div class="text-size"><span>Ukuran</span><input id="nameSize" type="range" min="50" max="200" value="100"><output id="nameSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="name" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="name" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="name" data-dir="center">● Tengah</button><button type="button" class="right" data-text="name" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="name" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon.</textarea><div class="text-control" data-text="body"><div class="text-size"><span>Ukuran</span><input id="bodySize" type="range" min="50" max="200" value="100"><output id="bodySizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="body" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="body" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="body" data-dir="center">● Tengah</button><button type="button" class="right" data-text="body" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="body" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"><div class="text-control" data-text="period"><div class="text-size"><span>Ukuran</span><input id="periodSize" type="range" min="50" max="200" value="100"><output id="periodSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="period" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="period" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="period" data-dir="center">● Tengah</button><button type="button" class="right" data-text="period" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="period" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Sumber</label><input id="sumber" type="text" value="Sumber"><div class="text-control" data-text="sumber"><div class="text-size"><span>Ukuran</span><input id="sumberSize" type="range" min="50" max="200" value="100"><output id="sumberSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="sumber" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="sumber" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="sumber" data-dir="center">● Tengah</button><button type="button" class="right" data-text="sumber" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="sumber" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="[Tanggal penandatanganan]"><div class="text-control" data-text="tanggalTtd"><div class="text-size"><span>Ukuran</span><input id="tanggalTtdSize" type="range" min="50" max="200" value="100"><output id="tanggalTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="tanggalTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="tanggalTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="tanggalTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="tanggalTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="tanggalTtd" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea><div class="text-control" data-text="jabatanTtd"><div class="text-size"><span>Ukuran</span><input id="jabatanTtdSize" type="range" min="50" max="200" value="100"><output id="jabatanTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="jabatanTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="jabatanTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="jabatanTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="jabatanTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="jabatanTtd" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Nomor sertifikat</label><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"><div class="text-control" data-text="number"><div class="text-size"><span>Ukuran</span><input id="numberSize" type="range" min="50" max="200" value="100"><output id="numberSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="number" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="number" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="number" data-dir="center">● Tengah</button><button type="button" class="right" data-text="number" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="number" data-dir="down">▼ Bawah</button></div></div></div><div class="field"><label>Nama Penandatangan</label><input id="penandatangan" type="text" value="Dangi, S.Si., M.Sc., MT."><div class="text-control" data-text="penandatangan"><div class="text-size"><span>Ukuran</span><input id="penandatanganSize" type="range" min="50" max="200" value="100"><output id="penandatanganSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="penandatangan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="penandatangan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="penandatangan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="penandatangan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="penandatangan" data-dir="down">▼ Bawah</button></div></div></div>
 <div class="actions"><button class="primary" id="download">Unduh Sertifikat PNG</button><button class="secondary" id="reset">Atur Ulang</button></div>
 <div class="history-actions"><button class="secondary" id="saveLast">Simpan Terakhir</button><button class="secondary" id="undo" disabled>Urungkan</button><button class="secondary" id="redo" disabled>Ulangi</button></div>
 <p class="save-status" id="saveStatus" role="status">Penyimpanan otomatis aktif di perangkat ini.</p>
@@ -69,8 +70,17 @@ const logoPositions = [
   {x:72,y:72},{x:172,y:72},{x:272,y:72},{x:372,y:72}
 ];
 const LOGO_MOVE_STEP = 10;
+const TEXT_MOVE_STEP = 10;
+const textBaseSizes = {number:18,name:34,body:15,period:15,sumber:13,tanggalTtd:13,jabatanTtd:12,penandatangan:17};
+const textSizes = {number:100,name:100,body:100,period:100,sumber:100,tanggalTtd:100,jabatanTtd:100,penandatangan:100};
+const textPositions = {
+  number:{x:306,y:500}, name:{x:995,y:345}, body:{x:995,y:405}, period:{x:995,y:485},
+  sumber:{x:1245,y:570}, tanggalTtd:{x:1245,y:588}, jabatanTtd:{x:1245,y:607}, penandatangan:{x:1245,y:670}
+};
+const textDefaults = JSON.parse(JSON.stringify(textPositions));
+
 const STORAGE_KEY = 'bapperida_generator_sertifikat_v1';
-const TEMPLATE_VERSION = '2026-10-05-template-2';
+const TEMPLATE_VERSION = '2026-10-05-template-3';
 const fields = ['name','body','period','sumber','tanggalTtd','jabatanTtd','number','penandatangan'];
 let undoStack = [], redoStack = [];
 let applyingHistory = false, saveTimer = null;
@@ -80,14 +90,29 @@ function renderCertificate() {
   // Template baru digunakan penuh sebagai background.
   ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
-  // Nomor sertifikat di bawah tulisan SERTIFIKAT pada panel kiri.
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'alphabetic';
-  ctx.font = 'bold 18px Arial';
-  ctx.fillStyle = '#075b3e';
-  ctx.fillText('Nomor :  ' + document.getElementById('number').value, 306, 500);
+  // Semua elemen teks dapat dipindah dan diperbesar/diperkecil.
+  const textSize = id => textBaseSizes[id] * (textSizes[id] / 100);
+  const pos = id => textPositions[id];
+  const drawCenter = (id, text, color, bold=false) => {
+    const p = pos(id); ctx.textAlign='center'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${textSize(id)}px Arial`;
+    ctx.fillText(text, p.x, p.y);
+  };
+  const drawRight = (id, text, color, bold=false) => {
+    const p = pos(id); ctx.textAlign='right'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${textSize(id)}px Arial`;
+    ctx.fillText(text, p.x, p.y);
+  };
+  const drawWrappedCenter = (id, text, color, bold=false) => {
+    const p=pos(id), size=textSize(id); ctx.textAlign='center'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${size}px Arial`;
+    wrapText(ctx,text,p.x,p.y,570,size*1.4);
+  };
+  const drawWrappedRight = (id, text, color, bold=false) => {
+    const p=pos(id), size=textSize(id); ctx.textAlign='right'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${size}px Arial`;
+    wrapTextRight(ctx,text,p.x,p.y,330,size*1.25);
+  };
 
-  // Empat logo opsional di area kosong kiri atas.
+  drawCenter('number','Nomor :  ' + document.getElementById('number').value,'#075b3e',true);
+
+  // Empat logo opsional.
   const logoSlots = [
     { img: logo1Img, x: logoPositions[0].x, y: logoPositions[0].y, w: 90 * logoSizes[0] / 100, h: 72 * logoSizes[0] / 100 },
     { img: logo2Img, x: logoPositions[1].x, y: logoPositions[1].y, w: 90 * logoSizes[1] / 100, h: 72 * logoSizes[1] / 100 },
@@ -96,59 +121,19 @@ function renderCertificate() {
   ];
   logoSlots.forEach(({img,x,y,w,h}) => drawTransparentLogo(ctx, img, x, y, w, h));
 
-  // Isi sertifikat pada panel kanan.
-  const centerX = 995;
-  ctx.textAlign = 'center';
-  ctx.font = 'bold 17px Arial';
-  ctx.fillStyle = '#075b3e';
-  ctx.fillText('Diberikan kepada', centerX, 285);
+  drawCenter('name',document.getElementById('name').value.trim(),'#075b3e',true);
+  const namePos=pos('name');
+  const nameWidth=Math.min(Math.max(ctx.measureText(document.getElementById('name').value.trim()).width+55,260),570);
+  ctx.beginPath(); ctx.moveTo(namePos.x-nameWidth/2,namePos.y+17); ctx.lineTo(namePos.x+nameWidth/2,namePos.y+17); ctx.strokeStyle='#075b3e'; ctx.lineWidth=2.5; ctx.stroke();
+  drawWrappedCenter('body',document.getElementById('body').value.trim(),'#075b3e',false);
+  drawCenter('period',document.getElementById('period').value,'#ed791d',true);
+  drawRight('sumber',document.getElementById('sumber').value.trim(),'#075b3e',false);
+  drawRight('tanggalTtd',document.getElementById('tanggalTtd').value.trim(),'#075b3e',false);
+  drawWrappedRight('jabatanTtd',document.getElementById('jabatanTtd').value.trim(),'#075b3e',true);
+  drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
 
-  const name = document.getElementById('name').value.trim();
-  ctx.font = 'bold 34px Arial';
-  ctx.fillStyle = '#075b3e';
-  ctx.fillText(name, centerX, 345);
-
-  // Garis bawah nama dibuat lebih tegas.
-  const nameWidth = Math.min(Math.max(ctx.measureText(name).width + 55, 260), 570);
-  ctx.beginPath();
-  ctx.moveTo(centerX - nameWidth / 2, 362);
-  ctx.lineTo(centerX + nameWidth / 2, 362);
-  ctx.strokeStyle = '#075b3e';
-  ctx.lineWidth = 2.5;
-  ctx.stroke();
-
-  ctx.font = '15px Arial';
-  ctx.fillStyle = '#075b3e';
-  const bodyText = document.getElementById('body').value.trim();
-  wrapText(ctx, bodyText, centerX, 405, 570, 21);
-
-  ctx.font = 'bold 15px Arial';
-  ctx.fillStyle = '#ed791d';
-  ctx.fillText(document.getElementById('period').value, centerX, 485);
-
-  // Penandatangan pada bagian bawah kanan.
-  const signerX = 1245;
-  const source = document.getElementById('sumber').value.trim();
-  const signingDate = document.getElementById('tanggalTtd').value.trim();
-  const position = document.getElementById('jabatanTtd').value.trim();
-  const signerName = document.getElementById('penandatangan').value.trim();
-
-  ctx.textAlign = 'right';
-  ctx.fillStyle = '#075b3e';
-  ctx.font = '13px Arial';
-  ctx.fillText(source, signerX, 570);
-  ctx.fillText(signingDate, signerX, 588);
-  ctx.font = 'bold 12px Arial';
-  wrapTextRight(ctx, position, signerX, 607, 330, 15);
-  ctx.font = 'bold 17px Arial';
-  ctx.fillText(signerName, signerX, 670);
-
-  ctx.beginPath();
-  ctx.moveTo(940, 678);
-  ctx.lineTo(signerX, 678);
-  ctx.strokeStyle = '#075b3e';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+  const signerPos=pos('penandatangan');
+  ctx.beginPath(); ctx.moveTo(signerPos.x-305, signerPos.y+8); ctx.lineTo(signerPos.x, signerPos.y+8); ctx.strokeStyle='#075b3e'; ctx.lineWidth=2; ctx.stroke();
   ctx.textAlign = 'center';
 }
 
@@ -203,6 +188,8 @@ function currentState() {
     logos: [...logoDataCache],
     logoSizes: [...logoSizes],
     logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
+    textSizes: {...textSizes},
+    textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}])),
     templateVersion: TEMPLATE_VERSION,
     template: customTemplateData
   };
@@ -226,6 +213,10 @@ function applyState(state) {
     });
     updateLogoSizeControls();
   }
+  if (state.textSizes) Object.keys(textSizes).forEach(id => { if (state.textSizes[id] !== undefined) textSizes[id] = Math.max(50, Math.min(200, Number(state.textSizes[id]) || 100)); });
+  if (state.textPositions) Object.keys(textPositions).forEach(id => { const p=state.textPositions[id]; if(p){ textPositions[id].x=Number(p.x)||0; textPositions[id].y=Number(p.y)||0; } });
+  updateTextControls();
+
   if (state.template) {
     customTemplateData = state.template;
     const customImg = new Image();
@@ -261,7 +252,9 @@ function saveFieldsOnly() {
     const fieldsState = {
       fields: Object.fromEntries(fields.map(id => [id, document.getElementById(id).value])),
       logoSizes: [...logoSizes],
-      logoPositions: logoPositions.map(p => ({x:p.x,y:p.y}))
+      logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
+      textSizes: {...textSizes},
+      textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}]))
     };
     localStorage.setItem(STORAGE_KEY + '_fields', JSON.stringify(fieldsState));
     const status = document.getElementById('saveStatus');
@@ -325,7 +318,10 @@ function loadSavedState() {
       if (light.fields) fields.forEach(id => { if (light.fields[id] !== undefined) document.getElementById(id).value = light.fields[id]; });
       if (Array.isArray(light.logoSizes)) light.logoSizes.forEach((size, i) => { if (i < 4) logoSizes[i] = Math.max(50, Math.min(170, Number(size) || 100)); });
       if (Array.isArray(light.logoPositions)) light.logoPositions.forEach((pos,i)=>{ if(i<4 && pos){logoPositions[i].x=Number(pos.x)||0; logoPositions[i].y=Number(pos.y)||0;} });
+      if (light.textSizes) Object.keys(textSizes).forEach(id=>{ if(light.textSizes[id]!==undefined) textSizes[id]=Math.max(50,Math.min(200,Number(light.textSizes[id])||100)); });
+      if (light.textPositions) Object.keys(textPositions).forEach(id=>{ const pos=light.textPositions[id]; if(pos){textPositions[id].x=Number(pos.x)||0;textPositions[id].y=Number(pos.y)||0;} });
       updateLogoSizeControls();
+      updateTextControls();
     }
   } catch (err) {
     const status = document.getElementById('saveStatus');
@@ -441,6 +437,23 @@ document.querySelectorAll('.logo-position button').forEach(button => {
     if (dir === 'center') logoPositions[i] = [{x:72,y:72},{x:172,y:72},{x:272,y:72},{x:372,y:72}][i];
     undoStack.push(before); if (undoStack.length > 50) undoStack.shift(); redoStack=[];
     updateHistoryButtons(); scheduleRender(); saveState(false);
+  });
+});
+
+function updateTextControls(){
+  Object.keys(textSizes).forEach(id=>{ const slider=document.getElementById(id+'Size'); const output=document.getElementById(id+'SizeValue'); if(slider) slider.value=textSizes[id]; if(output) output.value=textSizes[id]+'%'; });
+}
+updateTextControls();
+Object.keys(textSizes).forEach(id=>{
+  const slider=document.getElementById(id+'Size');
+  if(!slider) return;
+  slider.addEventListener('input',()=>{ const before=currentState(); textSizes[id]=Number(slider.value); document.getElementById(id+'SizeValue').value=textSizes[id]+'%'; scheduleRender(); scheduleSave(); slider.dataset.beforeState=JSON.stringify(before); });
+  slider.addEventListener('change',()=>{ try{ if(slider.dataset.beforeState){ undoStack.push(JSON.parse(slider.dataset.beforeState)); if(undoStack.length>50)undoStack.shift(); redoStack=[]; updateHistoryButtons(); } }catch(e){} saveState(false); });
+});
+document.querySelectorAll('.text-position button').forEach(button=>{
+  button.addEventListener('click',()=>{ const id=button.dataset.text,dir=button.dataset.dir; if(!textPositions[id])return; const before=currentState();
+    if(dir==='up') textPositions[id].y-=TEXT_MOVE_STEP; if(dir==='down') textPositions[id].y+=TEXT_MOVE_STEP; if(dir==='left') textPositions[id].x-=TEXT_MOVE_STEP; if(dir==='right') textPositions[id].x+=TEXT_MOVE_STEP; if(dir==='center') { textPositions[id].x=textDefaults[id].x; textPositions[id].y=textDefaults[id].y; }
+    undoStack.push(before); if(undoStack.length>50)undoStack.shift(); redoStack=[]; updateHistoryButtons(); scheduleRender(); saveState(false);
   });
 });
 
