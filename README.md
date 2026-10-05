@@ -1,11 +1,12 @@
 # Generator Sertifikat Bapperida
 
-Aplikasi statis HTML/CSS/JavaScript, siap deploy ke Vercel.
+Versi ini menanamkan gambar template langsung di dalam index.html (data URI).
+Tidak membutuhkan folder public atau file template.jpg terpisah.
 
-## Deploy
-1. Buat repository GitHub baru dan upload seluruh isi folder ini (index.html, vercel.json, public/).
-2. Di Vercel pilih **Add New → Project**, impor repository.
-3. Framework Preset: **Other**. Build Command dan Output Directory dikosongkan.
-4. Klik **Deploy**.
+## Deploy ke Vercel
+1. Upload index.html, vercel.json, dan README.md ke root repository GitHub.
+2. Vercel: Framework Preset = Other.
+3. Root Directory = ./ ; Build Command kosong; Output Directory kosong.
+4. Deploy.
 
-Aplikasi berjalan di browser. Tiga logo dapat diunggah, nama dan tulisan dapat diedit, lalu hasil disimpan sebagai PNG.
+Jika repository sebelumnya sudah memiliki public/template.jpg, file tersebut boleh tetap ada tetapi tidak diperlukan.
