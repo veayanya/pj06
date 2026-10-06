@@ -153,6 +153,7 @@
     { sec: 'tombol', els: function () { return [field('#uploadTemplateBtn')]; }, title: 'Template latar (opsional)', text: 'Template bawaan sudah dipakai otomatis. Ganti hanya bila punya desain latar sendiri, berupa gambar landscape 16:9.' },
     { sec: 'logo', els: function () { return [q('#logo1')]; }, title: 'Unggah logo', text: 'Ada 4 slot logo. Klik <b>Choose File</b>, lalu pilih gambar dari perangkat Anda. Pakai <b>PNG berlatar transparan</b> agar tidak muncul kotak putih.' },
     { sec: 'logo', els: function () { var f = field('#logo1'); return [q('.size-control', f), q('.logo-position', f)]; }, title: 'Ukuran dan posisi logo', text: 'Cara cepat: klik logo di pratinjau, lalu geser atau tarik sudutnya. Untuk pengaturan halus, pakai slider <b>Ukuran</b> dan klik panah. <b>Tengah</b> mengembalikan ke posisi bawaan.' },
+    { sec: 'logo', els: function () { return [q('.logo-remove', field('#logo1'))]; }, title: 'Hapus logo', text: 'Tidak butuh logo tertentu? Klik <b>Hapus logo</b> di bawah kolom file. Tombol ini ada di keempat slot, termasuk logo bawaan (Logo 1 dan 2). Logo yang dihapus tidak muncul lagi saat halaman dibuka ulang. Salah hapus? Klik <b>Urungkan</b> atau unggah logonya lagi.' },
     { sec: 'isi', els: function () { return [field('#judul')]; }, title: 'Judul sertifikat', text: 'Berisi \u201cSERTIFIKAT\u201d. Ganti bila ingin judul lain, misalnya \u201cPIAGAM PENGHARGAAN\u201d.' },
     { sec: 'isi', els: function () { return [field('#number')]; }, title: 'Nomor sertifikat', text: 'Cukup ketik nomornya, misalnya <code>400.14.5.4/012/BAPPERIDA</code>. Tulisan \u201cNomor :\u201d di depannya sudah otomatis.' },
     { sec: 'nama', els: function () { return [field('#name')]; }, title: 'Nama penerima', text: 'Hapus \u201cNama Penerima\u201d, lalu ketik nama peserta magang. Garis di bawah nama mengikuti posisinya. Nama terlalu panjang? Kecilkan dengan slider <b>Ukuran</b>.' },
@@ -320,10 +321,13 @@
       '<ol class="tw-steps"><li>Di bawah judul slot logo yang diinginkan, klik tombol <b>pilih file</b> (Choose File).</li><li>Pilih gambar logo dari perangkat Anda.</li><li>Logo langsung muncul di pratinjau.</li></ol>' +
       fig('03-logo-unggah', 1200, 785, 'Contoh: logo ditambahkan ke slot Logo 3') +
       '<h4>Mengatur ukuran dan posisi logo</h4>' +
-      '<ul class="tw-list"><li>Geser slider <b>Ukuran</b> ke kanan untuk memperbesar dan ke kiri untuk memperkecil. Rentangnya 50% sampai 170%.</li>' +
+      '<ul class="tw-list"><li>Geser slider <b>Ukuran</b> ke kanan untuk memperbesar dan ke kiri untuk memperkecil. Rentangnya 30% sampai 300%.</li>' +
       '<li>Klik <b>&#9650; Atas</b>, <b>&#9660; Bawah</b>, <b>&#9664; Kiri</b>, atau <b>Kanan &#9654;</b> untuk menggeser logo. Satu klik menggeser sedikit, jadi klik berulang sampai pas.</li>' +
       '<li>Klik <b>&#9679; Tengah</b> untuk mengembalikan logo ke posisi bawaannya.</li></ul>' +
       fig('04-logo-ukuran-posisi', 1200, 785, 'Slider ukuran (1), tombol arah (2), tombol tengah (3)') +
+      '<h4>Menghapus logo</h4>' +
+      '<ol class="tw-steps"><li>Di slot logo yang ingin dihapus, klik tombol merah <b>Hapus logo</b> di bawah kolom file. Atau klik logonya di pratinjau, lalu klik <b>Hapus</b> di bawah pratinjau.</li><li>Logo langsung hilang dari sertifikat. Tombol ini berlaku untuk keempat slot, termasuk logo bawaan (Logo 1 dan Logo 2).</li><li>Logo yang dihapus tetap hilang saat halaman dibuka lagi.</li></ol>' +
+      '<p>Salah hapus? Klik <b>Urungkan</b>, atau unggah file logonya lagi. <b>Atur Ulang</b> mengembalikan logo bawaan.</p>' +
       '<div class="tw-tip"><b>&#128161;</b><div><b>Tips logo</b><ul>' +
       '<li>Pakai file <b>PNG dengan latar transparan</b> agar tidak muncul kotak putih di atas template.</li>' +
       '<li>Gunakan gambar yang cukup tajam, tetapi tidak perlu berukuran sangat besar.</li>' +

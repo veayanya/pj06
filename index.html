@@ -48,6 +48,8 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 .selbar .selbtns{display:flex;gap:6px}
 .selbar button{padding:6px 11px;font-size:12px}
 .selbar button:disabled{opacity:.45;cursor:default}
+.logo-remove{display:block;margin-top:6px;padding:6px 10px;font-size:12px;background:#fdeeee;color:#a12a2a;border:1px solid #f1caca}.logo-remove:hover:not(:disabled){background:#fadada}.logo-remove:disabled{opacity:.45;cursor:default}
+#selDelete{color:#a12a2a}
 </style>
 <link rel="stylesheet" href="tutorial.css">
 </head>
@@ -59,10 +61,10 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <p class="panel-hint">&#128161; <b>Cara cepat:</b> klik teks atau logo langsung di pratinjau, lalu geser. Tarik kotak kecil di sudutnya untuk memperbesar atau memperkecil.</p>
 <details class="grp" open><summary><span class="num">1</span><span>Template &amp; Logo <small>(bagian atas)</small></span></summary><div class="grp-body">
 <div class="field"><label>Template Sertifikat</label><button type="button" class="secondary" id="uploadTemplateBtn" style="width:100%;margin-bottom:6px">Upload Template Sertifikat</button><input id="templateFile" type="file" accept="image/*" hidden><small id="templateStatus">Template bawaan baru sedang digunakan.</small></div>
-<div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo1Size" type="range" min="30" max="300" value="100" step="1"><output id="logo1SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="1" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="1" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="1" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="1" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="1" data-dir="down">▼ Bawah</button></div></div>
-<div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo2Size" type="range" min="30" max="300" value="100" step="1"><output id="logo2SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="2" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="2" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="2" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="2" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="2" data-dir="down">▼ Bawah</button></div></div>
-<div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo3Size" type="range" min="30" max="300" value="100" step="1"><output id="logo3SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="3" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="3" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="3" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="3" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="3" data-dir="down">▼ Bawah</button></div></div>
-<div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo4Size" type="range" min="30" max="300" value="100" step="1"><output id="logo4SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="4" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="4" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="4" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="4" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="4" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"><button type="button" class="logo-remove" id="logo1Remove" data-logo-remove="1" disabled>&#128465; Hapus logo 1</button><div class="size-control"><span>Ukuran</span><input id="logo1Size" type="range" min="30" max="300" value="100" step="1"><output id="logo1SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="1" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="1" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="1" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="1" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="1" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"><button type="button" class="logo-remove" id="logo2Remove" data-logo-remove="2" disabled>&#128465; Hapus logo 2</button><div class="size-control"><span>Ukuran</span><input id="logo2Size" type="range" min="30" max="300" value="100" step="1"><output id="logo2SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="2" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="2" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="2" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="2" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="2" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"><button type="button" class="logo-remove" id="logo3Remove" data-logo-remove="3" disabled>&#128465; Hapus logo 3</button><div class="size-control"><span>Ukuran</span><input id="logo3Size" type="range" min="30" max="300" value="100" step="1"><output id="logo3SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="3" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="3" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="3" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="3" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="3" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"><button type="button" class="logo-remove" id="logo4Remove" data-logo-remove="4" disabled>&#128465; Hapus logo 4</button><div class="size-control"><span>Ukuran</span><input id="logo4Size" type="range" min="30" max="300" value="100" step="1"><output id="logo4SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="4" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="4" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="4" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="4" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="4" data-dir="down">▼ Bawah</button></div></div>
 </div></details>
 <details class="grp" open><summary><span class="num">2</span><span>Judul &amp; Nomor</span></summary><div class="grp-body">
 <div class="field"><label>Tulisan judul sertifikat</label><input id="judul" type="text" value="SERTIFIKAT"><div class="text-control" data-text="judul"><div class="text-size"><span>Ukuran</span><input id="judulSize" type="range" min="30" max="300" value="100"><output id="judulSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="judul" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="judul" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="judul" data-dir="center">● Tengah</button><button type="button" class="right" data-text="judul" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="judul" data-dir="down">▼ Bawah</button></div></div></div>
@@ -91,7 +93,7 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <section class="preview">
 <div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Klik &amp; geser langsung di sini</span></div>
 <div class="stage"><canvas id="cert" width="1376" height="768"></canvas><canvas id="overlay" width="1376" height="768"></canvas></div>
-<div class="selbar"><span id="selLabel">Klik teks atau logo di sertifikat untuk memilih</span><span class="selbtns"><button type="button" class="secondary" id="selMinus" title="Perkecil" disabled>A&minus;</button><button type="button" class="secondary" id="selPlus" title="Perbesar" disabled>A+</button><button type="button" class="secondary" id="selReset" title="Kembalikan ke posisi awal" disabled>Posisi awal</button></span></div>
+<div class="selbar"><span id="selLabel">Klik teks atau logo di sertifikat untuk memilih</span><span class="selbtns"><button type="button" class="secondary" id="selMinus" title="Perkecil" disabled>A&minus;</button><button type="button" class="secondary" id="selPlus" title="Perbesar" disabled>A+</button><button type="button" class="secondary" id="selDelete" title="Hapus logo ini" hidden>&#128465; Hapus</button><button type="button" class="secondary" id="selReset" title="Kembalikan ke posisi awal" disabled>Posisi awal</button></span></div>
 <p class="note">Geser untuk memindah; tarik kotak kecil di sudut untuk mengubah ukuran. Di komputer, tombol panah menggeser 1 px (Shift = 10 px) dan +/&minus; mengubah ukuran. Tampilan pratinjau mengikuti ukuran gambar template. Periksa kembali ejaan dan data sebelum mengunduh.</p>
 </section>
 </main>
@@ -109,6 +111,8 @@ function setBox(id, x, y, w, h) { hitBoxes[id] = { x, y, w, h }; }
 const template=new Image();
 let customTemplateData = null;
 let logoDataCache = [null, null, null, null];
+// Logo yang sengaja dihapus (termasuk logo bawaan) agar tidak muncul lagi saat halaman dibuka ulang.
+const logoRemoved = [false, false, false, false];
 let renderTimer = null;
 
 // Template sertifikat baru dari gambar yang dilampirkan pengguna.
@@ -121,9 +125,9 @@ const DEFAULT_LOGO_SRC = ['data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAAD
 const DEFAULT_LOGO_SETTERS = [img => logo1Img = img, img => logo2Img = img, img => logo3Img = img, img => logo4Img = img];
 function ensureDefaultLogos() {
   DEFAULT_LOGO_SRC.forEach((src, i) => {
-    if (!src || logoDataCache[i]) return;
+    if (!src || logoDataCache[i] || logoRemoved[i]) return;
     const img = new Image();
-    img.onload = () => { if (logoDataCache[i]) return; DEFAULT_LOGO_SETTERS[i](img); logoDataCache[i] = src; renderCertificate(); };
+    img.onload = () => { if (logoDataCache[i] || logoRemoved[i]) return; DEFAULT_LOGO_SETTERS[i](img); logoDataCache[i] = src; renderCertificate(); };
     img.src = src;
   });
 }
@@ -216,6 +220,7 @@ function renderCertificate() {
   if (tr) hitBoxes.tte = tr;
   drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
   drawOverlay();
+  for (let n = 1; n <= 4; n++) { const rb = document.getElementById('logo' + n + 'Remove'); if (rb) rb.disabled = !hitBoxes['logo' + n]; }
 }
 
 // Menggambar PNG transparan secara proporsional tanpa merusak alpha channel.
@@ -310,6 +315,7 @@ function currentState() {
   return {
     fields: Object.fromEntries(fields.map(id => [id, document.getElementById(id).value])),
     logos: [...logoDataCache],
+    logosRemoved: [...logoRemoved],
     logoSizes: [...logoSizes],
     logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
     textSizes: {...textSizes},
@@ -372,7 +378,9 @@ function applyState(state) {
 
   const logoSetters = [img => logo1Img = img, img => logo2Img = img, img => logo3Img = img, img => logo4Img = img];
   let pending = 0;
-  (Array.isArray(state.logos) ? [0, 1, 2, 3].map(i => state.logos[i] || DEFAULT_LOGO_SRC[i] || null) : []).forEach((src, i) => {
+  const removedState = Array.isArray(state.logosRemoved) ? state.logosRemoved : [];
+  for (let i = 0; i < 4; i++) logoRemoved[i] = !!removedState[i];
+  (Array.isArray(state.logos) ? [0, 1, 2, 3].map(i => state.logos[i] || (logoRemoved[i] ? null : DEFAULT_LOGO_SRC[i]) || null) : []).forEach((src, i) => {
     logoDataCache[i] = src || null;
     if (!src) { logoSetters[i](null); return; }
     pending++;
@@ -679,7 +687,7 @@ function handleLogoUpload(e, callback) {
     const reader = new FileReader();
     reader.onload = function(event) {
       const img = new Image();
-      img.onload = function() { callback(img); const idx = [logo1Img, logo2Img, logo3Img, logo4Img].indexOf(img); if (idx >= 0) logoDataCache[idx] = imageToDataURL(img); undoStack.push(before); redoStack = []; updateHistoryButtons(); scheduleRender(); saveState(false); };
+      img.onload = function() { callback(img); const idx = [logo1Img, logo2Img, logo3Img, logo4Img].indexOf(img); if (idx >= 0) { logoDataCache[idx] = imageToDataURL(img); logoRemoved[idx] = false; } undoStack.push(before); redoStack = []; updateHistoryButtons(); scheduleRender(); saveState(false); };
       img.src = event.target.result;
     };
     reader.readAsDataURL(file);
@@ -871,6 +879,23 @@ document.getElementById('reset').addEventListener('click', () => {
 // Simpan perubahan saat tab ditutup atau halaman berpindah.
 window.addEventListener('beforeunload', () => { if (skipUnloadSave) return; try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {} });
 
+// ===== Hapus logo (untuk keempat slot, termasuk logo bawaan) =====
+function removeLogo(i) {
+  const setters = [img => logo1Img = img, img => logo2Img = img, img => logo3Img = img, img => logo4Img = img];
+  if (!logoDataCache[i] && ![logo1Img, logo2Img, logo3Img, logo4Img][i]) return;
+  const before = currentState();
+  setters[i](null);
+  logoDataCache[i] = null;
+  logoRemoved[i] = true;
+  const input = document.getElementById('logo' + (i + 1));
+  if (input) input.value = '';   // agar file yang sama bisa dipilih lagi
+  undoStack.push(before); if (undoStack.length > 50) undoStack.shift(); redoStack = []; updateHistoryButtons();
+  if (selectedKey === 'logo' + (i + 1)) select(null);
+  renderCertificate(); saveState(false);
+  const st = document.getElementById('saveStatus'); if (st) st.textContent = 'Logo ' + (i + 1) + ' dihapus. Klik Urungkan bila salah.';
+}
+document.querySelectorAll('[data-logo-remove]').forEach(btn => btn.addEventListener('click', () => removeLogo(Number(btn.dataset.logoRemove) - 1)));
+
 // ===== Pratinjau interaktif: klik, geser, dan ubah ukuran langsung di sertifikat =====
 const SEL_LABELS = {
   judul: 'Judul', number: 'Nomor sertifikat', diberikan: 'Tulisan di atas nama', name: 'Nama penerima',
@@ -938,6 +963,7 @@ function drawOverlay() {
 function updateSelBar() {
   document.getElementById('selLabel').textContent = selectedKey ? 'Terpilih: ' + SEL_LABELS[selectedKey] : 'Klik teks atau logo di sertifikat untuk memilih';
   ['selMinus', 'selPlus', 'selReset'].forEach(id => { document.getElementById(id).disabled = !selectedKey; });
+  document.getElementById('selDelete').hidden = !(selectedKey && isLogoKey(selectedKey));
 }
 function syncSidebar(k) {
   document.querySelectorAll('.field.active').forEach(f => f.classList.remove('active'));
@@ -1047,6 +1073,7 @@ function bumpSize(delta) {
   resizeKeepCenter(selectedKey, getSize(selectedKey) + delta);
   commitHistory(before);
 }
+document.getElementById('selDelete').addEventListener('click', () => { if (selectedKey && isLogoKey(selectedKey)) removeLogo(Number(selectedKey.slice(4)) - 1); });
 document.getElementById('selMinus').addEventListener('click', () => bumpSize(-5));
 document.getElementById('selPlus').addEventListener('click', () => bumpSize(5));
 document.getElementById('selReset').addEventListener('click', () => {
