@@ -1,0 +1,101 @@
+{
+ "fields": {
+  "judul": "SERTIFIKAT",
+  "diberikan": "Diberikan kepada",
+  "name": "Nama Penerima",
+  "body": "Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon, dengan menghasilkan karya “[Nama Karya]”.",
+  "period": "Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]",
+  "tanggalTtd": "Sumber, [Tanggal penandatanganan]",
+  "jabatanTtd": "Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon",
+  "number": "400.14.5.4/[nomor]/BAPPERIDA",
+  "penandatangan": "DANGI"
+ },
+ "logos": [
+  null,
+  null,
+  null,
+  null
+ ],
+ "logoSizes": [
+  100,
+  158,
+  100,
+  100
+ ],
+ "logoPositions": [
+  {
+   "x": 22,
+   "y": 42
+  },
+  {
+   "x": 112,
+   "y": 22
+  },
+  {
+   "x": 272,
+   "y": 72
+  },
+  {
+   "x": 372,
+   "y": 72
+  }
+ ],
+ "textSizes": {
+  "judul": 141,
+  "diberikan": 133,
+  "number": 122,
+  "name": 100,
+  "body": 134,
+  "period": 131,
+  "tanggalTtd": 139,
+  "jabatanTtd": 138,
+  "penandatangan": 100
+ },
+ "textPositions": {
+  "judul": {
+   "x": 688,
+   "y": 102
+  },
+  "diberikan": {
+   "x": 688,
+   "y": 231
+  },
+  "number": {
+   "x": 688,
+   "y": 142
+  },
+  "name": {
+   "x": 688,
+   "y": 275
+  },
+  "body": {
+   "x": 688,
+   "y": 330
+  },
+  "period": {
+   "x": 688,
+   "y": 420
+  },
+  "tanggalTtd": {
+   "x": 1225,
+   "y": 558
+  },
+  "jabatanTtd": {
+   "x": 1225,
+   "y": 587
+  },
+  "penandatangan": {
+   "x": 1115,
+   "y": 750
+  }
+ },
+ "templateVersion": "2026-10-05-template-7-batik-sirkuit",
+ "signerLayoutVersion": "2026-10-05-signer-tte-center-2",
+ "template": null,
+ "tte": null,
+ "tteSize": 100,
+ "ttePosition": {
+  "x": 1245,
+  "y": 655
+ }
+}
