@@ -108,7 +108,7 @@
     cap.parentNode.replaceChild(clone, cap);
     qa('.tw-dots i', intro).forEach(function (d, k) { d.classList.toggle('on', k === introIdx); });
 
-    var typed = q('.tw-typed', stage), mn = q('.tw-mn', stage), NAME = 'Siti Nurhaliza';
+    var typed = q('.tw-typed', stage), mn = q('.tw-mn', stage), NAME = 'Shokhifahtul Jannah';
     if (introIdx === 0) {
       stage.classList.remove('logo-in', 'size-up', 'press', 'save');
       typed.textContent = ''; mn.textContent = '';
