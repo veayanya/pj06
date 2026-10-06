@@ -50,20 +50,6 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 .selbar button:disabled{opacity:.45;cursor:default}
 .logo-remove{display:block;margin-top:6px;padding:6px 10px;font-size:12px;background:#fdeeee;color:#a12a2a;border:1px solid #f1caca}.logo-remove:hover:not(:disabled){background:#fadada}.logo-remove:disabled{opacity:.45;cursor:default}
 #selDelete{color:#a12a2a}
-
-.font-select{width:100%;padding:9px 10px;border:1px solid #d7e1db;border-radius:9px;background:#fff;color:#193b2e}
-.font-row{display:grid;grid-template-columns:1fr 48px;gap:8px;align-items:center;margin-top:8px}
-.wheel-label{position:relative;width:44px;height:44px;display:block;border-radius:50%;padding:0;cursor:pointer;overflow:hidden;border:3px solid #fff;box-shadow:0 1px 7px #173c2440;background:conic-gradient(#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);animation:hueWheel 8s linear infinite}
-.wheel-label input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
-.color-wheel{position:absolute;inset:7px;border-radius:50%;background:#075b3e;border:2px solid #fff;pointer-events:none;z-index:0}
-@keyframes hueWheel{to{transform:rotate(360deg)}}
-.font-status{font-size:11px;color:#527064;margin-top:6px}
-.font-link{display:block;margin-top:5px;color:#075b3e;font-size:12px;font-weight:700;text-decoration:none}
-.font-link:hover{text-decoration:underline}
-.custom-text-list{display:grid;gap:6px;margin-top:8px}
-.custom-text-item{display:flex;gap:6px;align-items:center;padding:7px 8px;background:#f6f9f7;border:1px solid #dce7e0;border-radius:9px;font-size:12px}
-.custom-text-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.custom-text-item button{border:0;background:#fff0f0;color:#a12a2a;border-radius:6px;cursor:pointer}
 </style>
 <link rel="stylesheet" href="tutorial.css">
 </head>
@@ -90,33 +76,6 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon, dengan menghasilkan karya “[Nama Karya]”.</textarea><div class="text-control" data-text="body"><div class="text-size"><span>Ukuran</span><input id="bodySize" type="range" min="30" max="300" value="100"><output id="bodySizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="body" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="body" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="body" data-dir="center">● Tengah</button><button type="button" class="right" data-text="body" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="body" data-dir="down">▼ Bawah</button></div></div></div>
 <div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"><div class="text-control" data-text="period"><div class="text-size"><span>Ukuran</span><input id="periodSize" type="range" min="30" max="300" value="100"><output id="periodSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="period" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="period" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="period" data-dir="center">● Tengah</button><button type="button" class="right" data-text="period" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="period" data-dir="down">▼ Bawah</button></div></div></div>
 </div></details>
-
-<details class="grp" open><summary><span class="num">★</span><span>Font, Warna & Teks Tambahan</span></summary><div class="grp-body">
-<div class="field">
-<label>Atur gaya teks yang dipilih</label>
-<select id="styleTarget" class="font-select">
-<option value="judul">Judul</option><option value="number">Nomor sertifikat</option><option value="diberikan">Tulisan di atas nama</option><option value="name">Nama penerima</option><option value="body">Isi / keterangan</option><option value="period">Tanggal pelaksanaan</option><option value="tanggalTtd">Tanggal penandatanganan</option><option value="jabatanTtd">Jabatan penandatangan</option><option value="penandatangan">Nama penandatangan</option>
-</select>
-<div class="font-row">
-<select id="fontFamily" class="font-select">
-<option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Times New Roman">Times New Roman</option><option value="Verdana">Verdana</option><option value="Tahoma">Tahoma</option><option value="Trebuchet MS">Trebuchet MS</option><option value="Courier New">Courier New</option><option value="Impact">Impact</option><option value="Comic Sans MS">Comic Sans MS</option>
-</select>
-<label class="wheel-label" title="Pilih warna font"><span id="fontColorWheel" class="color-wheel"></span><input id="fontColor" type="color" value="#075b3e" aria-label="Warna font"></label>
-</div>
-<button type="button" class="secondary" id="uploadFontBtn" style="width:100%;margin-top:7px">＋ Pasang Font (.ttf, .otf, .woff, .woff2)</button>
-<input id="fontFile" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden>
-<div id="fontStatus" class="font-status">Font tambahan bisa dipasang dari file yang sudah kamu download.</div>
-<a class="font-link" href="https://www.dafont.com/" target="_blank" rel="noopener">↗ Cari & download font di DaFont</a>
-</div>
-<div class="field">
-<label>Teks tambahan</label>
-<textarea id="customTextInput" rows="2" placeholder="Contoh: TERIMA KASIH"></textarea>
-<button type="button" class="primary" id="addCustomText" style="width:100%;margin-top:7px">＋ Tambahkan Teks ke Sertifikat</button>
-<small>Setelah ditambahkan, teks bisa diklik/geser di preview, diperbesar, diperkecil, diberi font dan warna sendiri.</small>
-</div>
-<div id="customTextList" class="custom-text-list"></div>
-</div></details>
-
 <details class="grp" open><summary><span class="num">4</span><span>Penandatangan <small>(bagian bawah)</small></span></summary><div class="grp-body">
 <div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="Sumber, [Tanggal penandatanganan]"><div class="text-control" data-text="tanggalTtd"><div class="text-size"><span>Ukuran</span><input id="tanggalTtdSize" type="range" min="30" max="300" value="100"><output id="tanggalTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="tanggalTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="tanggalTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="tanggalTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="tanggalTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="tanggalTtd" data-dir="down">▼ Bawah</button></div></div></div>
 <div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea><div class="text-control" data-text="jabatanTtd"><div class="text-size"><span>Ukuran</span><input id="jabatanTtdSize" type="range" min="30" max="300" value="100"><output id="jabatanTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="jabatanTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="jabatanTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="jabatanTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="jabatanTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="jabatanTtd" data-dir="down">▼ Bawah</button></div></div></div>
@@ -184,7 +143,7 @@ let tteData = null;
 const tteSize = { value: 100 };
 const ttePosition = {x: 1245, y: 655};
 const tteDefaultPosition = {x: 1245, y: 655};
-const textBaseSizes = {custom:24,judul:40,diberikan:16,number:18,name:34,body:15,period:15,tanggalTtd:13,jabatanTtd:12,penandatangan:17};
+const textBaseSizes = {judul:40,diberikan:16,number:18,name:34,body:15,period:15,tanggalTtd:13,jabatanTtd:12,penandatangan:17};
 const textSizes = {judul:141,diberikan:133,number:122,name:100,body:134,period:131,tanggalTtd:139,jabatanTtd:138,penandatangan:100};
 const textPositions = {
   judul:{x:688,y:102}, diberikan:{x:688,y:231}, number:{x:688,y:142}, name:{x:688,y:275}, body:{x:688,y:330}, period:{x:688,y:420},
@@ -197,18 +156,6 @@ const TEMPLATE_VERSION = '2026-10-05-template-7-batik-sirkuit';
 const LAYOUT_VERSION = '2026-10-05-layout-center-frame';
 const LAYOUT_KEY = STORAGE_KEY + '_layout';
 const fields = ['judul','diberikan','name','body','period','tanggalTtd','jabatanTtd','number','penandatangan'];
-const fontStyles = {
-  judul:{family:'Arial',color:'#075b3e'}, number:{family:'Arial',color:'#075b3e'},
-  diberikan:{family:'Arial',color:'#075b3e'}, name:{family:'Arial',color:'#075b3e'},
-  body:{family:'Arial',color:'#075b3e'}, period:{family:'Arial',color:'#ed791d'},
-  tanggalTtd:{family:'Arial',color:'#075b3e'}, jabatanTtd:{family:'Arial',color:'#075b3e'},
-  penandatangan:{family:'Arial',color:'#075b3e'}
-};
-let customTexts = [];
-let customTextSeq = 0;
-const customFontFamilies = new Set();
-const fontStyleOf = (id, fallback) => fontStyles[id] || {family:'Arial',color:fallback};
-
 let undoStack = [], redoStack = [];
 let applyingHistory = false, saveTimer = null;
 
@@ -222,21 +169,21 @@ function renderCertificate() {
   const textSize = id => textBaseSizes[id] * (textSizes[id] / 100);
   const pos = id => textPositions[id];
   const drawCenter = (id, text, color, bold=false) => {
-    const p = pos(id), sz = textSize(id), st=fontStyleOf(id,color); ctx.textAlign='center'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${sz}px "${st.family}"`;
+    const p = pos(id), sz = textSize(id); ctx.textAlign='center'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${sz}px Arial`;
     ctx.fillText(text, p.x, p.y);
     const w = Math.max(ctx.measureText(text).width, 30); setBox(id, p.x - w/2, p.y - sz*0.85, w, sz*1.1);
   };
   const drawRight = (id, text, color, bold=false) => {
-    const p = pos(id), sz = textSize(id), st=fontStyleOf(id,color); ctx.textAlign='right'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${sz}px "${st.family}"`;
+    const p = pos(id), sz = textSize(id); ctx.textAlign='right'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${sz}px Arial`;
     ctx.fillText(text, p.x, p.y);
     const w = Math.max(ctx.measureText(text).width, 30); setBox(id, p.x - w, p.y - sz*0.85, w, sz*1.1);
   };
   const drawWrappedCenter = (id, text, color, bold=false) => {
-    const p=pos(id), size=textSize(id), st=fontStyleOf(id,color); ctx.textAlign='center'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${size}px "${st.family}"`;
+    const p=pos(id), size=textSize(id); ctx.textAlign='center'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${size}px Arial`;
     wrapText(ctx,text,p.x,p.y,570,size*1.4);
   };
   const drawWrappedRight = (id, text, color, bold=false) => {
-    const p=pos(id), size=textSize(id), st=fontStyleOf(id,color); ctx.textAlign='right'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${size}px "${st.family}"`;
+    const p=pos(id), size=textSize(id); ctx.textAlign='right'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${size}px Arial`;
     const r = wrapTextRight(ctx,text,p.x,p.y,330,size*1.25);
     const bw = Math.max(r.maxW, 30); setBox(id, p.x - bw, p.y - size*0.85, bw, (r.lines-1)*size*1.25 + size*1.1);
   };
@@ -262,8 +209,8 @@ function renderCertificate() {
   if (hitBoxes.name) { hitBoxes.name.x = namePos.x - nameWidth/2; hitBoxes.name.w = nameWidth; hitBoxes.name.h += 14; }
   ctx.beginPath(); ctx.moveTo(namePos.x-nameWidth/2,namePos.y+17); ctx.lineTo(namePos.x+nameWidth/2,namePos.y+17); ctx.strokeStyle='#075b3e'; ctx.lineWidth=2.5; ctx.stroke();
   let periodShift = 0;
-  { const p=pos('body'), size=textSize('body'); const n=drawRichWrappedCenter(ctx,document.getElementById('body').value.trim(),p.x,p.y,650,size*1.4,size,fontStyleOf('body','#075b3e').color,'body'); periodShift = Math.max(0, n - 3) * size * 1.4; const rr = drawRichWrappedCenter.last, bw = Math.max(rr.w, 30); setBox('body', p.x - bw/2, p.y - size*0.85, bw, (n-1)*size*1.4 + size*1.1); }
-  { const p=pos('period'); ctx.textAlign='center'; { const st=fontStyleOf('period','#ed791d'); ctx.fillStyle=st.color; ctx.font=`bold ${textSize('period')}px "${st.family}"`; } const pt = document.getElementById('period').value; ctx.fillText(pt, p.x, p.y + periodShift); const psz = textSize('period'), pw = Math.max(ctx.measureText(pt).width, 30); setBox('period', p.x - pw/2, p.y + periodShift - psz*0.85, pw, psz*1.1); }
+  { const p=pos('body'), size=textSize('body'); const n=drawRichWrappedCenter(ctx,document.getElementById('body').value.trim(),p.x,p.y,650,size*1.4,size,'#075b3e'); periodShift = Math.max(0, n - 3) * size * 1.4; const rr = drawRichWrappedCenter.last, bw = Math.max(rr.w, 30); setBox('body', p.x - bw/2, p.y - size*0.85, bw, (n-1)*size*1.4 + size*1.1); }
+  { const p=pos('period'); ctx.textAlign='center'; ctx.fillStyle='#ed791d'; ctx.font=`bold ${textSize('period')}px Arial`; const pt = document.getElementById('period').value; ctx.fillText(pt, p.x, p.y + periodShift); const psz = textSize('period'), pw = Math.max(ctx.measureText(pt).width, 30); setBox('period', p.x - pw/2, p.y + periodShift - psz*0.85, pw, psz*1.1); }
   drawRight('tanggalTtd',document.getElementById('tanggalTtd').value.trim(),'#075b3e',false);
   drawWrappedRight('jabatanTtd',document.getElementById('jabatanTtd').value.trim(),'#075b3e',true);
   // Sediakan ruang TTE di tengah area tanda tangan, di antara jabatan dan nama penandatangan.
@@ -272,16 +219,6 @@ function renderCertificate() {
   const tr = drawTransparentLogo(ctx, tteImg, signerCenterX + (ttePosition.x - tteDefaultPosition.x) - tteW/2, ttePosition.y - tteH/2, tteW, tteH);
   if (tr) hitBoxes.tte = tr;
   drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
-  // Teks tambahan bebas.
-  customTexts.forEach(t => {
-    const sz=textBaseSizes.custom * (t.size/100), st={family:t.fontFamily||'Arial',color:t.color||'#075b3e'};
-    ctx.save(); ctx.textAlign='center'; ctx.textBaseline='alphabetic'; ctx.fillStyle=st.color;
-    ctx.font=`${t.bold?'bold ':''}${sz}px "${st.family}"`;
-    const lines=String(t.text||'').split(/\n/), lh=sz*1.25, widths=lines.map(line=>ctx.measureText(line).width), w=Math.max(30,...widths);
-    lines.forEach((line,i)=>ctx.fillText(line,t.x,t.y+i*lh));
-    ctx.restore();
-    setBox(t.id,t.x-w/2,t.y-sz*.9,w,Math.max(sz*1.1,lines.length*lh));
-  });
   drawOverlay();
   for (let n = 1; n <= 4; n++) { const rb = document.getElementById('logo' + n + 'Remove'); if (rb) rb.disabled = !hitBoxes['logo' + n]; }
 }
@@ -299,8 +236,8 @@ function drawTransparentLogo(context, img, x, y, maxW, maxH) {
 
 // Teks rata tengah dengan pembungkusan baris; bagian dari tanda petik buka sampai tutup dicetak tebal.
 // Mendukung “...” dan "...".
-function drawRichWrappedCenter(context, text, cx, y, maxWidth, lineHeight, size, color, styleId='body') {
-  const fontOf = b => (b ? 'bold ' : '') + size + 'px "' + fontStyleOf(styleId, color).family + '"';
+function drawRichWrappedCenter(context, text, cx, y, maxWidth, lineHeight, size, color) {
+  const fontOf = b => (b ? 'bold ' : '') + size + 'px Arial';
   const widthOf = (str, b) => { context.font = fontOf(b); return context.measureText(str).width; };
   let bold = false;
   const words = [];
@@ -323,7 +260,7 @@ function drawRichWrappedCenter(context, text, cx, y, maxWidth, lineHeight, size,
     else { line.push(word); lineW += add; }
   });
   if (line.length) lines.push({ words: line, w: lineW });
-  context.textAlign = 'left'; context.fillStyle = fontStyleOf(styleId,color).color;
+  context.textAlign = 'left'; context.fillStyle = color;
   lines.forEach((ln, li) => {
     let x = cx - ln.w / 2; const yy = y + li * lineHeight;
     ln.words.forEach((word, wi) => {
@@ -383,9 +320,6 @@ function currentState() {
     logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
     textSizes: {...textSizes},
     textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}])),
-    fontStyles: JSON.parse(JSON.stringify(fontStyles)),
-    customTexts: customTexts.map(t => ({...t})),
-    customTextSeq,
     templateVersion: TEMPLATE_VERSION,
     signerLayoutVersion: SIGNER_LAYOUT_VERSION,
     template: customTemplateData,
@@ -415,10 +349,6 @@ function applyState(state) {
   }
   if (state.textSizes) Object.keys(textSizes).forEach(id => { if (state.textSizes[id] !== undefined) textSizes[id] = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(state.textSizes[id]) || 100)); });
   if (state.textPositions) Object.keys(textPositions).forEach(id => { const p=state.textPositions[id]; if(p){ textPositions[id].x=Number(p.x)||0; textPositions[id].y=Number(p.y)||0; } });
-  if (state.fontStyles) Object.keys(fontStyles).forEach(id => { if(state.fontStyles[id]) { fontStyles[id].family=state.fontStyles[id].family||'Arial'; fontStyles[id].color=state.fontStyles[id].color||fontStyles[id].color; } });
-  if (Array.isArray(state.customTexts)) customTexts = state.customTexts.map(t => ({id:t.id||('custom_'+(++customTextSeq)),text:t.text||'',x:Number(t.x)||688,y:Number(t.y)||500,size:Number(t.size)||100,fontFamily:t.fontFamily||'Arial',color:t.color||'#075b3e',bold:!!t.bold}));
-  customTextSeq = Math.max(Number(state.customTextSeq)||0, customTexts.reduce((m,t)=>Math.max(m,Number(String(t.id).replace('custom_',''))||0),0));
-  renderCustomTextList();
   if (state.textPositions && state.textPositions.name && !state.textPositions.diberikan) { textPositions.diberikan.x = textPositions.name.x; textPositions.diberikan.y = textPositions.name.y - 34; }
   if (state.tteSize !== undefined) tteSize.value = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(state.tteSize) || 100));
   if (state.ttePosition) { ttePosition.x = Number(state.ttePosition.x) || tteDefaultPosition.x; ttePosition.y = Number(state.ttePosition.y) || tteDefaultPosition.y; }
@@ -482,9 +412,6 @@ function saveFieldsOnly() {
       logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
       textSizes: {...textSizes},
       textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}])),
-      fontStyles: JSON.parse(JSON.stringify(fontStyles)),
-      customTexts: customTexts.map(t => ({...t})),
-      customTextSeq,
       tteSize: tteSize.value,
       ttePosition: {x: ttePosition.x, y: ttePosition.y}
     };
@@ -923,73 +850,6 @@ document.querySelectorAll('.text-position button').forEach(button=>{
   });
 });
 
-
-// ===== Font, warna, dan teks tambahan =====
-function renderCustomTextList(){
-  refreshCustomLabels();
-  const list=document.getElementById('customTextList'), target=document.getElementById('styleTarget');
-  if(!list||!target)return;
-  list.innerHTML='';
-  [...target.options].filter(o=>o.dataset.custom).forEach(o=>o.remove());
-  customTexts.forEach(t=>{
-    const opt=document.createElement('option'); opt.value=t.id; opt.textContent='Teks tambahan: '+t.text.slice(0,32); opt.dataset.custom='1'; target.appendChild(opt);
-    const row=document.createElement('div'); row.className='custom-text-item';
-    row.innerHTML=`<span title="${escapeHtml(t.text)}">${escapeHtml(t.text)}</span><button type="button" data-custom-select="${t.id}">Pilih</button><button type="button" data-custom-delete="${t.id}" title="Hapus">×</button>`;
-    list.appendChild(row);
-  });
-}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function syncFontControls(){
-  const target=document.getElementById('styleTarget').value, st=fontStyles[target] || customByKey(target) || {family:'Arial',color:'#075b3e'};
-  document.getElementById('fontFamily').value=st.fontFamily||st.family||'Arial';
-  document.getElementById('fontColor').value=st.color||'#075b3e';
-  document.getElementById('fontColorWheel').style.background=st.color||'#075b3e';
-}
-function applyFontStyle(){
-  const target=document.getElementById('styleTarget').value, family=document.getElementById('fontFamily').value, color=document.getElementById('fontColor').value;
-  if(isCustomKey(target)){ const t=customByKey(target); if(t){t.fontFamily=family;t.color=color;} }
-  else if(fontStyles[target]){fontStyles[target].family=family;fontStyles[target].color=color;}
-  renderCertificate(); drawOverlay(); saveState(false);
-}
-function deleteCustomText(id){
-  const before=currentState();
-  customTexts=customTexts.filter(t=>t.id!==id);
-  if(selectedKey===id) select(null);
-  renderCustomTextList(); renderCertificate(); commitHistory(before); saveState(false);
-}
-document.getElementById('styleTarget').addEventListener('change',()=>{ select(document.getElementById('styleTarget').value); syncFontControls(); });
-document.getElementById('fontFamily').addEventListener('change',applyFontStyle);
-document.getElementById('fontColor').addEventListener('input',applyFontStyle);
-document.getElementById('fontColorWheel').style.background=document.getElementById('fontColor').value;
-document.getElementById('uploadFontBtn').addEventListener('click',()=>document.getElementById('fontFile').click());
-document.getElementById('fontFile').addEventListener('change',async e=>{
-  const file=e.target.files[0]; if(!file)return;
-  const status=document.getElementById('fontStatus');
-  try{
-    const rawName=file.name.replace(/\.[^.]+$/,'').replace(/[^a-zA-Z0-9_-]+/g,'_') || 'Font_Custom';
-    let family='Custom_'+rawName, i=2;
-    while(customFontFamilies.has(family)){family='Custom_'+rawName+'_'+i++;}
-    const face=new FontFace(family, await file.arrayBuffer());
-    await face.load(); document.fonts.add(face); customFontFamilies.add(family);
-    const opt=document.createElement('option'); opt.value=family; opt.textContent=family+' ✓'; document.getElementById('fontFamily').appendChild(opt);
-    document.getElementById('fontFamily').value=family; applyFontStyle();
-    status.textContent='Font aktif: '+file.name+' — pilih target teks lalu gunakan font ini.';
-  }catch(err){status.textContent='Font gagal dipasang. Gunakan TTF, OTF, WOFF, atau WOFF2 yang valid.';}
-  e.target.value='';
-});
-document.getElementById('addCustomText').addEventListener('click',()=>{
-  const input=document.getElementById('customTextInput'), text=input.value.trim(); if(!text)return;
-  const before=currentState(); const id='custom_'+(++customTextSeq);
-  customTexts.push({id,text,x:688,y:500,size:100,fontFamily:'Arial',color:'#075b3e',bold:false});
-  input.value=''; renderCustomTextList(); document.getElementById('styleTarget').value=id; syncFontControls(); select(id);
-  renderCertificate(); commitHistory(before); saveState(false);
-});
-document.getElementById('customTextList').addEventListener('click',e=>{
-  const sel=e.target.closest('[data-custom-select]'), del=e.target.closest('[data-custom-delete]');
-  if(sel){const id=sel.dataset.customSelect;document.getElementById('styleTarget').value=id;syncFontControls();select(id);}
-  if(del)deleteCustomText(del.dataset.customDelete);
-});
-
 document.getElementById('saveLast').addEventListener('click', () => saveState(true));
 document.getElementById('undo').addEventListener('click', () => {
   if (!undoStack.length) return;
@@ -1044,19 +904,16 @@ const SEL_LABELS = {
   logo1: 'Logo 1', logo2: 'Logo 2', logo3: 'Logo 3', logo4: 'Logo 4'
 };
 let selectedKey = null, hoverKey = null, drag = null, keyBurst = null;
-function refreshCustomLabels(){ customTexts.forEach(t=>SEL_LABELS[t.id]=`Teks tambahan: ${t.text.slice(0,28)}`); }
 const fieldToKey = new Map();
 Object.keys(SEL_LABELS).forEach(k => { const el = document.getElementById(k); const f = el && el.closest('.field'); if (f) fieldToKey.set(f, k); });
 
 const isLogoKey = k => /^logo[1-4]$/.test(k);
-const isCustomKey = k => /^custom_\d+$/.test(k);
-const customByKey = k => customTexts.find(t=>t.id===k);
-const getPos = k => k === 'tte' ? ttePosition : isLogoKey(k) ? logoPositions[Number(k.slice(4)) - 1] : isCustomKey(k) ? customByKey(k) : textPositions[k];
-const getSize = k => k === 'tte' ? tteSize.value : isLogoKey(k) ? logoSizes[Number(k.slice(4)) - 1] : isCustomKey(k) ? customByKey(k).size : textSizes[k];
-const defaultPos = k => k === 'tte' ? tteDefaultPosition : isLogoKey(k) ? logoDefaultPositions[Number(k.slice(4)) - 1] : isCustomKey(k) ? {x:customByKey(k).x,y:customByKey(k).y} : textDefaults[k];
+const getPos = k => k === 'tte' ? ttePosition : isLogoKey(k) ? logoPositions[Number(k.slice(4)) - 1] : textPositions[k];
+const getSize = k => k === 'tte' ? tteSize.value : isLogoKey(k) ? logoSizes[Number(k.slice(4)) - 1] : textSizes[k];
+const defaultPos = k => k === 'tte' ? tteDefaultPosition : isLogoKey(k) ? logoDefaultPositions[Number(k.slice(4)) - 1] : textDefaults[k];
 function setSize(k, v) {
   v = Math.round(Math.max(SIZE_MIN, Math.min(SIZE_MAX, v)));
-  if (k === 'tte') tteSize.value = v; else if (isLogoKey(k)) logoSizes[Number(k.slice(4)) - 1] = v; else if (isCustomKey(k)) customByKey(k).size=v; else textSizes[k] = v;
+  if (k === 'tte') tteSize.value = v; else if (isLogoKey(k)) logoSizes[Number(k.slice(4)) - 1] = v; else textSizes[k] = v;
 }
 function refreshControls() { updateTextControls(); updateLogoSizeControls(); updateTteControls(); }
 const cssUnit = () => overlay.width / (overlay.getBoundingClientRect().width || overlay.width); // piksel kanvas per piksel layar
@@ -1106,7 +963,7 @@ function drawOverlay() {
 function updateSelBar() {
   document.getElementById('selLabel').textContent = selectedKey ? 'Terpilih: ' + SEL_LABELS[selectedKey] : 'Klik teks atau logo di sertifikat untuk memilih';
   ['selMinus', 'selPlus', 'selReset'].forEach(id => { document.getElementById(id).disabled = !selectedKey; });
-  document.getElementById('selDelete').hidden = !(selectedKey && (isLogoKey(selectedKey)||isCustomKey(selectedKey)));
+  document.getElementById('selDelete').hidden = !(selectedKey && isLogoKey(selectedKey));
 }
 function syncSidebar(k) {
   document.querySelectorAll('.field.active').forEach(f => f.classList.remove('active'));
@@ -1119,12 +976,7 @@ function syncSidebar(k) {
   if (window.innerWidth > 850) f.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 function select(k) {
-  selectedKey = k; updateSelBar(); syncSidebar(k);
-  if(k && document.getElementById('styleTarget')) { 
-    const opt=[...document.getElementById('styleTarget').options].find(o=>o.value===k);
-    if(opt){ document.getElementById('styleTarget').value=k; syncFontControls(); }
-  }
-  drawOverlay();
+  selectedKey = k; updateSelBar(); syncSidebar(k); drawOverlay();
 }
 function commitHistory(before) {
   undoStack.push(before); if (undoStack.length > 50) undoStack.shift();
@@ -1221,10 +1073,7 @@ function bumpSize(delta) {
   resizeKeepCenter(selectedKey, getSize(selectedKey) + delta);
   commitHistory(before);
 }
-document.getElementById('selDelete').addEventListener('click', () => {
-  if (selectedKey && isLogoKey(selectedKey)) removeLogo(Number(selectedKey.slice(4)) - 1);
-  else if (selectedKey && isCustomKey(selectedKey)) deleteCustomText(selectedKey);
-});
+document.getElementById('selDelete').addEventListener('click', () => { if (selectedKey && isLogoKey(selectedKey)) removeLogo(Number(selectedKey.slice(4)) - 1); });
 document.getElementById('selMinus').addEventListener('click', () => bumpSize(-5));
 document.getElementById('selPlus').addEventListener('click', () => bumpSize(5));
 document.getElementById('selReset').addEventListener('click', () => {
@@ -1263,7 +1112,6 @@ document.querySelector('.panel').addEventListener('focusin', e => {
   if (k && k !== selectedKey) { selectedKey = k; updateSelBar(); syncSidebar(k); drawOverlay(); }
 });
 
-renderCustomTextList(); syncFontControls();
 if (window.ResizeObserver) new ResizeObserver(() => drawOverlay()).observe(overlay);
 else window.addEventListener('resize', drawOverlay);
 </script>
