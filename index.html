@@ -30,9 +30,11 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 .site-footer{max-width:1200px;margin:0 auto 24px;padding:14px 20px;border:1px solid #dce7df;border-radius:14px;background:#ffffff;box-shadow:0 4px 18px #173c2410;color:#315446;font-size:13px;display:flex;justify-content:center;align-items:center;gap:28px;flex-wrap:wrap}
 .site-footer a{color:#075b3e;text-decoration:none;font-weight:700}.site-footer a:hover{text-decoration:underline}
 @media(max-width:850px){body{overflow:auto}main{grid-template-columns:1fr;height:auto;overflow:visible}.panel{order:2;height:auto;overflow:visible}.preview{order:1;position:static;height:auto}}
-</style></head>
+</style>
+<link rel="stylesheet" href="tutorial.css">
+</head>
 <body>
-<header><h1>Generator Sertifikat Bapperida</h1><p>Unggah empat logo, ubah nama dan isi sertifikat, lalu unduh hasilnya. Hubungi Pengembang web di Email: shokhifahtulj@gmail.com  dan No.WhatsApp di Nomor: 081393626981  </p></header>
+<header><h1>Generator Sertifikat Bapperida</h1><p>Unggah empat logo, ubah nama dan isi sertifikat, lalu unduh hasilnya. Hubungi Pengembang web di Email: shokhifahtulj@gmail.com  dan No.WhatsApp di Nomor: 081393626981  </p><button type="button" class="tw-header-btn" id="openTutorial" aria-haspopup="dialog">&#128214; Tutorial &amp; Panduan</button></header>
 <main>
 <section class="panel">
 <h2>Pengaturan Sertifikat</h2>
@@ -822,5 +824,6 @@ document.getElementById('reset').addEventListener('click', () => {
 // Simpan perubahan saat tab ditutup atau halaman berpindah.
 window.addEventListener('beforeunload', () => { if (skipUnloadSave) return; try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {} });
 </script>
+<script src="tutorial.js" defer></script>
 </body>
 </html>
