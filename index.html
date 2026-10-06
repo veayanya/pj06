@@ -30,6 +30,24 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 .site-footer{max-width:1200px;margin:0 auto 24px;padding:14px 20px;border:1px solid #dce7df;border-radius:14px;background:#ffffff;box-shadow:0 4px 18px #173c2410;color:#315446;font-size:13px;display:flex;justify-content:center;align-items:center;gap:28px;flex-wrap:wrap}
 .site-footer a{color:#075b3e;text-decoration:none;font-weight:700}.site-footer a:hover{text-decoration:underline}
 @media(max-width:850px){body{overflow:auto}main{grid-template-columns:1fr;height:auto;overflow:visible}.panel{order:2;height:auto;overflow:visible}.preview{order:1;position:static;height:auto}}
+
+.panel-hint{background:#fff7ec;border:1px solid #f6d9b4;color:#7a4a12;border-radius:10px;padding:9px 11px;font-size:12px;margin:0 0 14px}
+.grp{border:1px solid #e0e8e2;border-radius:12px;margin:0 0 12px;background:#fcfdfc}
+.grp>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;padding:11px 12px;font-weight:700;font-size:14px;color:#0b4a33;user-select:none}
+.grp>summary::-webkit-details-marker{display:none}
+.grp>summary small{font-weight:500;color:#728178;font-size:11px}
+.grp>summary::after{content:'\25BE';margin-left:auto;color:#728178;transition:transform .15s}
+.grp:not([open])>summary::after{transform:rotate(-90deg)}
+.grp>summary .num{flex:none;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;display:inline-grid;place-items:center;font-size:12px}
+.grp[open]>summary{border-bottom:1px solid #e6eee9}
+.grp-body{padding:14px 12px 2px}
+.field.active{outline:2px solid var(--orange);outline-offset:5px;border-radius:6px}
+.stage{position:relative;line-height:0}
+#overlay{position:absolute;left:0;top:0;width:100%;height:100%;background:transparent;touch-action:none;user-select:none;-webkit-user-select:none}
+.selbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:8px 10px;background:#f4f8f5;border:1px solid #e0e9e3;border-radius:10px;font-size:13px;color:#315446}
+.selbar .selbtns{display:flex;gap:6px}
+.selbar button{padding:6px 11px;font-size:12px}
+.selbar button:disabled{opacity:.45;cursor:default}
 </style>
 <link rel="stylesheet" href="tutorial.css">
 </head>
@@ -38,18 +56,30 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <main>
 <section class="panel">
 <h2>Pengaturan Sertifikat</h2>
-<div class="field"><label>Template Sertifikat</label><button type="button" class="secondary" id="uploadTemplateBtn" style="width:100%;margin-bottom:6px">Upload Template Sertifikat</button><input id="templateFile" type="file" accept="image/*" hidden><small id="templateStatus">Template bawaan baru sedang digunakan.</small></div><div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo1Size" type="range" min="50" max="170" value="100" step="1"><output id="logo1SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="1" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="1" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="1" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="1" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="1" data-dir="down">▼ Bawah</button></div></div>
-<div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo2Size" type="range" min="50" max="170" value="100" step="1"><output id="logo2SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="2" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="2" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="2" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="2" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="2" data-dir="down">▼ Bawah</button></div></div>
-<div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo3Size" type="range" min="50" max="170" value="100" step="1"><output id="logo3SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="3" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="3" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="3" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="3" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="3" data-dir="down">▼ Bawah</button></div></div>
-<div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo4Size" type="range" min="50" max="170" value="100" step="1"><output id="logo4SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="4" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="4" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="4" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="4" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="4" data-dir="down">▼ Bawah</button></div></div>
-<div class="field"><label>Tulisan judul sertifikat</label><input id="judul" type="text" value="SERTIFIKAT"><div class="text-control" data-text="judul"><div class="text-size"><span>Ukuran</span><input id="judulSize" type="range" min="50" max="200" value="100"><output id="judulSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="judul" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="judul" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="judul" data-dir="center">● Tengah</button><button type="button" class="right" data-text="judul" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="judul" data-dir="down">▼ Bawah</button></div></div></div><div class="field"><label>Tulisan di atas nama penerima</label><input id="diberikan" type="text" value="Diberikan kepada"><div class="text-control" data-text="diberikan"><div class="text-size"><span>Ukuran</span><input id="diberikanSize" type="range" min="50" max="200" value="100"><output id="diberikanSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="diberikan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="diberikan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="diberikan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="diberikan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="diberikan" data-dir="down">▼ Bawah</button></div></div></div><div class="field"><label>Nama penerima</label><input id="name" type="text" value="Nama Penerima"><div class="text-control" data-text="name"><div class="text-size"><span>Ukuran</span><input id="nameSize" type="range" min="50" max="200" value="100"><output id="nameSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="name" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="name" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="name" data-dir="center">● Tengah</button><button type="button" class="right" data-text="name" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="name" data-dir="down">▼ Bawah</button></div></div></div>
-<div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon, dengan menghasilkan karya “[Nama Karya]”.</textarea><div class="text-control" data-text="body"><div class="text-size"><span>Ukuran</span><input id="bodySize" type="range" min="50" max="200" value="100"><output id="bodySizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="body" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="body" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="body" data-dir="center">● Tengah</button><button type="button" class="right" data-text="body" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="body" data-dir="down">▼ Bawah</button></div></div></div>
-<div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"><div class="text-control" data-text="period"><div class="text-size"><span>Ukuran</span><input id="periodSize" type="range" min="50" max="200" value="100"><output id="periodSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="period" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="period" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="period" data-dir="center">● Tengah</button><button type="button" class="right" data-text="period" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="period" data-dir="down">▼ Bawah</button></div></div></div>
-
-<div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="Sumber, [Tanggal penandatanganan]"><div class="text-control" data-text="tanggalTtd"><div class="text-size"><span>Ukuran</span><input id="tanggalTtdSize" type="range" min="50" max="200" value="100"><output id="tanggalTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="tanggalTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="tanggalTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="tanggalTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="tanggalTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="tanggalTtd" data-dir="down">▼ Bawah</button></div></div></div>
-<div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea><div class="text-control" data-text="jabatanTtd"><div class="text-size"><span>Ukuran</span><input id="jabatanTtdSize" type="range" min="50" max="200" value="100"><output id="jabatanTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="jabatanTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="jabatanTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="jabatanTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="jabatanTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="jabatanTtd" data-dir="down">▼ Bawah</button></div></div></div>
-<div class="field"><label>Nomor sertifikat</label><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"><div class="text-control" data-text="number"><div class="text-size"><span>Ukuran</span><input id="numberSize" type="range" min="50" max="200" value="100"><output id="numberSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="number" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="number" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="number" data-dir="center">● Tengah</button><button type="button" class="right" data-text="number" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="number" data-dir="down">▼ Bawah</button></div></div></div><div class="field"><label>Nama Penandatangan</label><input id="penandatangan" type="text" value="DANGI"><div class="text-control" data-text="penandatangan"><div class="text-size"><span>Ukuran</span><input id="penandatanganSize" type="range" min="50" max="200" value="100"><output id="penandatanganSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="penandatangan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="penandatangan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="penandatangan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="penandatangan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="penandatangan" data-dir="down">▼ Bawah</button></div></div></div>
-<div class="field"><label>Upload TTE / Tanda Tangan Elektronik</label><input id="tte" type="file" accept="image/png,image/jpeg,image/webp"><small>TTE akan ditempatkan di atas nama penandatangan dan dapat diatur posisinya.</small><div class="size-control"><span>Ukuran</span><input id="tteSize" type="range" min="50" max="170" value="100" step="1"><output id="tteSizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-tte-dir="up">▲ Atas</button><button type="button" class="left" data-tte-dir="left">◀ Kiri</button><button type="button" class="center" data-tte-dir="center">● Tengah</button><button type="button" class="right" data-tte-dir="right">Kanan ▶</button><button type="button" class="down" data-tte-dir="down">▼ Bawah</button></div></div>
+<p class="panel-hint">&#128161; <b>Cara cepat:</b> klik teks atau logo langsung di pratinjau, lalu geser. Tarik kotak kecil di sudutnya untuk memperbesar atau memperkecil.</p>
+<details class="grp" open><summary><span class="num">1</span><span>Template &amp; Logo <small>(bagian atas)</small></span></summary><div class="grp-body">
+<div class="field"><label>Template Sertifikat</label><button type="button" class="secondary" id="uploadTemplateBtn" style="width:100%;margin-bottom:6px">Upload Template Sertifikat</button><input id="templateFile" type="file" accept="image/*" hidden><small id="templateStatus">Template bawaan baru sedang digunakan.</small></div>
+<div class="field"><label>Logo 1 (atas)</label><input id="logo1" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo1Size" type="range" min="30" max="300" value="100" step="1"><output id="logo1SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="1" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="1" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="1" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="1" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="1" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 2 (atas)</label><input id="logo2" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo2Size" type="range" min="30" max="300" value="100" step="1"><output id="logo2SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="2" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="2" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="2" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="2" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="2" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 3 (atas)</label><input id="logo3" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo3Size" type="range" min="30" max="300" value="100" step="1"><output id="logo3SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="3" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="3" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="3" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="3" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="3" data-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Logo 4 (atas)</label><input id="logo4" type="file" accept="image/*"><div class="size-control"><span>Ukuran</span><input id="logo4Size" type="range" min="30" max="300" value="100" step="1"><output id="logo4SizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-logo="4" data-dir="up">▲ Atas</button><button type="button" class="left" data-logo="4" data-dir="left">◀ Kiri</button><button type="button" class="center" data-logo="4" data-dir="center">● Tengah</button><button type="button" class="right" data-logo="4" data-dir="right">Kanan ▶</button><button type="button" class="down" data-logo="4" data-dir="down">▼ Bawah</button></div></div>
+</div></details>
+<details class="grp" open><summary><span class="num">2</span><span>Judul &amp; Nomor</span></summary><div class="grp-body">
+<div class="field"><label>Tulisan judul sertifikat</label><input id="judul" type="text" value="SERTIFIKAT"><div class="text-control" data-text="judul"><div class="text-size"><span>Ukuran</span><input id="judulSize" type="range" min="30" max="300" value="100"><output id="judulSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="judul" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="judul" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="judul" data-dir="center">● Tengah</button><button type="button" class="right" data-text="judul" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="judul" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Nomor sertifikat</label><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"><div class="text-control" data-text="number"><div class="text-size"><span>Ukuran</span><input id="numberSize" type="range" min="30" max="300" value="100"><output id="numberSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="number" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="number" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="number" data-dir="center">● Tengah</button><button type="button" class="right" data-text="number" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="number" data-dir="down">▼ Bawah</button></div></div></div>
+</div></details>
+<details class="grp" open><summary><span class="num">3</span><span>Penerima &amp; Isi</span></summary><div class="grp-body">
+<div class="field"><label>Tulisan di atas nama penerima</label><input id="diberikan" type="text" value="Diberikan kepada"><div class="text-control" data-text="diberikan"><div class="text-size"><span>Ukuran</span><input id="diberikanSize" type="range" min="30" max="300" value="100"><output id="diberikanSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="diberikan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="diberikan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="diberikan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="diberikan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="diberikan" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Nama penerima</label><input id="name" type="text" value="Nama Penerima"><div class="text-control" data-text="name"><div class="text-size"><span>Ukuran</span><input id="nameSize" type="range" min="30" max="300" value="100"><output id="nameSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="name" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="name" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="name" data-dir="center">● Tengah</button><button type="button" class="right" data-text="name" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="name" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Isi / keterangan sertifikat</label><textarea id="body">Mahasiswa [Nama Perguruan Tinggi] Program Studi [Program Studi] telah melaksanakan kegiatan magang di [Nama Instansi], Kabupaten Cirebon, dengan menghasilkan karya “[Nama Karya]”.</textarea><div class="text-control" data-text="body"><div class="text-size"><span>Ukuran</span><input id="bodySize" type="range" min="30" max="300" value="100"><output id="bodySizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="body" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="body" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="body" data-dir="center">● Tengah</button><button type="button" class="right" data-text="body" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="body" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Tanggal pelaksanaan</label><input id="period" type="text" value="Terhitung mulai tanggal [tanggal mulai] s.d. [tanggal selesai]"><div class="text-control" data-text="period"><div class="text-size"><span>Ukuran</span><input id="periodSize" type="range" min="30" max="300" value="100"><output id="periodSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="period" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="period" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="period" data-dir="center">● Tengah</button><button type="button" class="right" data-text="period" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="period" data-dir="down">▼ Bawah</button></div></div></div>
+</div></details>
+<details class="grp" open><summary><span class="num">4</span><span>Penandatangan <small>(bagian bawah)</small></span></summary><div class="grp-body">
+<div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="Sumber, [Tanggal penandatanganan]"><div class="text-control" data-text="tanggalTtd"><div class="text-size"><span>Ukuran</span><input id="tanggalTtdSize" type="range" min="30" max="300" value="100"><output id="tanggalTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="tanggalTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="tanggalTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="tanggalTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="tanggalTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="tanggalTtd" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea><div class="text-control" data-text="jabatanTtd"><div class="text-size"><span>Ukuran</span><input id="jabatanTtdSize" type="range" min="30" max="300" value="100"><output id="jabatanTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="jabatanTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="jabatanTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="jabatanTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="jabatanTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="jabatanTtd" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Upload TTE / Tanda Tangan Elektronik</label><input id="tte" type="file" accept="image/png,image/jpeg,image/webp"><small>TTE akan ditempatkan di atas nama penandatangan dan dapat diatur posisinya.</small><div class="size-control"><span>Ukuran</span><input id="tteSize" type="range" min="30" max="300" value="100" step="1"><output id="tteSizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-tte-dir="up">▲ Atas</button><button type="button" class="left" data-tte-dir="left">◀ Kiri</button><button type="button" class="center" data-tte-dir="center">● Tengah</button><button type="button" class="right" data-tte-dir="right">Kanan ▶</button><button type="button" class="down" data-tte-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Nama Penandatangan</label><input id="penandatangan" type="text" value="DANGI"><div class="text-control" data-text="penandatangan"><div class="text-size"><span>Ukuran</span><input id="penandatanganSize" type="range" min="30" max="300" value="100"><output id="penandatanganSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="penandatangan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="penandatangan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="penandatangan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="penandatangan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="penandatangan" data-dir="down">▼ Bawah</button></div></div></div>
+</div></details>
 <div class="actions"><button class="primary" id="download">Unduh Sertifikat PNG</button><button class="secondary" id="reset">Atur Ulang</button></div>
 <div class="history-actions"><button class="secondary" id="saveLast">Simpan Terakhir</button><button class="secondary" id="undo" disabled>Urungkan</button><button class="secondary" id="redo" disabled>Ulangi</button></div>
 <p class="save-status" id="saveStatus" role="status">Penyimpanan otomatis aktif di perangkat ini.</p>
@@ -59,9 +89,10 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 <p class="note">Tips: gunakan logo PNG transparan. File diproses langsung di browser. Data hanya dikirim ke server jika Anda menekan &quot;Simpan ke Server&quot;.</p>
 </section>
 <section class="preview">
-<div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Rasio landscape</span></div>
-<canvas id="cert" width="1376" height="768"></canvas>
-<p class="note">Tampilan pratinjau mengikuti ukuran gambar template. Periksa kembali ejaan dan data sebelum mengunduh.</p>
+<div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Klik &amp; geser langsung di sini</span></div>
+<div class="stage"><canvas id="cert" width="1376" height="768"></canvas><canvas id="overlay" width="1376" height="768"></canvas></div>
+<div class="selbar"><span id="selLabel">Klik teks atau logo di sertifikat untuk memilih</span><span class="selbtns"><button type="button" class="secondary" id="selMinus" title="Perkecil" disabled>A&minus;</button><button type="button" class="secondary" id="selPlus" title="Perbesar" disabled>A+</button><button type="button" class="secondary" id="selReset" title="Kembalikan ke posisi awal" disabled>Posisi awal</button></span></div>
+<p class="note">Geser untuk memindah; tarik kotak kecil di sudut untuk mengubah ukuran. Di komputer, tombol panah menggeser 1 px (Shift = 10 px) dan +/&minus; mengubah ukuran. Tampilan pratinjau mengikuti ukuran gambar template. Periksa kembali ejaan dan data sebelum mengunduh.</p>
 </section>
 </main>
 <footer class="site-footer" aria-label="Kontak website">
@@ -70,6 +101,11 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 </footer>
 <script>
 const canvas=document.getElementById('cert'),ctx=canvas.getContext('2d');
+const overlay=document.getElementById('overlay'),octx=overlay.getContext('2d');
+const SIZE_MIN = 30, SIZE_MAX = 300;
+// Kotak tiap elemen di kanvas (diisi saat render) untuk klik/geser di pratinjau.
+const hitBoxes = {};
+function setBox(id, x, y, w, h) { hitBoxes[id] = { x, y, w, h }; }
 const template=new Image();
 let customTemplateData = null;
 let logoDataCache = [null, null, null, null];
@@ -121,6 +157,7 @@ let applyingHistory = false, saveTimer = null;
 
 function renderCertificate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  Object.keys(hitBoxes).forEach(k => delete hitBoxes[k]);
   // Template baru digunakan penuh sebagai background.
   ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
@@ -128,12 +165,14 @@ function renderCertificate() {
   const textSize = id => textBaseSizes[id] * (textSizes[id] / 100);
   const pos = id => textPositions[id];
   const drawCenter = (id, text, color, bold=false) => {
-    const p = pos(id); ctx.textAlign='center'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${textSize(id)}px Arial`;
+    const p = pos(id), sz = textSize(id); ctx.textAlign='center'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${sz}px Arial`;
     ctx.fillText(text, p.x, p.y);
+    const w = Math.max(ctx.measureText(text).width, 30); setBox(id, p.x - w/2, p.y - sz*0.85, w, sz*1.1);
   };
   const drawRight = (id, text, color, bold=false) => {
-    const p = pos(id); ctx.textAlign='right'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${textSize(id)}px Arial`;
+    const p = pos(id), sz = textSize(id); ctx.textAlign='right'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${sz}px Arial`;
     ctx.fillText(text, p.x, p.y);
+    const w = Math.max(ctx.measureText(text).width, 30); setBox(id, p.x - w, p.y - sz*0.85, w, sz*1.1);
   };
   const drawWrappedCenter = (id, text, color, bold=false) => {
     const p=pos(id), size=textSize(id); ctx.textAlign='center'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${size}px Arial`;
@@ -141,7 +180,8 @@ function renderCertificate() {
   };
   const drawWrappedRight = (id, text, color, bold=false) => {
     const p=pos(id), size=textSize(id); ctx.textAlign='right'; ctx.fillStyle=color; ctx.font=`${bold?'bold ':''}${size}px Arial`;
-    wrapTextRight(ctx,text,p.x,p.y,330,size*1.25);
+    const r = wrapTextRight(ctx,text,p.x,p.y,330,size*1.25);
+    const bw = Math.max(r.maxW, 30); setBox(id, p.x - bw, p.y - size*0.85, bw, (r.lines-1)*size*1.25 + size*1.1);
   };
 
   drawCenter('judul', document.getElementById('judul').value.trim(), '#075b3e', true);
@@ -155,34 +195,38 @@ function renderCertificate() {
     { img: logo3Img, x: logoPositions[2].x, y: logoPositions[2].y, w: 90 * logoSizes[2] / 100, h: 72 * logoSizes[2] / 100 },
     { img: logo4Img, x: logoPositions[3].x, y: logoPositions[3].y, w: 90 * logoSizes[3] / 100, h: 72 * logoSizes[3] / 100 }
   ];
-  logoSlots.forEach(({img,x,y,w,h}) => drawTransparentLogo(ctx, img, x, y, w, h));
+  logoSlots.forEach(({img,x,y,w,h}, i) => { const r = drawTransparentLogo(ctx, img, x, y, w, h); if (r) hitBoxes['logo' + (i + 1)] = r; });
 
   // Label tetap berada tepat di atas nama penerima. Saat nama digeser, label ikut bergeser.
   const namePos=pos('name');
   drawCenter('diberikan', document.getElementById('diberikan').value.trim(), '#075b3e', false);
   drawCenter('name',document.getElementById('name').value.trim(),'#075b3e',true);
   const nameWidth=Math.min(Math.max(ctx.measureText(document.getElementById('name').value.trim()).width+55,260),570);
+  if (hitBoxes.name) { hitBoxes.name.x = namePos.x - nameWidth/2; hitBoxes.name.w = nameWidth; hitBoxes.name.h += 14; }
   ctx.beginPath(); ctx.moveTo(namePos.x-nameWidth/2,namePos.y+17); ctx.lineTo(namePos.x+nameWidth/2,namePos.y+17); ctx.strokeStyle='#075b3e'; ctx.lineWidth=2.5; ctx.stroke();
   let periodShift = 0;
-  { const p=pos('body'), size=textSize('body'); const n=drawRichWrappedCenter(ctx,document.getElementById('body').value.trim(),p.x,p.y,650,size*1.4,size,'#075b3e'); periodShift = Math.max(0, n - 3) * size * 1.4; }
-  { const p=pos('period'); ctx.textAlign='center'; ctx.fillStyle='#ed791d'; ctx.font=`bold ${textSize('period')}px Arial`; ctx.fillText(document.getElementById('period').value, p.x, p.y + periodShift); }
+  { const p=pos('body'), size=textSize('body'); const n=drawRichWrappedCenter(ctx,document.getElementById('body').value.trim(),p.x,p.y,650,size*1.4,size,'#075b3e'); periodShift = Math.max(0, n - 3) * size * 1.4; const rr = drawRichWrappedCenter.last, bw = Math.max(rr.w, 30); setBox('body', p.x - bw/2, p.y - size*0.85, bw, (n-1)*size*1.4 + size*1.1); }
+  { const p=pos('period'); ctx.textAlign='center'; ctx.fillStyle='#ed791d'; ctx.font=`bold ${textSize('period')}px Arial`; const pt = document.getElementById('period').value; ctx.fillText(pt, p.x, p.y + periodShift); const psz = textSize('period'), pw = Math.max(ctx.measureText(pt).width, 30); setBox('period', p.x - pw/2, p.y + periodShift - psz*0.85, pw, psz*1.1); }
   drawRight('tanggalTtd',document.getElementById('tanggalTtd').value.trim(),'#075b3e',false);
   drawWrappedRight('jabatanTtd',document.getElementById('jabatanTtd').value.trim(),'#075b3e',true);
   // Sediakan ruang TTE di tengah area tanda tangan, di antara jabatan dan nama penandatangan.
   const signerCenterX = pos('penandatangan').x;
   const tteW = 200 * tteSize.value / 100, tteH = 60 * tteSize.value / 100;
-  drawTransparentLogo(ctx, tteImg, signerCenterX + (ttePosition.x - tteDefaultPosition.x) - tteW/2, ttePosition.y - tteH/2, tteW, tteH);
+  const tr = drawTransparentLogo(ctx, tteImg, signerCenterX + (ttePosition.x - tteDefaultPosition.x) - tteW/2, ttePosition.y - tteH/2, tteW, tteH);
+  if (tr) hitBoxes.tte = tr;
   drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
-
+  drawOverlay();
 }
 
 // Menggambar PNG transparan secara proporsional tanpa merusak alpha channel.
 function drawTransparentLogo(context, img, x, y, maxW, maxH) {
-  if (!img || !img.naturalWidth) return;
+  if (!img || !img.naturalWidth) return null;
   const scale = Math.min(maxW / img.naturalWidth, maxH / img.naturalHeight);
   const w = img.naturalWidth * scale;
   const h = img.naturalHeight * scale;
-  context.drawImage(img, x + (maxW - w) / 2, y + (maxH - h) / 2, w, h);
+  const dx = x + (maxW - w) / 2, dy = y + (maxH - h) / 2;
+  context.drawImage(img, dx, dy, w, h);
+  return { x: dx, y: dy, w, h };
 }
 
 // Teks rata tengah dengan pembungkusan baris; bagian dari tanda petik buka sampai tutup dicetak tebal.
@@ -220,24 +264,27 @@ function drawRichWrappedCenter(context, text, cx, y, maxWidth, lineHeight, size,
     });
   });
   context.textAlign = 'center';
+  drawRichWrappedCenter.last = { n: lines.length, w: lines.reduce((m, l) => Math.max(m, l.w), 0) };
   return lines.length;
 }
 
 // Fungsi bantu untuk membungkus teks panjang (multiline)
 function wrapTextRight(context, text, rightX, y, maxWidth, lineHeight) {
   const words = text.split(' ');
-  let line = '';
+  let line = '', lines = 0, maxW = 0;
+  const put = str => { context.fillText(str, rightX, y); maxW = Math.max(maxW, context.measureText(str).width); lines++; };
   for (let n = 0; n < words.length; n++) {
     const testLine = line + words[n] + ' ';
     if (context.measureText(testLine).width > maxWidth && n > 0) {
-      context.fillText(line.trim(), rightX, y);
+      put(line.trim());
       line = words[n] + ' ';
       y += lineHeight;
     } else {
       line = testLine;
     }
   }
-  if (line.trim()) context.fillText(line.trim(), rightX, y);
+  if (line.trim()) put(line.trim());
+  return { lines: Math.max(lines, 1), maxW };
 }
 
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
@@ -290,14 +337,14 @@ function applyState(state) {
   }
   if (Array.isArray(state.logoSizes)) {
     state.logoSizes.slice(0, 4).forEach((size, i) => {
-      logoSizes[i] = Math.max(50, Math.min(170, Number(size) || 100));
+      logoSizes[i] = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(size) || 100));
     });
     updateLogoSizeControls();
   }
-  if (state.textSizes) Object.keys(textSizes).forEach(id => { if (state.textSizes[id] !== undefined) textSizes[id] = Math.max(50, Math.min(200, Number(state.textSizes[id]) || 100)); });
+  if (state.textSizes) Object.keys(textSizes).forEach(id => { if (state.textSizes[id] !== undefined) textSizes[id] = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(state.textSizes[id]) || 100)); });
   if (state.textPositions) Object.keys(textPositions).forEach(id => { const p=state.textPositions[id]; if(p){ textPositions[id].x=Number(p.x)||0; textPositions[id].y=Number(p.y)||0; } });
   if (state.textPositions && state.textPositions.name && !state.textPositions.diberikan) { textPositions.diberikan.x = textPositions.name.x; textPositions.diberikan.y = textPositions.name.y - 34; }
-  if (state.tteSize !== undefined) tteSize.value = Math.max(50, Math.min(170, Number(state.tteSize) || 100));
+  if (state.tteSize !== undefined) tteSize.value = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(state.tteSize) || 100));
   if (state.ttePosition) { ttePosition.x = Number(state.ttePosition.x) || tteDefaultPosition.x; ttePosition.y = Number(state.ttePosition.y) || tteDefaultPosition.y; }
   // Migrasi sekali: beri ruang khusus di antara jabatan dan nama untuk TTE.
   if (state.signerLayoutVersion !== SIGNER_LAYOUT_VERSION) {
@@ -420,11 +467,11 @@ function loadSavedState() {
     if (lightSaved) {
       const light = JSON.parse(lightSaved);
       if (light.fields) fields.forEach(id => { if (light.fields[id] !== undefined) document.getElementById(id).value = light.fields[id]; });
-      if (Array.isArray(light.logoSizes)) light.logoSizes.forEach((size, i) => { if (i < 4) logoSizes[i] = Math.max(50, Math.min(170, Number(size) || 100)); });
+      if (Array.isArray(light.logoSizes)) light.logoSizes.forEach((size, i) => { if (i < 4) logoSizes[i] = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(size) || 100)); });
       if (Array.isArray(light.logoPositions)) light.logoPositions.forEach((pos,i)=>{ if(i<4 && pos){logoPositions[i].x=Number(pos.x)||0; logoPositions[i].y=Number(pos.y)||0;} });
-      if (light.textSizes) Object.keys(textSizes).forEach(id=>{ if(light.textSizes[id]!==undefined) textSizes[id]=Math.max(50,Math.min(200,Number(light.textSizes[id])||100)); });
+      if (light.textSizes) Object.keys(textSizes).forEach(id=>{ if(light.textSizes[id]!==undefined) textSizes[id]=Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(light.textSizes[id])||100)); });
       if (light.textPositions) Object.keys(textPositions).forEach(id=>{ const pos=light.textPositions[id]; if(pos){textPositions[id].x=Number(pos.x)||0;textPositions[id].y=Number(pos.y)||0;} });
-      if (light.tteSize !== undefined) tteSize.value = Math.max(50, Math.min(170, Number(light.tteSize) || 100));
+      if (light.tteSize !== undefined) tteSize.value = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(light.tteSize) || 100));
       if (light.ttePosition) { ttePosition.x=Number(light.ttePosition.x)||tteDefaultPosition.x; ttePosition.y=Number(light.ttePosition.y)||tteDefaultPosition.y; }
       updateLogoSizeControls();
       updateTextControls();
@@ -823,6 +870,223 @@ document.getElementById('reset').addEventListener('click', () => {
 
 // Simpan perubahan saat tab ditutup atau halaman berpindah.
 window.addEventListener('beforeunload', () => { if (skipUnloadSave) return; try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {} });
+
+// ===== Pratinjau interaktif: klik, geser, dan ubah ukuran langsung di sertifikat =====
+const SEL_LABELS = {
+  judul: 'Judul', number: 'Nomor sertifikat', diberikan: 'Tulisan di atas nama', name: 'Nama penerima',
+  body: 'Isi / keterangan', period: 'Tanggal pelaksanaan', tanggalTtd: 'Tanggal penandatanganan',
+  jabatanTtd: 'Jabatan penandatangan', penandatangan: 'Nama penandatangan', tte: 'TTE / tanda tangan',
+  logo1: 'Logo 1', logo2: 'Logo 2', logo3: 'Logo 3', logo4: 'Logo 4'
+};
+let selectedKey = null, hoverKey = null, drag = null, keyBurst = null;
+const fieldToKey = new Map();
+Object.keys(SEL_LABELS).forEach(k => { const el = document.getElementById(k); const f = el && el.closest('.field'); if (f) fieldToKey.set(f, k); });
+
+const isLogoKey = k => /^logo[1-4]$/.test(k);
+const getPos = k => k === 'tte' ? ttePosition : isLogoKey(k) ? logoPositions[Number(k.slice(4)) - 1] : textPositions[k];
+const getSize = k => k === 'tte' ? tteSize.value : isLogoKey(k) ? logoSizes[Number(k.slice(4)) - 1] : textSizes[k];
+const defaultPos = k => k === 'tte' ? tteDefaultPosition : isLogoKey(k) ? logoDefaultPositions[Number(k.slice(4)) - 1] : textDefaults[k];
+function setSize(k, v) {
+  v = Math.round(Math.max(SIZE_MIN, Math.min(SIZE_MAX, v)));
+  if (k === 'tte') tteSize.value = v; else if (isLogoKey(k)) logoSizes[Number(k.slice(4)) - 1] = v; else textSizes[k] = v;
+}
+function refreshControls() { updateTextControls(); updateLogoSizeControls(); updateTteControls(); }
+const cssUnit = () => overlay.width / (overlay.getBoundingClientRect().width || overlay.width); // piksel kanvas per piksel layar
+function canvasPoint(e) {
+  const r = overlay.getBoundingClientRect();
+  return { x: (e.clientX - r.left) * overlay.width / r.width, y: (e.clientY - r.top) * overlay.height / r.height };
+}
+function padded(b, u) { const pad = 4 * u; return { x: b.x - pad, y: b.y - pad, w: b.w + pad * 2, h: b.h + pad * 2 }; }
+const cornersOf = b => [[b.x, b.y], [b.x + b.w, b.y], [b.x, b.y + b.h], [b.x + b.w, b.y + b.h]];
+
+function hitTest(p) {
+  const u = cssUnit();
+  if (selectedKey && hitBoxes[selectedKey]) {
+    const pb = padded(hitBoxes[selectedKey], u);
+    if (cornersOf(pb).some(c => Math.abs(p.x - c[0]) <= 10 * u && Math.abs(p.y - c[1]) <= 10 * u)) return { key: selectedKey, handle: true };
+  }
+  const pad = 5 * u; let best = null, bestArea = Infinity;
+  Object.keys(hitBoxes).forEach(k => {
+    const b = hitBoxes[k];
+    if (p.x >= b.x - pad && p.x <= b.x + b.w + pad && p.y >= b.y - pad && p.y <= b.y + b.h + pad) {
+      const a = b.w * b.h; if (a < bestArea) { best = k; bestArea = a; }
+    }
+  });
+  return best ? { key: best, handle: false } : null;
+}
+
+function drawOverlay() {
+  octx.clearRect(0, 0, overlay.width, overlay.height);
+  const u = cssUnit();
+  const outline = (k, strong) => {
+    const b = hitBoxes[k]; if (!b) return;
+    const pb = padded(b, u);
+    octx.save();
+    octx.lineWidth = (strong ? 2 : 1.5) * u; octx.strokeStyle = strong ? '#ed791d' : '#075b3e';
+    octx.setLineDash(strong ? [] : [6 * u, 4 * u]);
+    octx.strokeRect(pb.x, pb.y, pb.w, pb.h);
+    if (strong) {
+      octx.setLineDash([]); octx.fillStyle = '#fff';
+      cornersOf(pb).forEach(c => { octx.beginPath(); octx.rect(c[0] - 6 * u, c[1] - 6 * u, 12 * u, 12 * u); octx.fill(); octx.stroke(); });
+    }
+    octx.restore();
+  };
+  if (hoverKey && hoverKey !== selectedKey && !drag) outline(hoverKey, false);
+  if (selectedKey) outline(selectedKey, true);
+}
+
+function updateSelBar() {
+  document.getElementById('selLabel').textContent = selectedKey ? 'Terpilih: ' + SEL_LABELS[selectedKey] : 'Klik teks atau logo di sertifikat untuk memilih';
+  ['selMinus', 'selPlus', 'selReset'].forEach(id => { document.getElementById(id).disabled = !selectedKey; });
+}
+function syncSidebar(k) {
+  document.querySelectorAll('.field.active').forEach(f => f.classList.remove('active'));
+  if (!k) return;
+  const el = document.getElementById(k), f = el && el.closest('.field');
+  if (!f) return;
+  f.classList.add('active');
+  const d = f.closest('details'); if (d) d.open = true;
+  // Di HP pratinjau ada di atas panel; jangan menggulir halaman agar pratinjau tetap terlihat.
+  if (window.innerWidth > 850) f.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+function select(k) {
+  selectedKey = k; updateSelBar(); syncSidebar(k); drawOverlay();
+}
+function commitHistory(before) {
+  undoStack.push(before); if (undoStack.length > 50) undoStack.shift();
+  redoStack = []; updateHistoryButtons(); saveState(false);
+}
+
+// Ubah ukuran sambil menjaga titik tengah elemen tetap di tempatnya.
+function resizeKeepCenter(k, newSize, basePos) {
+  const pos = getPos(k), b0 = hitBoxes[k];
+  const p0 = basePos || { x: pos.x, y: pos.y };
+  const c0 = b0 ? { x: b0.x + b0.w / 2, y: b0.y + b0.h / 2 } : null;
+  setSize(k, newSize);
+  pos.x = p0.x; pos.y = p0.y;
+  if (c0) {
+    renderCertificate();
+    const b = hitBoxes[k];
+    if (b) { pos.x = Math.round(p0.x + (c0.x - (b.x + b.w / 2))); pos.y = Math.round(p0.y + (c0.y - (b.y + b.h / 2))); }
+  }
+  refreshControls(); renderCertificate();
+}
+
+overlay.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  if (document.activeElement && document.activeElement !== document.body && document.activeElement.blur) document.activeElement.blur();
+  const p = canvasPoint(e), hit = hitTest(p);
+  if (!hit) { select(null); return; }
+  select(hit.key);
+  const b = hitBoxes[hit.key], pos = getPos(hit.key);
+  drag = {
+    mode: hit.handle ? 'resize' : 'move', key: hit.key, p0: p, pos0: { x: pos.x, y: pos.y }, size0: getSize(hit.key),
+    c0: { x: b.x + b.w / 2, y: b.y + b.h / 2 }, before: currentState(), moved: false, pending: null, raf: 0
+  };
+  try { overlay.setPointerCapture(e.pointerId); } catch (err) {}
+  e.preventDefault();
+});
+
+function applyDrag() {
+  if (!drag) return;
+  drag.raf = 0;
+  const p = drag.pending; if (!p) return;
+  const k = drag.key, pos = getPos(k);
+  if (drag.mode === 'move') {
+    const dx = p.x - drag.p0.x, dy = p.y - drag.p0.y;
+    if (!drag.moved && Math.hypot(dx, dy) < 3 * cssUnit()) return;
+    drag.moved = true;
+    pos.x = Math.round(drag.pos0.x + dx); pos.y = Math.round(drag.pos0.y + dy);
+    renderCertificate();
+  } else {
+    const r0 = Math.hypot(drag.p0.x - drag.c0.x, drag.p0.y - drag.c0.y) || 1;
+    const r1 = Math.hypot(p.x - drag.c0.x, p.y - drag.c0.y);
+    drag.moved = true;
+    // Posisi awal dipakai sebagai acuan agar ukuran tidak "melayang" saat ditarik.
+    pos.x = drag.pos0.x; pos.y = drag.pos0.y;
+    const startSize = drag.size0;
+    setSize(k, startSize);
+    renderCertificate();
+    const b0 = hitBoxes[k];
+    const c0 = b0 ? { x: b0.x + b0.w / 2, y: b0.y + b0.h / 2 } : drag.c0;
+    setSize(k, startSize * r1 / r0);
+    renderCertificate();
+    const b = hitBoxes[k];
+    if (b) { pos.x = Math.round(drag.pos0.x + (c0.x - (b.x + b.w / 2))); pos.y = Math.round(drag.pos0.y + (c0.y - (b.y + b.h / 2))); }
+    refreshControls(); renderCertificate();
+  }
+  scheduleSave();
+}
+overlay.addEventListener('pointermove', e => {
+  const p = canvasPoint(e);
+  if (!drag) {
+    const h = hitTest(p), k = h ? h.key : null;
+    overlay.style.cursor = h ? (h.handle ? 'nwse-resize' : 'move') : 'default';
+    if (k !== hoverKey) { hoverKey = k; drawOverlay(); }
+    return;
+  }
+  drag.pending = p;
+  if (!drag.raf) drag.raf = requestAnimationFrame(applyDrag);
+});
+function endDrag(e) {
+  if (!drag) return;
+  if (drag.raf) { cancelAnimationFrame(drag.raf); applyDrag(); }
+  const d = drag; drag = null;
+  try { overlay.releasePointerCapture(e.pointerId); } catch (err) {}
+  if (d.moved) commitHistory(d.before);
+  drawOverlay();
+}
+overlay.addEventListener('pointerup', endDrag);
+overlay.addEventListener('pointercancel', endDrag);
+overlay.addEventListener('pointerleave', () => { if (!drag && hoverKey) { hoverKey = null; drawOverlay(); } });
+
+// Tombol A−, A+, Posisi awal di bawah pratinjau.
+function bumpSize(delta) {
+  if (!selectedKey) return;
+  const before = currentState();
+  resizeKeepCenter(selectedKey, getSize(selectedKey) + delta);
+  commitHistory(before);
+}
+document.getElementById('selMinus').addEventListener('click', () => bumpSize(-5));
+document.getElementById('selPlus').addEventListener('click', () => bumpSize(5));
+document.getElementById('selReset').addEventListener('click', () => {
+  if (!selectedKey) return;
+  const before = currentState(), pos = getPos(selectedKey), d = defaultPos(selectedKey);
+  pos.x = d.x; pos.y = d.y; renderCertificate(); commitHistory(before);
+});
+
+// Keyboard: panah = geser (Shift = 10 px), + / − = ukuran, Esc = lepas pilihan.
+document.addEventListener('keydown', e => {
+  if (!selectedKey) return;
+  const t = e.target;
+  if (t && (/^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(t.tagName) || t.isContentEditable)) return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === 'Escape') { select(null); return; }
+  const k = selectedKey, pos = getPos(k), step = e.shiftKey ? 10 : 1;
+  const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', '+', '=', '-', '_'];
+  if (!keys.includes(e.key)) return;
+  e.preventDefault();
+  if (!keyBurst) { keyBurst = { before: currentState(), timer: 0 }; }
+  if (e.key === 'ArrowLeft') pos.x -= step;
+  else if (e.key === 'ArrowRight') pos.x += step;
+  else if (e.key === 'ArrowUp') pos.y -= step;
+  else if (e.key === 'ArrowDown') pos.y += step;
+  else if (e.key === '+' || e.key === '=') resizeKeepCenter(k, getSize(k) + (e.shiftKey ? 10 : 2));
+  else resizeKeepCenter(k, getSize(k) - (e.shiftKey ? 10 : 2));
+  renderCertificate(); scheduleSave();
+  clearTimeout(keyBurst.timer);
+  keyBurst.timer = setTimeout(() => { const b = keyBurst.before; keyBurst = null; commitHistory(b); }, 700);
+});
+
+// Memilih kolom di panel kiri ikut memilih elemennya di pratinjau.
+document.querySelector('.panel').addEventListener('focusin', e => {
+  const f = e.target.closest && e.target.closest('.field');
+  const k = f && fieldToKey.get(f);
+  if (k && k !== selectedKey) { selectedKey = k; updateSelBar(); syncSidebar(k); drawOverlay(); }
+});
+
+if (window.ResizeObserver) new ResizeObserver(() => drawOverlay()).observe(overlay);
+else window.addEventListener('resize', drawOverlay);
 </script>
 <script src="tutorial.js" defer></script>
 </body>

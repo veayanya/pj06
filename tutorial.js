@@ -148,19 +148,19 @@
    *  2. TUR SOROTAN INTERAKTIF
    * ==================================================================== */
   var STEPS = [
-    { sec: 'mengenal', top: true, els: function () { return [q('.panel')]; }, title: 'Panel Pengaturan', text: 'Semua kolom isian ada di sini: logo, nama, isi sertifikat, penandatangan, dan tombol. Gulir panel ke bawah untuk melihat semuanya.' },
-    { sec: 'mengenal', top: true, els: function () { return [q('section.preview')]; }, title: 'Pratinjau Sertifikat', text: 'Hasil sertifikat tampil langsung di sini. Setiap perubahan di panel langsung terlihat. Di HP, pratinjau berada di atas panel.' },
+    { sec: 'mengenal', top: true, els: function () { return [q('.panel')]; }, title: 'Panel Pengaturan', text: 'Semua kolom isian ada di sini, disusun dari atas ke bawah mengikuti sertifikat: 1) Template &amp; Logo, 2) Judul &amp; Nomor, 3) Penerima &amp; Isi, 4) Penandatangan. Klik judul bagian untuk membuka atau menutupnya.' },
+    { sec: 'mengenal', top: true, els: function () { return [q('section.preview')]; }, title: 'Pratinjau Sertifikat', text: 'Hasil sertifikat tampil langsung di sini. <b>Klik teks atau logo</b> untuk memilih, <b>geser</b> untuk memindah, dan <b>tarik kotak kecil di sudutnya</b> untuk memperbesar atau memperkecil. Di HP, pratinjau berada di atas panel.' },
     { sec: 'tombol', els: function () { return [field('#uploadTemplateBtn')]; }, title: 'Template latar (opsional)', text: 'Template bawaan sudah dipakai otomatis. Ganti hanya bila punya desain latar sendiri, berupa gambar landscape 16:9.' },
     { sec: 'logo', els: function () { return [q('#logo1')]; }, title: 'Unggah logo', text: 'Ada 4 slot logo. Klik <b>Choose File</b>, lalu pilih gambar dari perangkat Anda. Pakai <b>PNG berlatar transparan</b> agar tidak muncul kotak putih.' },
-    { sec: 'logo', els: function () { var f = field('#logo1'); return [q('.size-control', f), q('.logo-position', f)]; }, title: 'Ukuran dan posisi logo', text: 'Geser slider <b>Ukuran</b> untuk memperbesar atau memperkecil. Klik panah untuk menggeser logo sedikit demi sedikit. <b>Tengah</b> mengembalikan ke posisi bawaan.' },
+    { sec: 'logo', els: function () { var f = field('#logo1'); return [q('.size-control', f), q('.logo-position', f)]; }, title: 'Ukuran dan posisi logo', text: 'Cara cepat: klik logo di pratinjau, lalu geser atau tarik sudutnya. Untuk pengaturan halus, pakai slider <b>Ukuran</b> dan klik panah. <b>Tengah</b> mengembalikan ke posisi bawaan.' },
     { sec: 'isi', els: function () { return [field('#judul')]; }, title: 'Judul sertifikat', text: 'Berisi \u201cSERTIFIKAT\u201d. Ganti bila ingin judul lain, misalnya \u201cPIAGAM PENGHARGAAN\u201d.' },
+    { sec: 'isi', els: function () { return [field('#number')]; }, title: 'Nomor sertifikat', text: 'Cukup ketik nomornya, misalnya <code>400.14.5.4/012/BAPPERIDA</code>. Tulisan \u201cNomor :\u201d di depannya sudah otomatis.' },
     { sec: 'nama', els: function () { return [field('#name')]; }, title: 'Nama penerima', text: 'Hapus \u201cNama Penerima\u201d, lalu ketik nama peserta magang. Garis di bawah nama mengikuti posisinya. Nama terlalu panjang? Kecilkan dengan slider <b>Ukuran</b>.' },
     { sec: 'isi', els: function () { return [field('#body')]; }, title: 'Isi / keterangan', text: 'Ganti semua bagian dalam kurung siku <b>[ ]</b> dengan data sebenarnya, <b>termasuk kurung sikunya</b>. Teks di dalam tanda petik \u201c \u201d otomatis tebal, jadi tulis nama karya di sana.' },
     { sec: 'isi', els: function () { return [field('#period')]; }, title: 'Tanggal pelaksanaan', text: 'Kalimat berwarna oranye, misalnya \u201cTerhitung mulai tanggal 1 Juli 2026 s.d. 30 September 2026\u201d.' },
     { sec: 'ttd', els: function () { return [field('#tanggalTtd'), field('#jabatanTtd')]; }, title: 'Tanggal dan jabatan penandatangan', text: 'Isi tanggal penandatanganan (misalnya \u201cSumber, 5 Oktober 2026\u201d) dan jabatan pejabat yang menandatangani.' },
-    { sec: 'isi', els: function () { return [field('#number')]; }, title: 'Nomor sertifikat', text: 'Cukup ketik nomornya, misalnya <code>400.14.5.4/012/BAPPERIDA</code>. Tulisan \u201cNomor :\u201d di depannya sudah otomatis.' },
     { sec: 'ttd', els: function () { return [field('#penandatangan'), field('#tte')]; }, title: 'Nama penandatangan dan TTE', text: 'Ketik nama pejabat, lalu unggah gambar tanda tangan elektronik (PNG transparan). TTE ditempatkan di atas nama dan bisa diatur ukuran serta posisinya.' },
-    { sec: 'teks', els: function () { return [q('.text-control[data-text="name"]')]; }, title: 'Ukuran dan posisi teks', text: 'Setiap kolom teks punya slider <b>Ukuran</b> dan tombol arah. Pakai hanya bila ada teks yang terlalu rapat, terpotong, atau tidak rapi.' },
+    { sec: 'teks', els: function () { return [q('.text-control[data-text="name"]')]; }, title: 'Ukuran dan posisi teks', text: 'Teks bisa digeser dan diubah ukurannya langsung di pratinjau. Slider <b>Ukuran</b> dan tombol arah di sini untuk penyesuaian halus bila ada teks yang terlalu rapat atau terpotong.' },
     { sec: 'unduh', els: function () { return [q('.actions')]; }, title: 'Unduh sertifikat', text: '<b>Periksa dulu</b> ejaan nama, nomor, tanggal, dan jabatan, karena setelah diunduh teks tidak bisa diedit. Lalu klik <b>Unduh Sertifikat PNG</b>.' },
     { sec: 'tombol', els: function () { return [q('#saveLast').closest('.history-actions'), q('#exportCfg').closest('.history-actions')]; }, title: 'Tombol penyimpanan', text: 'Simpan Terakhir, Urungkan, Ulangi, serta Ekspor dan Impor Pengaturan untuk cadangan. Hati-hati dengan <b>Atur Ulang</b>: semua data tersimpan ikut terhapus.' }
   ];
@@ -203,6 +203,7 @@
   function placeTour() {
     if (!tour.open) return;
     var step = STEPS[tour.i], els = step.els().filter(Boolean);
+    els.forEach(function (e) { var d = e.closest && e.closest('details'); if (d && !d.open) d.open = true; });
     var r = unionRect(els); if (!r) return;
     var vw = window.innerWidth, vh = window.innerHeight, m = 8, pad = 7;
     var sheet = vw <= 700;
@@ -254,6 +255,7 @@
   function goStep(i) {
     tour.i = Math.max(0, Math.min(STEPS.length - 1, i)); tour.adjusted = false;
     var step = STEPS[tour.i], els = step.els().filter(Boolean);
+    els.forEach(function (e) { var d = e.closest && e.closest('details'); if (d && !d.open) d.open = true; });
     renderPop();
     var behavior = reduce ? 'auto' : 'smooth';
     if (window.innerWidth <= 700 && els[0]) {
