@@ -149,7 +149,7 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 <details class="grp" open><summary><span class="num">4</span><span>Penandatangan <small>(bagian bawah)</small></span></summary><div class="grp-body">
 <div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="Sumber, [Tanggal penandatanganan]"><div class="text-control" data-text="tanggalTtd"><div class="text-size"><span>Ukuran</span><input id="tanggalTtdSize" type="range" min="30" max="300" value="100"><output id="tanggalTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="tanggalTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="tanggalTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="tanggalTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="tanggalTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="tanggalTtd" data-dir="down">▼ Bawah</button></div></div></div>
 <div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea><div class="text-control" data-text="jabatanTtd"><div class="text-size"><span>Ukuran</span><input id="jabatanTtdSize" type="range" min="30" max="300" value="100"><output id="jabatanTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="jabatanTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="jabatanTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="jabatanTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="jabatanTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="jabatanTtd" data-dir="down">▼ Bawah</button></div></div></div>
-<div class="field"><label>Upload TTE / Tanda Tangan Elektronik</label><input id="tte" type="file" accept="image/png,image/jpeg,image/webp"><small>Gambar TTE dipakai pada pratinjau setelah TTE. Di format Srikandi, tempatnya berisi ${ttd_pengirim} yang diisi otomatis oleh Srikandi. Posisi dan ukuran tetap bisa diatur.</small><div class="size-control"><span>Ukuran</span><input id="tteSize" type="range" min="30" max="300" value="100" step="1"><output id="tteSizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-tte-dir="up">▲ Atas</button><button type="button" class="left" data-tte-dir="left">◀ Kiri</button><button type="button" class="center" data-tte-dir="center">● Tengah</button><button type="button" class="right" data-tte-dir="right">Kanan ▶</button><button type="button" class="down" data-tte-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Upload TTE / Tanda Tangan Elektronik</label><input id="tte" type="file" accept="image/png,image/jpeg,image/webp"><small>Gambar TTE hanya untuk pratinjau (ikon mata). Di file Word, TTE berupa teks ${ttd_pengirim} (format Srikandi); Ukuran = ukuran font Word (pt). Posisi dan ukuran tetap bisa diatur.</small><div class="size-control"><span>Ukuran</span><input id="tteSize" type="range" min="30" max="300" value="100" step="1"><output id="tteSizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-tte-dir="up">▲ Atas</button><button type="button" class="left" data-tte-dir="left">◀ Kiri</button><button type="button" class="center" data-tte-dir="center">● Tengah</button><button type="button" class="right" data-tte-dir="right">Kanan ▶</button><button type="button" class="down" data-tte-dir="down">▼ Bawah</button></div></div>
 <div class="field"><label>Nama Penandatangan</label><input id="penandatangan" type="text" value="DANGI"><div class="text-control" data-text="penandatangan"><div class="text-size"><span>Ukuran</span><input id="penandatanganSize" type="range" min="30" max="300" value="100"><output id="penandatanganSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="penandatangan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="penandatangan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="penandatangan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="penandatangan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="penandatangan" data-dir="down">▼ Bawah</button></div></div></div>
 </div></details>
 <details class="grp" open><summary><span class="num">&#9635;</span><span>Layer Gambar <small>(foto, stempel, watermark)</small></span></summary><div class="grp-body">
@@ -180,8 +180,8 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 <div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Klik &amp; geser langsung di sini</span><button type="button" class="eye-btn" id="eyeTte" aria-pressed="false" title="Lihat tampilan sertifikat setelah ditandatangani TTE Srikandi" aria-label="Lihat pratinjau setelah TTE Srikandi"><svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg><span>Lihat setelah TTE</span></button></div>
 <p class="eye-note" id="eyeNote" role="status"></p>
 <div class="stage"><canvas id="cert" width="1376" height="768"></canvas><canvas id="overlay" width="1376" height="768"></canvas></div>
-<div class="selbar"><span id="selLabel">Klik teks atau logo di sertifikat untuk memilih</span><span class="selbtns"><button type="button" class="secondary" id="selMinus" title="Perkecil" disabled>A&minus;</button><button type="button" class="secondary" id="selPlus" title="Perbesar" disabled>A+</button><button type="button" class="secondary" id="selDelete" title="Hapus logo ini" hidden>&#128465; Hapus</button><button type="button" class="secondary" id="selReset" title="Kembalikan ke posisi awal" disabled>Posisi awal</button></span></div>
-<p class="note">Geser untuk memindah; tarik kotak kecil di sudut untuk mengubah ukuran. Di komputer, tombol panah menggeser 1 px (Shift = 10 px) dan +/&minus; mengubah ukuran. Tampilan pratinjau mengikuti ukuran gambar template. Periksa kembali ejaan dan data sebelum mengunduh.</p>
+<div class="selbar"><span id="selLabel">Klik teks atau logo di sertifikat untuk memilih</span><span class="selbtns"><button type="button" class="secondary" id="selMinus" title="Perkecil" disabled>A&minus;</button><button type="button" class="secondary" id="selPlus" title="Perbesar" disabled>A+</button><button type="button" class="secondary" id="selDelete" title="Hapus logo ini" hidden>&#128465; Hapus</button><button type="button" class="secondary" id="selReset" title="Kembalikan posisi dan lebar kotak ke awal" disabled>Posisi awal</button></span></div>
+<p class="note">Geser untuk memindah; tarik kotak kecil di sudut untuk mengubah ukuran font; tarik kotak di tengah sisi kiri/kanan untuk melebarkan atau menyempitkan kotak teks (teks otomatis turun baris seperti di Word). A+/A&minus; mengikuti ukuran font Word (10, 10,5, 11, 12, 14, 16 pt ...). Di komputer, tombol panah menggeser 1 px (Shift = 10 px) dan +/&minus; mengubah ukuran. Tampilan pratinjau mengikuti ukuran gambar template. Periksa kembali ejaan dan data sebelum mengunduh.</p>
 </section>
 </main>
 <footer class="site-footer" aria-label="Kontak website">
@@ -244,6 +244,20 @@ const tteSize = { value: 100 };
 const ttePosition = {x: 1245, y: 655};
 const tteDefaultPosition = {x: 1245, y: 655};
 const textBaseSizes = {custom:24,judul:40,diberikan:16,number:18,name:34,body:15,period:15,tanggalTtd:13,jabatanTtd:12,penandatangan:17};
+const textWidths = {};   // lebar kotak teks (px kanvas); kosong = otomatis, seperti text box Word
+const WORD_PT = [8,9,10,10.5,11,12,14,16,18,20,22,24,26,28,36,48,72];
+function wrapPlainLines(text, maxW) {   // bungkus teks per kata di dalam lebar kotak (memakai font ctx saat ini)
+  const out = [];
+  String(text).split('\n').forEach(par => {
+    let line = '';
+    par.split(' ').forEach(w => {
+      const t = line ? line + ' ' + w : w;
+      if (line && ctx.measureText(t).width > maxW) { out.push(line); line = w; } else line = t;
+    });
+    out.push(line);
+  });
+  return out;
+}
 const textSizes = {judul:141,diberikan:133,number:122,name:100,body:134,period:131,tanggalTtd:139,jabatanTtd:138,penandatangan:100};
 const textPositions = {
   judul:{x:688,y:102}, diberikan:{x:688,y:231}, number:{x:688,y:142}, name:{x:688,y:275}, body:{x:688,y:330}, period:{x:688,y:420},
@@ -585,11 +599,15 @@ function renderCertificate() {
   const pos = id => textPositions[id];
   const drawCenter = (id, text, color, bold=false) => {
     const p = pos(id), sz = textSize(id), st=fontStyleOf(id,color); ctx.textAlign='center'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${sz}px "${st.family}"`;
+    const W = textWidths[id];
+    if (W) { const ls = wrapPlainLines(text, W), lh = sz*1.25; ls.forEach((l,i) => ctx.fillText(l, p.x, p.y + i*lh)); setBox(id, p.x - W/2, p.y - sz*0.85, W, (ls.length-1)*lh + sz*1.1); return; }
     ctx.fillText(text, p.x, p.y);
     const w = Math.max(ctx.measureText(text).width, 30); setBox(id, p.x - w/2, p.y - sz*0.85, w, sz*1.1);
   };
   const drawRight = (id, text, color, bold=false) => {
     const p = pos(id), sz = textSize(id), st=fontStyleOf(id,color); ctx.textAlign='right'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${sz}px "${st.family}"`;
+    const W = textWidths[id];
+    if (W) { const ls = wrapPlainLines(text, W), lh = sz*1.25; ls.forEach((l,i) => ctx.fillText(l, p.x, p.y + i*lh)); setBox(id, p.x - W, p.y - sz*0.85, W, (ls.length-1)*lh + sz*1.1); return; }
     ctx.fillText(text, p.x, p.y);
     const w = Math.max(ctx.measureText(text).width, 30); setBox(id, p.x - w, p.y - sz*0.85, w, sz*1.1);
   };
@@ -599,8 +617,8 @@ function renderCertificate() {
   };
   const drawWrappedRight = (id, text, color, bold=false) => {
     const p=pos(id), size=textSize(id), st=fontStyleOf(id,color); ctx.textAlign='right'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${size}px "${st.family}"`;
-    const r = wrapTextRight(ctx,text,p.x,p.y,330,size*1.25);
-    const bw = Math.max(r.maxW, 30); setBox(id, p.x - bw, p.y - size*0.85, bw, (r.lines-1)*size*1.25 + size*1.1);
+    const r = wrapTextRight(ctx,text,p.x,p.y,textWidths[id]||330,size*1.25);
+    const bw = textWidths[id] || Math.max(r.maxW, 30); setBox(id, p.x - bw, p.y - size*0.85, bw, (r.lines-1)*size*1.25 + size*1.1);
   };
 
   drawCenter('judul', document.getElementById('judul').value.trim(), '#075b3e', true);
@@ -621,11 +639,11 @@ function renderCertificate() {
   drawCenter('diberikan', document.getElementById('diberikan').value.trim(), '#075b3e', false);
   drawCenter('name',document.getElementById('name').value.trim(),'#075b3e',true);
   const nameWidth=Math.min(Math.max(ctx.measureText(document.getElementById('name').value.trim()).width+55,260),570);
-  if (hitBoxes.name) { hitBoxes.name.x = namePos.x - nameWidth/2; hitBoxes.name.w = nameWidth; hitBoxes.name.h += 14; }
+  if (hitBoxes.name && !textWidths.name) { hitBoxes.name.x = namePos.x - nameWidth/2; hitBoxes.name.w = nameWidth; hitBoxes.name.h += 14; }
   ctx.beginPath(); ctx.moveTo(namePos.x-nameWidth/2,namePos.y+17); ctx.lineTo(namePos.x+nameWidth/2,namePos.y+17); ctx.strokeStyle='#075b3e'; ctx.lineWidth=2.5; ctx.stroke();
   let periodShift = 0;
-  { const p=pos('body'), size=textSize('body'); const n=drawRichWrappedCenter(ctx,document.getElementById('body').value.trim(),p.x,p.y,650,size*1.4,size,fontStyleOf('body','#075b3e').color,'body'); periodShift = Math.max(0, n - 3) * size * 1.4; const rr = drawRichWrappedCenter.last, bw = Math.max(rr.w, 30); setBox('body', p.x - bw/2, p.y - size*0.85, bw, (n-1)*size*1.4 + size*1.1); }
-  { const p=pos('period'); ctx.textAlign='center'; { const st=fontStyleOf('period','#ed791d'); ctx.fillStyle=st.color; ctx.font=`bold ${textSize('period')}px "${st.family}"`; } const pt = document.getElementById('period').value; ctx.fillText(pt, p.x, p.y + periodShift); const psz = textSize('period'), pw = Math.max(ctx.measureText(pt).width, 30); setBox('period', p.x - pw/2, p.y + periodShift - psz*0.85, pw, psz*1.1); }
+  { const p=pos('body'), size=textSize('body'); const n=drawRichWrappedCenter(ctx,document.getElementById('body').value.trim(),p.x,p.y,textWidths.body||650,size*1.4,size,fontStyleOf('body','#075b3e').color,'body'); periodShift = Math.max(0, n - 3) * size * 1.4; const rr = drawRichWrappedCenter.last, bw = textWidths.body || Math.max(rr.w, 30); setBox('body', p.x - bw/2, p.y - size*0.85, bw, (n-1)*size*1.4 + size*1.1); }
+  { const p=pos('period'); ctx.textAlign='center'; { const st=fontStyleOf('period','#ed791d'); ctx.fillStyle=st.color; ctx.font=`bold ${textSize('period')}px "${st.family}"`; } const pt = document.getElementById('period').value; const psz = textSize('period'); if (textWidths.period) { const ls = wrapPlainLines(pt, textWidths.period), lh = psz*1.25; ls.forEach((l,i) => ctx.fillText(l, p.x, p.y + periodShift + i*lh)); setBox('period', p.x - textWidths.period/2, p.y + periodShift - psz*0.85, textWidths.period, (ls.length-1)*lh + psz*1.1); } else { ctx.fillText(pt, p.x, p.y + periodShift); const pw = Math.max(ctx.measureText(pt).width, 30); setBox('period', p.x - pw/2, p.y + periodShift - psz*0.85, pw, psz*1.1); } }
   drawRight('tanggalTtd',document.getElementById('tanggalTtd').value.trim(),'#075b3e',false);
   drawWrappedRight('jabatanTtd',document.getElementById('jabatanTtd').value.trim(),'#075b3e',true);
   // Sediakan ruang TTE di tengah area tanda tangan, di antara jabatan dan nama penandatangan.
@@ -642,7 +660,7 @@ function renderCertificate() {
     const sz=textBaseSizes.custom * (t.size/100), st={family:t.fontFamily||'Arial',color:t.color||'#075b3e'};
     ctx.save(); ctx.textAlign='center'; ctx.textBaseline='alphabetic'; ctx.fillStyle=st.color;
     ctx.font=`${t.bold?'bold ':''}${sz}px "${st.family}"`;
-    const lines=String(t.text||'').split(/\n/), lh=sz*1.25, widths=lines.map(line=>ctx.measureText(line).width), w=Math.max(30,...widths);
+    const lines=t.width?wrapPlainLines(t.text||'',t.width):String(t.text||'').split(/\n/), lh=sz*1.25, widths=lines.map(line=>ctx.measureText(line).width), w=t.width||Math.max(30,...widths);
     lines.forEach((line,i)=>ctx.fillText(line,t.x,t.y+i*lh));
     ctx.restore();
     setBox(t.id,t.x-w/2,t.y-sz*.9,w,Math.max(sz*1.1,lines.length*lh));
@@ -778,6 +796,7 @@ function currentState() {
     logoSizes: [...logoSizes],
     logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
     textSizes: {...textSizes},
+    textWidths: {...textWidths},
     textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}])),
     fontStyles: JSON.parse(JSON.stringify(fontStyles)),
     layers: layers.map(l => ({...l})),
@@ -811,9 +830,11 @@ function applyState(state) {
     updateLogoSizeControls();
   }
   if (state.textSizes) Object.keys(textSizes).forEach(id => { if (state.textSizes[id] !== undefined) textSizes[id] = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(state.textSizes[id]) || 100)); });
+  Object.keys(textWidths).forEach(k => delete textWidths[k]);
+  if (state.textWidths) Object.keys(state.textWidths).forEach(k => { const w = Number(state.textWidths[k]); if (w >= 40 && textSizes[k] !== undefined) textWidths[k] = w; });
   if (state.textPositions) Object.keys(textPositions).forEach(id => { const p=state.textPositions[id]; if(p){ textPositions[id].x=Number(p.x)||0; textPositions[id].y=Number(p.y)||0; } });
   if (state.fontStyles) Object.keys(fontStyles).forEach(id => { if(state.fontStyles[id]) { fontStyles[id].family=state.fontStyles[id].family||'Arial'; fontStyles[id].color=state.fontStyles[id].color||fontStyles[id].color; } });
-  if (Array.isArray(state.customTexts)) customTexts = state.customTexts.map(t => ({id:t.id||('custom_'+(++customTextSeq)),text:t.text||'',x:Number(t.x)||688,y:Number(t.y)||500,size:Number(t.size)||100,fontFamily:t.fontFamily||'Arial',color:t.color||'#075b3e',bold:!!t.bold}));
+  if (Array.isArray(state.customTexts)) customTexts = state.customTexts.map(t => ({id:t.id||('custom_'+(++customTextSeq)),text:t.text||'',x:Number(t.x)||688,y:Number(t.y)||500,size:Number(t.size)||100,fontFamily:t.fontFamily||'Arial',color:t.color||'#075b3e',bold:!!t.bold,width:Number(t.width)>=40?Number(t.width):undefined}));
   customTextSeq = Math.max(Number(state.customTextSeq)||0, customTexts.reduce((m,t)=>Math.max(m,Number(String(t.id).replace('custom_',''))||0),0));
   if (Array.isArray(state.layers)) setLayers(state.layers);
   renderCustomTextList();
@@ -879,6 +900,7 @@ function saveFieldsOnly() {
       logoSizes: [...logoSizes],
       logoPositions: logoPositions.map(p => ({x:p.x,y:p.y})),
       textSizes: {...textSizes},
+      textWidths: {...textWidths},
       textPositions: Object.fromEntries(Object.entries(textPositions).map(([k,p]) => [k,{x:p.x,y:p.y}])),
       fontStyles: JSON.parse(JSON.stringify(fontStyles)),
       customTexts: customTexts.map(t => ({...t})),
@@ -949,6 +971,8 @@ function loadSavedState() {
       if (Array.isArray(light.logoSizes)) light.logoSizes.forEach((size, i) => { if (i < 4) logoSizes[i] = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(size) || 100)); });
       if (Array.isArray(light.logoPositions)) light.logoPositions.forEach((pos,i)=>{ if(i<4 && pos){logoPositions[i].x=Number(pos.x)||0; logoPositions[i].y=Number(pos.y)||0;} });
       if (light.textSizes) Object.keys(textSizes).forEach(id=>{ if(light.textSizes[id]!==undefined) textSizes[id]=Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(light.textSizes[id])||100)); });
+      Object.keys(textWidths).forEach(k => delete textWidths[k]);
+      if (light.textWidths) Object.keys(light.textWidths).forEach(k => { const w = Number(light.textWidths[k]); if (w >= 40 && textSizes[k] !== undefined) textWidths[k] = w; });
       if (light.textPositions) Object.keys(textPositions).forEach(id=>{ const pos=light.textPositions[id]; if(pos){textPositions[id].x=Number(pos.x)||0;textPositions[id].y=Number(pos.y)||0;} });
       if (light.tteSize !== undefined) tteSize.value = Math.max(SIZE_MIN, Math.min(SIZE_MAX, Number(light.tteSize) || 100));
       if (light.ttePosition) { ttePosition.x=Number(light.ttePosition.x)||tteDefaultPosition.x; ttePosition.y=Number(light.ttePosition.y)||tteDefaultPosition.y; }
@@ -1224,7 +1248,9 @@ function updateTteControls() {
   const slider = document.getElementById('tteSize');
   const output = document.getElementById('tteSizeValue');
   if (slider) slider.value = tteSize.value;
-  if (output) output.value = `${tteSize.value}%`;
+  // TTE di Word berupa teks ${ttd_pengirim}; tampilkan ukuran font Word-nya (pt).
+  const tePt = Math.max(8, Math.min(0.18 * tteSize.value, 0.2 * tteSize.value)) * (16838 / 20 / 1376);
+  if (output) output.value = `${Math.round(tePt * 2) / 2} pt`;
 }
 updateTteControls();
 
@@ -1432,8 +1458,8 @@ function buildZip(files) {
 }
 function buildDocx(pngBytes, imgW, imgH, textLines) {
   const enc = new TextEncoder();
-  // Halaman Word = A4 landscape asli (29,7 x 21 cm). Gambar latar selebar halaman, rasio tetap, di tengah vertikal.
-  const pgW = 16838, pgH = 11906;                                    // A4 landscape (twips)
+  // Halaman Word selebar A4 landscape (29,7 cm), tinggi mengikuti rasio sertifikat: gambar latar memenuhi halaman tanpa tepi putih.
+  const pgW = 16838, pgH = Math.round(pgW * imgH / imgW);        // lebar A4 landscape (twips); tinggi mengikuti rasio gambar agar tidak ada area putih
   const cx = pgW * 635, cy = Math.round(cx * imgH / imgW);           // 1 twip = 635 EMU
   const offY = Math.max(0, Math.round((pgH * 635 - cy) / 2));        // tengah vertikal
   // Teks asli Word: tiap baris menjadi kotak teks (bisa diklik, diedit, diganti font/ukurannya di Word).
@@ -1575,6 +1601,22 @@ Object.keys(SEL_LABELS).forEach(k => { const el = document.getElementById(k); co
 
 const isLogoKey = k => /^logo[1-4]$/.test(k);
 const isCustomKey = k => /^custom_\d+$/.test(k);
+const isTextKey = k => k === 'tte' || isCustomKey(k) || textSizes[k] !== undefined;
+const isWidthKey = k => k !== 'tte' && (isCustomKey(k) || textSizes[k] !== undefined);
+const alignOf = k => ['tanggalTtd','jabatanTtd','penandatangan'].includes(k) ? 'right' : 'center';
+const getWidth = k => isCustomKey(k) ? (customByKey(k) || {}).width : textWidths[k];
+function setWidth(k, w) { if (isCustomKey(k)) { const t = customByKey(k); if (t) t.width = w || undefined; } else if (w) textWidths[k] = w; else delete textWidths[k]; }
+// Ukuran font seperti Word: langkah mengikuti daftar ukuran pt standar Word (8, 9, 10, 10,5, 11, 12, 14, 16 ...).
+const basePxOf = k => k === 'tte' ? 18 : isCustomKey(k) ? textBaseSizes.custom : textBaseSizes[k];
+const ptOfKey = k => basePxOf(k) * getSize(k) / 100 / PX_PER_PT;
+function wordStepSize(k, dir, big) {
+  if (!isTextKey(k)) return getSize(k) + dir * (big ? 10 : 5);
+  const cur = Math.round(ptOfKey(k) * 2) / 2;
+  let pt;
+  if (dir > 0) pt = WORD_PT.find(v => v > cur + 0.01) || cur + 8; else pt = [...WORD_PT].reverse().find(v => v < cur - 0.01) || Math.max(4, cur - 1);
+  if (big) { const i = WORD_PT.indexOf(pt); if (i >= 0) pt = WORD_PT[Math.max(0, Math.min(WORD_PT.length - 1, i + dir))]; }
+  return pt * PX_PER_PT * 100 / basePxOf(k);
+}
 const customByKey = k => customTexts.find(t=>t.id===k);
 const getPos = k => k === 'tte' ? ttePosition : isLogoKey(k) ? logoPositions[Number(k.slice(4)) - 1] : isCustomKey(k) ? customByKey(k) : isLayerKey(k) ? layerByKey(k) : textPositions[k];
 const getSize = k => k === 'tte' ? tteSize.value : isLogoKey(k) ? logoSizes[Number(k.slice(4)) - 1] : isCustomKey(k) ? customByKey(k).size : isLayerKey(k) ? layerByKey(k).size : textSizes[k];
@@ -1594,6 +1636,13 @@ const cornersOf = b => [[b.x, b.y], [b.x + b.w, b.y], [b.x, b.y + b.h], [b.x + b
 
 function hitTest(p) {
   const u = cssUnit();
+  if (selectedKey && hitBoxes[selectedKey] && isWidthKey(selectedKey)) {
+    const pb = padded(hitBoxes[selectedKey], u), my = pb.y + pb.h / 2;
+    if (Math.abs(p.y - my) <= 10 * u) {
+      if (Math.abs(p.x - pb.x) <= 9 * u) return { key: selectedKey, handle: false, side: 'l' };
+      if (Math.abs(p.x - (pb.x + pb.w)) <= 9 * u) return { key: selectedKey, handle: false, side: 'r' };
+    }
+  }
   if (selectedKey && hitBoxes[selectedKey]) {
     const pb = padded(hitBoxes[selectedKey], u);
     if (cornersOf(pb).some(c => Math.abs(p.x - c[0]) <= 10 * u && Math.abs(p.y - c[1]) <= 10 * u)) return { key: selectedKey, handle: true };
@@ -1621,6 +1670,7 @@ function drawOverlay() {
     if (strong) {
       octx.setLineDash([]); octx.fillStyle = '#fff';
       cornersOf(pb).forEach(c => { octx.beginPath(); octx.rect(c[0] - 6 * u, c[1] - 6 * u, 12 * u, 12 * u); octx.fill(); octx.stroke(); });
+      if (isWidthKey(k)) { const my = pb.y + pb.h / 2; [pb.x, pb.x + pb.w].forEach(x => { octx.beginPath(); octx.rect(x - 4 * u, my - 9 * u, 8 * u, 18 * u); octx.fill(); octx.stroke(); }); }
     }
     octx.restore();
   };
@@ -1679,7 +1729,7 @@ overlay.addEventListener('pointerdown', e => {
   select(hit.key);
   const b = hitBoxes[hit.key], pos = getPos(hit.key);
   drag = {
-    mode: hit.handle ? 'resize' : 'move', key: hit.key, p0: p, pos0: { x: pos.x, y: pos.y }, size0: getSize(hit.key),
+    mode: hit.side ? 'width' : hit.handle ? 'resize' : 'move', side: hit.side, L0: b.x, R0: b.x + b.w, key: hit.key, p0: p, pos0: { x: pos.x, y: pos.y }, size0: getSize(hit.key),
     c0: { x: b.x + b.w / 2, y: b.y + b.h / 2 }, before: currentState(), moved: false, pending: null, raf: 0
   };
   try { overlay.setPointerCapture(e.pointerId); } catch (err) {}
@@ -1691,6 +1741,15 @@ function applyDrag() {
   drag.raf = 0;
   const p = drag.pending; if (!p) return;
   const k = drag.key, pos = getPos(k);
+  if (drag.mode === 'width') {
+    drag.moved = true;
+    const dx = p.x - drag.p0.x; let L = drag.L0, R = drag.R0;
+    if (drag.side === 'l') L = Math.min(L + dx, R - 40); else R = Math.max(R + dx, L + 40);
+    setWidth(k, Math.round(R - L));
+    pos.x = alignOf(k) === 'right' ? Math.round(R) : Math.round((L + R) / 2);
+    pos.y = drag.pos0.y;
+    renderCertificate(); scheduleSave(); return;
+  }
   if (drag.mode === 'move') {
     const dx = p.x - drag.p0.x, dy = p.y - drag.p0.y;
     if (!drag.moved && Math.hypot(dx, dy) < 3 * cssUnit()) return;
@@ -1720,7 +1779,7 @@ overlay.addEventListener('pointermove', e => {
   const p = canvasPoint(e);
   if (!drag) {
     const h = hitTest(p), k = h ? h.key : null;
-    overlay.style.cursor = h ? (h.handle ? 'nwse-resize' : 'move') : 'default';
+    overlay.style.cursor = h ? (h.side ? 'ew-resize' : h.handle ? 'nwse-resize' : 'move') : 'default';
     if (k !== hoverKey) { hoverKey = k; drawOverlay(); }
     return;
   }
@@ -1743,7 +1802,7 @@ overlay.addEventListener('pointerleave', () => { if (!drag && hoverKey) { hoverK
 function bumpSize(delta) {
   if (!selectedKey) return;
   const before = currentState();
-  resizeKeepCenter(selectedKey, getSize(selectedKey) + delta);
+  resizeKeepCenter(selectedKey, wordStepSize(selectedKey, Math.sign(delta), false));
   commitHistory(before);
 }
 document.getElementById('selDelete').addEventListener('click', () => {
@@ -1756,7 +1815,7 @@ document.getElementById('selPlus').addEventListener('click', () => bumpSize(5));
 document.getElementById('selReset').addEventListener('click', () => {
   if (!selectedKey) return;
   const before = currentState(), pos = getPos(selectedKey), d = defaultPos(selectedKey);
-  pos.x = d.x; pos.y = d.y; renderCertificate(); commitHistory(before);
+  pos.x = d.x; pos.y = d.y; if (isWidthKey(selectedKey)) setWidth(selectedKey, null); renderCertificate(); commitHistory(before);
 });
 
 // Keyboard: panah = geser (Shift = 10 px), + / − = ukuran, Esc = lepas pilihan.
@@ -1775,8 +1834,8 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'ArrowRight') pos.x += step;
   else if (e.key === 'ArrowUp') pos.y -= step;
   else if (e.key === 'ArrowDown') pos.y += step;
-  else if (e.key === '+' || e.key === '=') resizeKeepCenter(k, getSize(k) + (e.shiftKey ? 10 : 2));
-  else resizeKeepCenter(k, getSize(k) - (e.shiftKey ? 10 : 2));
+  else if (e.key === '+' || e.key === '=') resizeKeepCenter(k, wordStepSize(k, 1, e.shiftKey));
+  else resizeKeepCenter(k, wordStepSize(k, -1, e.shiftKey));
   renderCertificate(); scheduleSave();
   clearTimeout(keyBurst.timer);
   keyBurst.timer = setTimeout(() => { const b = keyBurst.before; keyBurst = null; commitHistory(b); }, 700);
