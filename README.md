@@ -19,3 +19,9 @@ Jika repository sebelumnya sudah memiliki public/template.jpg, file tersebut bol
   jadi tombol Atur Ulang tidak memunculkan tutorial lagi.
 - Untuk menampilkan intro lagi: buka alamat dengan tambahan `?tutorial` (contoh: .../index.html?tutorial).
 - Gambar panduan ada di folder `tutorial/`. Bila tampilan aplikasi berubah, gambar perlu dibuat ulang.
+
+
+## Gemini (Nano Banana) dan Canva
+- Gemini: file `api/gemini.js`. Di Vercel tambahkan Environment Variables `GEMINI_API_KEY` (dari Google AI Studio) dan `ADMIN_KEY` (kata sandi bebas), lalu Redeploy. Opsional `GEMINI_IMAGE_MODEL` untuk memilih model gambar.
+- Di panel "Desain AI & Canva": tulis deskripsi, pilih tujuan (template 16:9 atau gambar layer), klik "Buat dengan Gemini", lalu pakai sebagai template atau layer (lewat Crop Pintar).
+- Canva (manual): buka Canva, buat desain ukuran custom 1376 x 768 px, unduh PNG/JPG, lalu klik "Impor desain Canva sebagai template".
