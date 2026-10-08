@@ -87,6 +87,12 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 .aiRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.aiRow>*{flex:1 1 auto;text-align:center}
 a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:#7d2ae8;color:#fff;font-weight:700;font-size:13px;text-decoration:none}
 .ai-sep{border:0;border-top:1px solid #e0e8e2;margin:14px 0}
+.previewtop{flex-wrap:wrap}
+.eye-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;font-size:12px;background:#edf3ef;color:#14583d;border:1px solid #cfe0d5}
+.eye-btn:hover{background:#e1ede6}
+.eye-btn.on{background:#075b3e;color:#fff;border-color:#075b3e}
+.eye-btn svg{flex:none}.eye-btn .eye-off{display:none}.eye-btn.on .eye-off{display:inline}.eye-btn.on .eye-on{display:none}
+.eye-note{font-size:12px;color:#557366;margin:-2px 2px 10px}
 </style>
 <link rel="stylesheet" href="tutorial.css">
 </head>
@@ -105,7 +111,7 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 </div></details>
 <details class="grp" open><summary><span class="num">2</span><span>Judul &amp; Nomor</span></summary><div class="grp-body">
 <div class="field"><label>Tulisan judul sertifikat</label><input id="judul" type="text" value="SERTIFIKAT"><div class="text-control" data-text="judul"><div class="text-size"><span>Ukuran</span><input id="judulSize" type="range" min="30" max="300" value="100"><output id="judulSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="judul" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="judul" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="judul" data-dir="center">● Tengah</button><button type="button" class="right" data-text="judul" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="judul" data-dir="down">▼ Bawah</button></div></div></div>
-<div class="field"><label>Nomor sertifikat</label><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"><div class="text-control" data-text="number"><div class="text-size"><span>Ukuran</span><input id="numberSize" type="range" min="30" max="300" value="100"><output id="numberSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="number" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="number" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="number" data-dir="center">● Tengah</button><button type="button" class="right" data-text="number" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="number" data-dir="down">▼ Bawah</button></div></div></div>
+<div class="field"><label>Nomor sertifikat</label><small style="margin:-2px 0 6px">Contoh nomor untuk pratinjau setelah TTE. Di format Srikandi, nomor tampil sebagai ${nomor_naskah}.</small><input id="number" type="text" value="400.14.5.4/[nomor]/BAPPERIDA"><div class="text-control" data-text="number"><div class="text-size"><span>Ukuran</span><input id="numberSize" type="range" min="30" max="300" value="100"><output id="numberSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="number" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="number" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="number" data-dir="center">● Tengah</button><button type="button" class="right" data-text="number" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="number" data-dir="down">▼ Bawah</button></div></div></div>
 </div></details>
 <details class="grp" open><summary><span class="num">3</span><span>Penerima &amp; Isi</span></summary><div class="grp-body">
 <div class="field"><label>Tulisan di atas nama penerima</label><input id="diberikan" type="text" value="Diberikan kepada"><div class="text-control" data-text="diberikan"><div class="text-size"><span>Ukuran</span><input id="diberikanSize" type="range" min="30" max="300" value="100"><output id="diberikanSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="diberikan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="diberikan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="diberikan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="diberikan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="diberikan" data-dir="down">▼ Bawah</button></div></div></div>
@@ -143,7 +149,7 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 <details class="grp" open><summary><span class="num">4</span><span>Penandatangan <small>(bagian bawah)</small></span></summary><div class="grp-body">
 <div class="field"><label>Tanggal penandatanganan</label><input id="tanggalTtd" type="text" value="Sumber, [Tanggal penandatanganan]"><div class="text-control" data-text="tanggalTtd"><div class="text-size"><span>Ukuran</span><input id="tanggalTtdSize" type="range" min="30" max="300" value="100"><output id="tanggalTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="tanggalTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="tanggalTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="tanggalTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="tanggalTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="tanggalTtd" data-dir="down">▼ Bawah</button></div></div></div>
 <div class="field"><label>Jabatan penandatangan</label><textarea id="jabatanTtd">Kepala Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah (Bapperida) Kabupaten Cirebon</textarea><div class="text-control" data-text="jabatanTtd"><div class="text-size"><span>Ukuran</span><input id="jabatanTtdSize" type="range" min="30" max="300" value="100"><output id="jabatanTtdSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="jabatanTtd" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="jabatanTtd" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="jabatanTtd" data-dir="center">● Tengah</button><button type="button" class="right" data-text="jabatanTtd" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="jabatanTtd" data-dir="down">▼ Bawah</button></div></div></div>
-<div class="field"><label>Upload TTE / Tanda Tangan Elektronik</label><input id="tte" type="file" accept="image/png,image/jpeg,image/webp"><small>TTE akan ditempatkan di atas nama penandatangan dan dapat diatur posisinya.</small><div class="size-control"><span>Ukuran</span><input id="tteSize" type="range" min="30" max="300" value="100" step="1"><output id="tteSizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-tte-dir="up">▲ Atas</button><button type="button" class="left" data-tte-dir="left">◀ Kiri</button><button type="button" class="center" data-tte-dir="center">● Tengah</button><button type="button" class="right" data-tte-dir="right">Kanan ▶</button><button type="button" class="down" data-tte-dir="down">▼ Bawah</button></div></div>
+<div class="field"><label>Upload TTE / Tanda Tangan Elektronik</label><input id="tte" type="file" accept="image/png,image/jpeg,image/webp"><small>Gambar TTE dipakai pada pratinjau setelah TTE. Di format Srikandi, tempatnya berisi ${ttd_pengirim} yang diisi otomatis oleh Srikandi. Posisi dan ukuran tetap bisa diatur.</small><div class="size-control"><span>Ukuran</span><input id="tteSize" type="range" min="30" max="300" value="100" step="1"><output id="tteSizeValue">100%</output></div><div class="logo-position"><button type="button" class="up" data-tte-dir="up">▲ Atas</button><button type="button" class="left" data-tte-dir="left">◀ Kiri</button><button type="button" class="center" data-tte-dir="center">● Tengah</button><button type="button" class="right" data-tte-dir="right">Kanan ▶</button><button type="button" class="down" data-tte-dir="down">▼ Bawah</button></div></div>
 <div class="field"><label>Nama Penandatangan</label><input id="penandatangan" type="text" value="DANGI"><div class="text-control" data-text="penandatangan"><div class="text-size"><span>Ukuran</span><input id="penandatanganSize" type="range" min="30" max="300" value="100"><output id="penandatanganSizeValue">100%</output></div><div class="text-position"><button type="button" class="up" data-text="penandatangan" data-dir="up">▲ Atas</button><button type="button" class="left" data-text="penandatangan" data-dir="left">◀ Kiri</button><button type="button" class="center" data-text="penandatangan" data-dir="center">● Tengah</button><button type="button" class="right" data-text="penandatangan" data-dir="right">Kanan ▶</button><button type="button" class="down" data-text="penandatangan" data-dir="down">▼ Bawah</button></div></div></div>
 </div></details>
 <details class="grp" open><summary><span class="num">&#9635;</span><span>Layer Gambar <small>(foto, stempel, watermark)</small></span></summary><div class="grp-body">
@@ -171,7 +177,8 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 <p class="note">Tips: gunakan logo PNG transparan. File diproses langsung di browser. Data hanya dikirim ke server jika Anda menekan &quot;Simpan ke Server&quot;.</p>
 </section>
 <section class="preview">
-<div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Klik &amp; geser langsung di sini</span></div>
+<div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Klik &amp; geser langsung di sini</span><button type="button" class="eye-btn" id="eyeTte" aria-pressed="false" title="Lihat tampilan sertifikat setelah ditandatangani TTE Srikandi" aria-label="Lihat pratinjau setelah TTE Srikandi"><svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg><span>Lihat setelah TTE</span></button></div>
+<p class="eye-note" id="eyeNote" role="status"></p>
 <div class="stage"><canvas id="cert" width="1376" height="768"></canvas><canvas id="overlay" width="1376" height="768"></canvas></div>
 <div class="selbar"><span id="selLabel">Klik teks atau logo di sertifikat untuk memilih</span><span class="selbtns"><button type="button" class="secondary" id="selMinus" title="Perkecil" disabled>A&minus;</button><button type="button" class="secondary" id="selPlus" title="Perbesar" disabled>A+</button><button type="button" class="secondary" id="selDelete" title="Hapus logo ini" hidden>&#128465; Hapus</button><button type="button" class="secondary" id="selReset" title="Kembalikan ke posisi awal" disabled>Posisi awal</button></span></div>
 <p class="note">Geser untuk memindah; tarik kotak kecil di sudut untuk mengubah ukuran. Di komputer, tombol panah menggeser 1 px (Shift = 10 px) dan +/&minus; mengubah ukuran. Tampilan pratinjau mengikuti ukuran gambar template. Periksa kembali ejaan dan data sebelum mengunduh.</p>
@@ -204,6 +211,9 @@ let logoDataCache = [null, null, null, null];
 // Logo yang sengaja dihapus (termasuk logo bawaan) agar tidak muncul lagi saat halaman dibuka ulang.
 const logoRemoved = [false, false, false, false];
 let renderTimer = null;
+// Format Srikandi: nomor dan tanda tangan berupa placeholder; ikon mata menampilkan simulasi setelah TTE.
+const SRK_NOMOR = '${nomor_naskah}', SRK_TTD = '${ttd_pengirim}';
+let signedPreview = false;
 
 // Template sertifikat baru dari gambar yang dilampirkan pengguna.
   // Gambar disematkan langsung ke HTML agar file tetap mandiri (tanpa path eksternal).
@@ -595,7 +605,7 @@ function renderCertificate() {
 
   drawCenter('judul', document.getElementById('judul').value.trim(), '#075b3e', true);
 
-  drawCenter('number','Nomor :  ' + document.getElementById('number').value,'#075b3e',true);
+  drawCenter('number','Nomor :  ' + (signedPreview ? document.getElementById('number').value : SRK_NOMOR),'#075b3e',true);
 
   // Empat logo opsional.
   const logoSlots = [
@@ -621,7 +631,10 @@ function renderCertificate() {
   // Sediakan ruang TTE di tengah area tanda tangan, di antara jabatan dan nama penandatangan.
   const signerCenterX = pos('penandatangan').x;
   const tteW = 200 * tteSize.value / 100, tteH = 60 * tteSize.value / 100;
-  const tr = drawTransparentLogo(ctx, tteImg, signerCenterX + (ttePosition.x - tteDefaultPosition.x) - tteW/2, ttePosition.y - tteH/2, tteW, tteH);
+  const tteX = signerCenterX + (ttePosition.x - tteDefaultPosition.x) - tteW/2, tteY = ttePosition.y - tteH/2;
+  const tr = !signedPreview ? drawTtePlaceholder(ctx, tteX, tteY, tteW, tteH)
+    : (tteImg && tteImg.naturalWidth) ? drawTransparentLogo(ctx, tteImg, tteX, tteY, tteW, tteH)
+    : drawSimQr(ctx, tteX, tteY, tteW, tteH, document.getElementById('number').value);
   if (tr) hitBoxes.tte = tr;
   drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
   // Teks tambahan bebas.
@@ -637,6 +650,36 @@ function renderCertificate() {
   drawLayers(true);
   drawOverlay();
   for (let n = 1; n <= 4; n++) { const rb = document.getElementById('logo' + n + 'Remove'); if (rb) rb.disabled = !hitBoxes['logo' + n]; }
+}
+
+// Placeholder Srikandi untuk tanda tangan: teks ${ttd_pengirim} di area TTE.
+function drawTtePlaceholder(context, x, y, w, h) {
+  context.save();
+  context.font = `bold ${Math.max(8, Math.min(h * 0.3, w / 10))}px "Courier New", monospace`;
+  context.textAlign = 'center'; context.textBaseline = 'middle'; context.fillStyle = '#075b3e';
+  context.fillText(SRK_TTD, x + w / 2, y + h / 2);
+  context.restore();
+  return { x, y, w, h };
+}
+// Simulasi TTE Srikandi (bukan kode QR sungguhan) bila gambar TTE belum diunggah.
+function drawSimQr(context, x, y, w, h, seed) {
+  let hs = 2166136261;
+  for (const ch of String(seed || 'TTE')) { hs ^= ch.charCodeAt(0); hs = Math.imul(hs, 16777619) >>> 0; }
+  const rnd = () => { hs = (Math.imul(hs, 1664525) + 1013904223) >>> 0; return hs / 4294967296; };
+  const n = 21, s = Math.min(w, h * 1.25), c = s / n, qx = x + (w - s) / 2, qy = y + (h - s) / 2;
+  const inFinder = (i, j) => (i < 8 && j < 8) || (i > n - 9 && j < 8) || (i < 8 && j > n - 9);
+  const finder = (i, j) => {
+    context.fillStyle = '#111'; context.fillRect(qx + i * c, qy + j * c, 7 * c, 7 * c);
+    context.fillStyle = '#fff'; context.fillRect(qx + (i + 1) * c, qy + (j + 1) * c, 5 * c, 5 * c);
+    context.fillStyle = '#111'; context.fillRect(qx + (i + 2) * c, qy + (j + 2) * c, 3 * c, 3 * c);
+  };
+  context.save();
+  context.fillStyle = '#fff'; context.fillRect(qx - c, qy - c, s + 2 * c, s + 2 * c);
+  context.fillStyle = '#111';
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) if (!inFinder(i, j) && rnd() < 0.5) context.fillRect(qx + i * c, qy + j * c, c, c);
+  finder(0, 0); finder(n - 7, 0); finder(0, n - 7);
+  context.restore();
+  return { x: qx - c, y: qy - c, w: s + 2 * c, h: s + 2 * c };
 }
 
 // Menggambar PNG transparan secara proporsional tanpa merusak alpha channel.
@@ -1261,14 +1304,17 @@ document.querySelectorAll('.logo-position button').forEach(button => {
   });
 });
 
+// Ukuran teks ditampilkan dalam pt seperti di Word (lebar sertifikat = A4 landscape 841,9 pt = 1376 px).
+const PX_PER_PT = 1376 / 841.89;
+const ptLabel = id => { const pt = Math.round(textBaseSizes[id] * textSizes[id] / 100 / PX_PER_PT * 2) / 2; return String(pt).replace('.', ',') + ' pt'; };
 function updateTextControls(){
-  Object.keys(textSizes).forEach(id=>{ const slider=document.getElementById(id+'Size'); const output=document.getElementById(id+'SizeValue'); if(slider) slider.value=textSizes[id]; if(output) output.value=textSizes[id]+'%'; });
+  Object.keys(textSizes).forEach(id=>{ const slider=document.getElementById(id+'Size'); const output=document.getElementById(id+'SizeValue'); if(slider) slider.value=textSizes[id]; if(output) output.value=ptLabel(id); });
 }
 updateTextControls();
 Object.keys(textSizes).forEach(id=>{
   const slider=document.getElementById(id+'Size');
   if(!slider) return;
-  slider.addEventListener('input',()=>{ const before=currentState(); textSizes[id]=Number(slider.value); document.getElementById(id+'SizeValue').value=textSizes[id]+'%'; scheduleRender(); scheduleSave(); slider.dataset.beforeState=JSON.stringify(before); });
+  slider.addEventListener('input',()=>{ const before=currentState(); textSizes[id]=Number(slider.value); document.getElementById(id+'SizeValue').value=ptLabel(id); scheduleRender(); scheduleSave(); slider.dataset.beforeState=JSON.stringify(before); });
   slider.addEventListener('change',()=>{ try{ if(slider.dataset.beforeState){ undoStack.push(JSON.parse(slider.dataset.beforeState)); if(undoStack.length>50)undoStack.shift(); redoStack=[]; updateHistoryButtons(); } }catch(e){} saveState(false); });
 });
 document.querySelectorAll('.text-position button').forEach(button=>{
@@ -1409,6 +1455,9 @@ function buildDocx(pngBytes, imgW, imgH) {
   ]);
 }
 document.getElementById('download').addEventListener('click', () => {
+  // Unduhan selalu memakai format Srikandi (${nomor_naskah} dan ${ttd_pengirim}), bukan pratinjau simulasi.
+  const wasSigned = signedPreview;
+  if (wasSigned) { signedPreview = false; renderCertificate(); }
   canvas.toBlob(async blob => {
     if (!blob) { alert('Gagal membuat file. Coba lagi.'); return; }
     try {
@@ -1421,6 +1470,7 @@ document.getElementById('download').addEventListener('click', () => {
       setTimeout(() => URL.revokeObjectURL(url), 10000);
     } catch (e) { alert('Gagal membuat file Word: ' + e.message); }
   }, 'image/png');
+  if (wasSigned) { signedPreview = true; renderCertificate(); }
 });
 
 // Atur Ulang
@@ -1679,6 +1729,18 @@ document.querySelector('.panel').addEventListener('focusin', e => {
   if (k && k !== selectedKey) { selectedKey = k; updateSelBar(); syncSidebar(k); drawOverlay(); }
 });
 
+(function () {
+  const btn = document.getElementById('eyeTte'), note = document.getElementById('eyeNote');
+  const sync = () => {
+    btn.setAttribute('aria-pressed', String(signedPreview)); btn.classList.toggle('on', signedPreview);
+    btn.querySelector('span').textContent = signedPreview ? 'Kembali ke format Srikandi' : 'Lihat setelah TTE';
+    note.textContent = signedPreview
+      ? 'Pratinjau setelah TTE Srikandi (simulasi). Unduhan tetap memakai format ${nomor_naskah} dan ${ttd_pengirim}.'
+      : 'Format Srikandi: nomor tampil sebagai ${nomor_naskah} dan tanda tangan sebagai ${ttd_pengirim}.';
+  };
+  btn.addEventListener('click', () => { signedPreview = !signedPreview; sync(); renderCertificate(); });
+  sync();
+})();
 renderCustomTextList(); syncFontControls();
 if (window.ResizeObserver) new ResizeObserver(() => drawOverlay()).observe(overlay);
 else window.addEventListener('resize', drawOverlay);

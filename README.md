@@ -30,3 +30,10 @@ Jika repository sebelumnya sudah memiliki public/template.jpg, file tersebut bol
 ## Format unduhan
 - Tombol unduh menghasilkan file Word (`Sertifikat_Bapperida.docx`), satu halaman landscape, gambar sertifikat memenuhi halaman. File dibuat langsung di browser, tanpa pustaka tambahan dan tanpa server.
 - Isi sertifikat berupa gambar, jadi teks di dalam Word tidak bisa diedit. Koreksi dilakukan di aplikasi, lalu unduh ulang.
+
+
+## Pratinjau setelah TTE Srikandi
+- Tampilan sertifikat memakai format Srikandi: nomor tampil sebagai `${nomor_naskah}` dan tanda tangan sebagai `${ttd_pengirim}`.
+- Tombol ikon mata di atas pratinjau menampilkan simulasi sertifikat setelah ditandatangani TTE. Nomor diambil dari kolom Nomor sertifikat; tanda tangan dari gambar TTE yang diunggah, atau kode QR simulasi bila belum ada.
+- Tombol unduh selalu memakai format Srikandi, tidak terpengaruh pratinjau.
+- Catatan: file Word berisi gambar, sehingga teks placeholder di dalam gambar belum bisa diganti otomatis oleh Srikandi.
