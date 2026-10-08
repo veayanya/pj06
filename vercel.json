@@ -3,7 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "functions": {
-    "api/gemini.js": {
+    "api/*.js": {
       "maxDuration": 60
     }
   }
