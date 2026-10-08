@@ -162,7 +162,7 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 <div class="aiRow"><a class="canvaBtn" href="https://www.canva.com/create/certificates/" target="_blank" rel="noopener">Buka Canva: Sertifikat</a><button type="button" class="secondary" id="canvaTpl">Impor desain Canva sebagai template</button></div>
 <p class="mut2" style="margin-top:8px">Di Canva pilih ukuran custom <b>1376 &times; 768 px</b>, kosongkan area tengah (nama dan isi diisi dari panel ini), lalu unduh sebagai PNG atau JPG dan klik tombol impor di atas.</p>
 </div></details>
-<div class="actions"><button class="primary" id="download">Unduh Sertifikat PNG</button><button class="secondary" id="reset">Atur Ulang</button></div>
+<div class="actions"><button class="primary" id="download">Unduh Sertifikat Word (.docx)</button><button class="secondary" id="reset">Atur Ulang</button></div>
 <div class="history-actions"><button class="secondary" id="saveLast">Simpan Terakhir</button><button class="secondary" id="undo" disabled>Urungkan</button><button class="secondary" id="redo" disabled>Ulangi</button></div>
 <p class="save-status" id="saveStatus" role="status">Penyimpanan otomatis aktif di perangkat ini.</p>
 <div class="history-actions share-actions"><button class="secondary" id="exportCfg" type="button">Ekspor Pengaturan</button><button class="secondary" id="importCfg" type="button">Impor Pengaturan</button><input id="importCfgFile" type="file" accept="application/json,.json" hidden></div>
@@ -1356,11 +1356,71 @@ document.getElementById('redo').addEventListener('click', () => {
 });
 
 // Unduh Sertifikat
+// Unduhan berupa file Word (.docx): satu halaman landscape, gambar sertifikat memenuhi halaman.
+// File .docx dibuat langsung di browser (ZIP tanpa kompresi), tanpa pustaka tambahan.
+const CRC_TABLE = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8) { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC_TABLE[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function buildZip(files) {
+  const enc = new TextEncoder(), parts = [], central = [];
+  let offset = 0;
+  files.forEach(f => {
+    const name = enc.encode(f.name), data = f.data, crc = crc32(data);
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+    lh.setUint16(10, 0, true); lh.setUint16(12, 0x21, true); lh.setUint32(14, crc, true);
+    lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true); lh.setUint16(26, name.length, true); lh.setUint16(28, 0, true);
+    parts.push(new Uint8Array(lh.buffer), name, data);
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+    ch.setUint16(12, 0, true); ch.setUint16(14, 0x21, true); ch.setUint32(16, crc, true);
+    ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true); ch.setUint16(28, name.length, true);
+    ch.setUint32(42, offset, true);
+    central.push(new Uint8Array(ch.buffer), name);
+    offset += 30 + name.length + data.length;
+  });
+  const cdSize = central.reduce((a, b) => a + b.length, 0);
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+  end.setUint32(12, cdSize, true); end.setUint32(16, offset, true);
+  return new Blob([...parts, ...central, new Uint8Array(end.buffer)], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+}
+function buildDocx(pngBytes, imgW, imgH) {
+  const enc = new TextEncoder();
+  const pgW = 16838, pgH = Math.round(pgW * imgH / imgW);          // lebar A4 landscape (twips), tinggi mengikuti rasio gambar
+  const cx = pgW * 635, cy = pgH * 635;                              // 1 twip = 635 EMU
+  const NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"';
+  const doc = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ' + NS + '><w:body>' +
+    '<w:p><w:pPr><w:spacing w:before="0" w:after="0" w:line="20" w:lineRule="exact"/></w:pPr><w:r><w:rPr><w:sz w:val="2"/></w:rPr><w:drawing>' +
+    '<wp:anchor distT="0" distB="0" distL="0" distR="0" simplePos="0" relativeHeight="0" behindDoc="1" locked="0" layoutInCell="1" allowOverlap="1">' +
+    '<wp:simplePos x="0" y="0"/><wp:positionH relativeFrom="page"><wp:posOffset>0</wp:posOffset></wp:positionH><wp:positionV relativeFrom="page"><wp:posOffset>0</wp:posOffset></wp:positionV>' +
+    '<wp:extent cx="' + cx + '" cy="' + cy + '"/><wp:effectExtent l="0" t="0" r="0" b="0"/><wp:wrapNone/><wp:docPr id="1" name="Sertifikat" descr="Sertifikat Bapperida"/><wp:cNvGraphicFramePr/>' +
+    '<a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="0" name="sertifikat.png"/><pic:cNvPicPr/></pic:nvPicPr>' +
+    '<pic:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>' +
+    '<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="' + cx + '" cy="' + cy + '"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic>' +
+    '</wp:anchor></w:drawing></w:r></w:p>' +
+    '<w:sectPr><w:pgSz w:w="' + pgW + '" w:h="' + pgH + '" w:orient="landscape"/><w:pgMar w:top="0" w:right="0" w:bottom="0" w:left="0" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr></w:body></w:document>';
+  const head = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  return buildZip([
+    { name: '[Content_Types].xml', data: enc.encode(head + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>') },
+    { name: '_rels/.rels', data: enc.encode(head + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>') },
+    { name: 'word/document.xml', data: enc.encode(doc) },
+    { name: 'word/_rels/document.xml.rels', data: enc.encode(head + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/image1.png"/></Relationships>') },
+    { name: 'word/media/image1.png', data: pngBytes }
+  ]);
+}
 document.getElementById('download').addEventListener('click', () => {
-  const link = document.createElement('a');
-  link.download = 'Sertifikat_Bapperida.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+  canvas.toBlob(async blob => {
+    if (!blob) { alert('Gagal membuat file. Coba lagi.'); return; }
+    try {
+      const png = new Uint8Array(await blob.arrayBuffer());
+      const url = URL.createObjectURL(buildDocx(png, canvas.width, canvas.height));
+      const link = document.createElement('a');
+      link.download = 'Sertifikat_Bapperida.docx';
+      link.href = url;
+      document.body.appendChild(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } catch (e) { alert('Gagal membuat file Word: ' + e.message); }
+  }, 'image/png');
 });
 
 // Atur Ulang

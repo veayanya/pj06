@@ -56,14 +56,14 @@
             '<div class="tw-mrow" data-r="logo"><span class="tw-mlabel">Logo 1</span><div class="tw-mfile"><i>Choose File</i><span>No file chosen</span><em>logo.png</em></div></div>' +
             '<div class="tw-mrow" data-r="name"><span class="tw-mlabel">Nama penerima</span><div class="tw-minput"><span class="tw-typed"></span><i class="tw-caret"></i></div></div>' +
             '<div class="tw-mrow" data-r="size"><span class="tw-mlabel">Ukuran</span><div class="tw-mslider"><i class="tw-thumb"></i></div></div>' +
-            '<div class="tw-mbtn" data-r="btn">Unduh Sertifikat PNG</div>' +
+            '<div class="tw-mbtn" data-r="btn">Unduh Sertifikat Word (.docx)</div>' +
           '</div>' +
           '<div class="tw-mcert">' +
             '<div class="tw-mlogo"></div>' +
             '<div class="tw-mtitle">SERTIFIKAT</div><div class="tw-mnum">Nomor : 400.14.5.4/012/BAPPERIDA</div>' +
             '<div class="tw-mgiven">Diberikan kepada</div><div class="tw-mname"><span class="tw-mn"></span></div>' +
             '<div class="tw-mlines"><i></i><i></i><i></i></div><div class="tw-msig"></div>' +
-            '<div class="tw-mpng">PNG</div><div class="tw-mok">&#10003; Tersimpan</div>' +
+            '<div class="tw-mpng">DOCX</div><div class="tw-mok">&#10003; Tersimpan</div>' +
           '</div>' +
           '<div class="tw-hand" style="transform:translate(60%,150px)">&#128070;</div>' +
         '</div>' +
@@ -87,7 +87,7 @@
     { t: 'Unggah logo', d: 'Pilih file PNG transparan, logo langsung muncul.' },
     { t: 'Ketik nama dan isi', d: 'Ganti teks contoh dengan data peserta magang.' },
     { t: 'Atur ukuran dan posisi', d: 'Geser slider atau klik tombol arah sampai pas.' },
-    { t: 'Unduh sebagai PNG', d: 'Periksa dulu, lalu klik Unduh Sertifikat PNG.' }
+    { t: 'Unduh sebagai Word', d: 'Periksa dulu, lalu klik Unduh Sertifikat Word.' }
   ];
 
   function moveHand(stage, target, offY) {
@@ -162,7 +162,7 @@
     { sec: 'ttd', els: function () { return [field('#tanggalTtd'), field('#jabatanTtd')]; }, title: 'Tanggal dan jabatan penandatangan', text: 'Isi tanggal penandatanganan (misalnya \u201cSumber, 5 Oktober 2026\u201d) dan jabatan pejabat yang menandatangani.' },
     { sec: 'ttd', els: function () { return [field('#penandatangan'), field('#tte')]; }, title: 'Nama penandatangan dan TTE', text: 'Ketik nama pejabat, lalu unggah gambar tanda tangan elektronik (PNG transparan). TTE ditempatkan di atas nama dan bisa diatur ukuran serta posisinya.' },
     { sec: 'teks', els: function () { return [q('.text-control[data-text="name"]')]; }, title: 'Ukuran dan posisi teks', text: 'Teks bisa digeser dan diubah ukurannya langsung di pratinjau. Slider <b>Ukuran</b> dan tombol arah di sini untuk penyesuaian halus bila ada teks yang terlalu rapat atau terpotong.' },
-    { sec: 'unduh', els: function () { return [q('.actions')]; }, title: 'Unduh sertifikat', text: '<b>Periksa dulu</b> ejaan nama, nomor, tanggal, dan jabatan, karena setelah diunduh teks tidak bisa diedit. Lalu klik <b>Unduh Sertifikat PNG</b>.' },
+    { sec: 'unduh', els: function () { return [q('.actions')]; }, title: 'Unduh sertifikat', text: '<b>Periksa dulu</b> ejaan nama, nomor, tanggal, dan jabatan, karena setelah diunduh teks tidak bisa diedit. Lalu klik <b>Unduh Sertifikat Word (.docx)</b>.' },
     { sec: 'tombol', els: function () { return [q('#saveLast').closest('.history-actions'), q('#exportCfg').closest('.history-actions')]; }, title: 'Tombol penyimpanan', text: 'Simpan Terakhir, Urungkan, Ulangi, serta Ekspor dan Impor Pengaturan untuk cadangan. Hati-hati dengan <b>Atur Ulang</b>: semua data tersimpan ikut terhapus.' }
   ];
 
@@ -305,7 +305,7 @@
 
   var SECTIONS = [
     { id: 'mengenal', ic: '&#129517;', t: 'Mengenal tampilan', html:
-      '<p class="tw-lead">Panduan lengkap membuat sertifikat magang: mengatur logo, mengubah nama dan isi sertifikat, sampai mengunduh hasilnya sebagai gambar PNG.</p>' +
+      '<p class="tw-lead">Panduan lengkap membuat sertifikat magang: mengatur logo, mengubah nama dan isi sertifikat, sampai mengunduh hasilnya sebagai file Word (.docx).</p>' +
       '<p>Halaman terbagi dua bagian:</p>' +
       '<ol class="tw-steps"><li><b>Panel Pengaturan Sertifikat</b> berisi semua kolom isian, pengaturan logo, ukuran, posisi, dan tombol.</li>' +
       '<li><b>Pratinjau Sertifikat</b> menampilkan hasil sertifikat secara langsung. Setiap perubahan di panel langsung terlihat di pratinjau.</li></ol>' +
@@ -385,13 +385,13 @@
       tryBtn('teks') },
 
     { id: 'unduh', ic: '&#11015;&#65039;', t: 'Memeriksa & mengunduh', html:
-      '<p class="tw-lead">Langkah terakhir: pastikan semuanya benar, lalu unduh sebagai gambar PNG.</p>' +
+      '<p class="tw-lead">Langkah terakhir: pastikan semuanya benar, lalu unduh sebagai file Word (.docx).</p>' +
       '<ol class="tw-steps"><li>Periksa pratinjau dengan teliti: ejaan nama, nomor, nama instansi, tanggal, dan jabatan. <b>Setelah diunduh, teks tidak bisa diedit lagi.</b></li>' +
-      '<li>Klik tombol <b>Unduh Sertifikat PNG</b>.</li>' +
-      '<li>File PNG tersimpan di perangkat Anda (biasanya di folder Downloads).</li>' +
+      '<li>Klik tombol <b>Unduh Sertifikat Word (.docx)</b>.</li>' +
+      '<li>File Word (.docx) tersimpan di perangkat Anda (biasanya di folder Downloads).</li>' +
       '<li>Untuk sertifikat berikutnya, cukup ganti nama, nomor, dan isi seperlunya, lalu unduh lagi.</li></ol>' +
       fig('13-unduh', 1200, 785, 'Tombol unduh (1) dan pratinjau yang diperiksa (2)') +
-      '<div class="tw-tip"><b>&#128424;&#65039;</b><div>Hasil unduhan berupa gambar <b>landscape</b> dengan ukuran mengikuti template. File ini bisa dicetak atau dikirim lewat WhatsApp dan email.</div></div>' +
+      '<div class="tw-tip"><b>&#128424;&#65039;</b><div>Hasil unduhan berupa file Word satu halaman <b>landscape</b>; sertifikat tampil penuh di halaman dan bisa langsung dicetak atau dikirim lewat WhatsApp dan email.</div></div>' +
       tryBtn('unduh') },
 
     { id: 'tombol', ic: '&#129520;', t: 'Fungsi tombol lainnya', html:

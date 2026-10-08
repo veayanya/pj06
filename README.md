@@ -25,3 +25,8 @@ Jika repository sebelumnya sudah memiliki public/template.jpg, file tersebut bol
 - Gemini: file `api/gemini.js`. Di Vercel tambahkan Environment Variables `GEMINI_API_KEY` (dari Google AI Studio) dan `ADMIN_KEY` (kata sandi bebas), lalu Redeploy. Opsional `GEMINI_IMAGE_MODEL` untuk memilih model gambar.
 - Di panel "Desain AI & Canva": tulis deskripsi, pilih tujuan (template 16:9 atau gambar layer), klik "Buat dengan Gemini", lalu pakai sebagai template atau layer (lewat Crop Pintar).
 - Canva (manual): buka Canva, buat desain ukuran custom 1376 x 768 px, unduh PNG/JPG, lalu klik "Impor desain Canva sebagai template".
+
+
+## Format unduhan
+- Tombol unduh menghasilkan file Word (`Sertifikat_Bapperida.docx`), satu halaman landscape, gambar sertifikat memenuhi halaman. File dibuat langsung di browser, tanpa pustaka tambahan dan tanpa server.
+- Isi sertifikat berupa gambar, jadi teks di dalam Word tidak bisa diedit. Koreksi dilakukan di aplikasi, lalu unduh ulang.
