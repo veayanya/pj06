@@ -1466,6 +1466,7 @@ function buildDocx(pngBytes, imgW, imgH, textLines) {
   // Teks asli Word: tiap baris menjadi kotak teks (bisa diklik, diedit, diganti font/ukurannya di Word).
   const escXml = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const emuPx = cx / imgW;                                            // EMU per piksel kanvas
+  const emuPxX = emuPx, emuPxY = emuPx;                              // skala posisi dan ukuran kotak teks
   const PX_TO_PT = (pgW / 20) / imgW;                                 // 1 px kanvas = berapa poin
   let shapeId = 10;
   const textBoxes = (textLines || []).map(L => {
