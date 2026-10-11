@@ -1599,8 +1599,8 @@ function buildZip(files) {
 function buildDocx(pngBytes, imgW, imgH, textLines, paperSize) {
   const enc = new TextEncoder();
   // Halaman Word selebar A4 landscape (29,7 cm), tinggi mengikuti rasio sertifikat: gambar latar memenuhi halaman tanpa tepi putih.
-  const isF4 = paperSize === 'F4';                                      // F4/Folio landscape 33 x 21 cm = 18709 x 11906 twips; gambar dilebarkan memenuhi seluruh halaman (tanpa area putih)
-  const pgW = isF4 ? 18709 : 16838, pgH = isF4 ? 11906 : Math.round(16838 * imgH / imgW);        // lebar A4 landscape (twips); tinggi mengikuti rasio gambar agar tidak ada area putih
+  const isF4 = paperSize === 'F4';                                      // F4/Folio landscape 33 x 21 cm = 18711 x 11906 twips; gambar dilebarkan memenuhi seluruh halaman (tanpa area putih)
+  const pgW = isF4 ? 18711 : 16838, pgH = isF4 ? 11906 : Math.round(16838 * imgH / imgW);        // lebar A4 landscape (twips); tinggi mengikuti rasio gambar agar tidak ada area putih
   let cx = pgW * 635, cy = isF4 ? pgH * 635 : Math.round(cx * imgH / imgW);   // F4: gambar diregangkan penuh ke halaman           // 1 twip = 635 EMU
   const offX = Math.max(0, Math.round((pgW * 635 - cx) / 2)), offY = Math.max(0, Math.round((pgH * 635 - cy) / 2));        // tengah vertikal
   // Teks asli Word: tiap baris menjadi kotak teks (bisa diklik, diedit, diganti font/ukurannya di Word).
