@@ -65,6 +65,18 @@ canvas{display:block;width:100%;height:auto;border-radius:7px;background:#eee}
 .custom-text-item{display:flex;gap:6px;align-items:center;padding:7px 8px;background:#f6f9f7;border:1px solid #dce7e0;border-radius:9px;font-size:12px}
 .custom-text-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .custom-text-item button{border:0;background:#fff0f0;color:#a12a2a;border-radius:6px;cursor:pointer}
+.custom-text-item button{padding:6px 8px;font-size:12px;flex:none}.custom-text-item span{min-width:0}
+.custom-text-item button.ct-btn{background:#e6f0ea;color:#14583d}
+.style-toolbar{display:flex;gap:6px;margin-top:10px}
+.fmt-btn{flex:1;min-width:0;padding:9px 0;border:1.5px solid #cfdcd4;background:#fff;color:#14583d;border-radius:9px;font-size:15px;cursor:pointer}
+.fmt-btn[aria-pressed="true"]{background:#075b3e;color:#fff;border-color:#075b3e}
+.text-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.text-actions button{padding:8px 2px;font-size:12px;border-radius:9px;border:0;cursor:pointer;background:#edf3ef;color:#14583d}
+.text-actions button:disabled{opacity:.45;cursor:not-allowed}
+.text-action-status{min-height:15px;margin-top:5px;font-size:11.5px;color:#587064}
+#customEditBox{margin-top:10px;padding:10px;border:1.5px dashed #9cc2ae;border-radius:10px;background:#f6faf7}
+#customEditBox label{display:block;margin-bottom:6px}
+#selDuplicate{color:#14583d}
 
 .mut2{font-size:12px;color:#728178;margin:0 0 10px}
 .lrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1px solid #e0e8e2;border-radius:10px;padding:7px;margin-top:8px;background:#fff}
@@ -133,6 +145,22 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 </select>
 <label class="wheel-label" title="Pilih warna font"><span id="fontColorWheel" class="color-wheel"></span><input id="fontColor" type="color" value="#075b3e" aria-label="Warna font"></label>
 </div>
+<div class="style-toolbar" id="styleToolbar">
+<button type="button" class="fmt-btn" id="btnBold" aria-pressed="false" title="Tebal / tidak tebal (Bold)"><b>B</b></button>
+<button type="button" class="fmt-btn" id="btnItalic" aria-pressed="false" title="Miring / tidak miring (Italic)"><i>I</i></button>
+<button type="button" class="fmt-btn" id="btnUnderline" aria-pressed="false" title="Garis bawah / tanpa garis bawah (Underline)"><u>U</u></button>
+</div>
+<div class="text-actions">
+<button type="button" id="btnDuplicate" title="Gandakan teks terpilih (Ctrl+D)">&#10697; Duplikat</button>
+<button type="button" id="btnCopy" title="Salin teks terpilih (Ctrl+C)">Salin</button>
+<button type="button" id="btnPaste" title="Tempel teks (Ctrl+V)">Tempel</button>
+<button type="button" id="btnResetStyle" title="Kembalikan Tebal/Miring/Garis bawah ke bawaan">&#8634; Reset gaya</button>
+</div>
+<div id="textActionStatus" class="text-action-status" role="status"></div>
+<div id="customEditBox" hidden>
+<label for="customEditInput">Edit teks tambahan yang dipilih</label>
+<textarea id="customEditInput" rows="2" placeholder="Ubah tulisan di sini"></textarea>
+</div>
 <button type="button" class="secondary" id="uploadFontBtn" style="width:100%;margin-top:7px">＋ Pasang Font (.ttf, .otf, .woff, .woff2)</button>
 <input id="fontFile" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden>
 <div id="fontStatus" class="font-status">Font tambahan bisa dipasang dari file yang sudah kamu download.</div>
@@ -142,7 +170,7 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 <label>Teks tambahan</label>
 <textarea id="customTextInput" rows="2" placeholder="Contoh: TERIMA KASIH"></textarea>
 <button type="button" class="primary" id="addCustomText" style="width:100%;margin-top:7px">＋ Tambahkan Teks ke Sertifikat</button>
-<small>Setelah ditambahkan, teks bisa diklik/geser di preview, diperbesar, diperkecil, diberi font dan warna sendiri.</small>
+<small>Setelah ditambahkan, teks bisa diklik/geser di preview, diperbesar, diperkecil, diberi font dan warna sendiri. Tombol B / I / U, Duplikat, Salin, dan Tempel berlaku untuk teks yang dipilih di atas (teks bawaan maupun teks tambahan).</small>
 </div>
 <div id="customTextList" class="custom-text-list"></div>
 </div></details>
@@ -181,7 +209,7 @@ a.canvaBtn{display:inline-block;padding:10px 14px;border-radius:10px;background:
 <div class="previewtop"><strong>Pratinjau Sertifikat</strong><span>Klik &amp; geser langsung di sini</span><button type="button" class="eye-btn" id="eyeTte" aria-pressed="false" title="Lihat tampilan sertifikat setelah ditandatangani TTE Srikandi" aria-label="Lihat pratinjau setelah TTE Srikandi"><svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg><span>Lihat setelah TTE</span></button></div>
 <p class="eye-note" id="eyeNote" role="status"></p>
 <div class="stage"><canvas id="cert" width="1376" height="768"></canvas><canvas id="overlay" width="1376" height="768"></canvas></div>
-<div class="selbar"><span id="selLabel">Klik teks atau logo di sertifikat untuk memilih</span><span class="selbtns"><button type="button" class="secondary" id="selMinus" title="Perkecil" disabled>A&minus;</button><button type="button" class="secondary" id="selPlus" title="Perbesar" disabled>A+</button><button type="button" class="secondary" id="selDelete" title="Hapus logo ini" hidden>&#128465; Hapus</button><button type="button" class="secondary" id="selReset" title="Kembalikan posisi dan lebar kotak ke awal" disabled>Posisi awal</button></span></div>
+<div class="selbar"><span id="selLabel">Klik teks atau logo di sertifikat untuk memilih</span><span class="selbtns"><button type="button" class="secondary" id="selMinus" title="Perkecil" disabled>A&minus;</button><button type="button" class="secondary" id="selPlus" title="Perbesar" disabled>A+</button><button type="button" class="secondary" id="selDuplicate" title="Gandakan teks ini (Ctrl+D)" hidden>&#10697; Duplikat</button><button type="button" class="secondary" id="selDelete" title="Hapus logo ini" hidden>&#128465; Hapus</button><button type="button" class="secondary" id="selReset" title="Kembalikan posisi dan lebar kotak ke awal" disabled>Posisi awal</button></span></div>
 <p class="note">Geser untuk memindah; tarik kotak kecil di sudut untuk mengubah ukuran font; tarik kotak di tengah sisi kiri/kanan untuk melebarkan atau menyempitkan kotak teks (teks otomatis turun baris seperti di Word). A+/A&minus; mengikuti ukuran font Word (10, 10,5, 11, 12, 14, 16 pt ...). Di komputer, tombol panah menggeser 1 px (Shift = 10 px) dan +/&minus; mengubah ukuran. Tampilan pratinjau mengikuti ukuran gambar template. Periksa kembali ejaan dan data sebelum mengunduh.</p>
 </section>
 </main>
@@ -584,6 +612,24 @@ return(file,cb)=>{done=cb;nameHint=file.name.replace(/\.[^.]+$/,'');src=null;$('
 let customTextSeq = 0;
 const customFontFamilies = new Set();
 const fontStyleOf = (id, fallback) => fontStyles[id] || {family:'Arial',color:fallback};
+// Bawaan tebal tiap teks bawaan (body: kutipan tebal otomatis).
+const DEFAULT_BOLD = {judul:true,number:true,diberikan:false,name:true,body:false,period:true,tanggalTtd:false,jabatanTtd:true,penandatangan:true};
+// Font CSS kanvas dengan dukungan miring & tebal pilihan pengguna (bold === undefined -> pakai bawaan).
+function fontCss(st, sz, defBold) {
+  const b = (st.bold === undefined || st.bold === null) ? defBold : st.bold;
+  return (st.italic ? 'italic ' : '') + (b ? 'bold ' : '') + sz + 'px "' + st.family + '"';
+}
+// Menulis teks + garis bawah opsional. Saat perekaman ekspor Word (fillText ditimpa) garis tidak digambar ke gambar.
+let curUL = false;
+function fillU(c, t, x, y, u) {
+  c._ul = !!u; c.fillText(t, x, y); c._ul = false;
+  if (!u || Object.prototype.hasOwnProperty.call(c, 'fillText')) return;
+  const str = String(t); if (!str.trim()) return;
+  const w = c.measureText(str).width, m = /([\d.]+)px/.exec(c.font), sz = m ? parseFloat(m[1]) : 16, al = c.textAlign;
+  const x0 = al === 'center' ? x - w / 2 : (al === 'right' || al === 'end') ? x - w : x;
+  c.save(); c.strokeStyle = c.fillStyle; c.lineWidth = Math.max(1, sz / 16); c.setLineDash([]);
+  c.beginPath(); c.moveTo(x0, y + sz * 0.12); c.lineTo(x0 + w, y + sz * 0.12); c.stroke(); c.restore();
+}
 
 let undoStack = [], redoStack = [];
 let applyingHistory = false, saveTimer = null;
@@ -599,26 +645,26 @@ function renderCertificate() {
   const textSize = id => textBaseSizes[id] * (textSizes[id] / 100);
   const pos = id => textPositions[id];
   const drawCenter = (id, text, color, bold=false) => {
-    const p = pos(id), sz = textSize(id), st=fontStyleOf(id,color); ctx.textAlign='center'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${sz}px "${st.family}"`;
+    const p = pos(id), sz = textSize(id), st=fontStyleOf(id,color); ctx.textAlign='center'; ctx.fillStyle=st.color; ctx.font=fontCss(st,sz,bold);
     const W = textWidths[id];
-    if (W) { const ls = wrapPlainLines(text, W), lh = sz*1.25; ls.forEach((l,i) => ctx.fillText(l, p.x, p.y + i*lh)); setBox(id, p.x - W/2, p.y - sz*0.85, W, (ls.length-1)*lh + sz*1.1); return; }
-    ctx.fillText(text, p.x, p.y);
+    if (W) { const ls = wrapPlainLines(text, W), lh = sz*1.25; ls.forEach((l,i) => fillU(ctx, l, p.x, p.y + i*lh, st.underline)); setBox(id, p.x - W/2, p.y - sz*0.85, W, (ls.length-1)*lh + sz*1.1); return; }
+    fillU(ctx, text, p.x, p.y, st.underline);
     const w = Math.max(ctx.measureText(text).width, 30); setBox(id, p.x - w/2, p.y - sz*0.85, w, sz*1.1);
   };
   const drawRight = (id, text, color, bold=false) => {
-    const p = pos(id), sz = textSize(id), st=fontStyleOf(id,color); ctx.textAlign='right'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${sz}px "${st.family}"`;
+    const p = pos(id), sz = textSize(id), st=fontStyleOf(id,color); ctx.textAlign='right'; ctx.fillStyle=st.color; ctx.font=fontCss(st,sz,bold);
     const W = textWidths[id];
-    if (W) { const ls = wrapPlainLines(text, W), lh = sz*1.25; ls.forEach((l,i) => ctx.fillText(l, p.x, p.y + i*lh)); setBox(id, p.x - W, p.y - sz*0.85, W, (ls.length-1)*lh + sz*1.1); return; }
-    ctx.fillText(text, p.x, p.y);
+    if (W) { const ls = wrapPlainLines(text, W), lh = sz*1.25; ls.forEach((l,i) => fillU(ctx, l, p.x, p.y + i*lh, st.underline)); setBox(id, p.x - W, p.y - sz*0.85, W, (ls.length-1)*lh + sz*1.1); return; }
+    fillU(ctx, text, p.x, p.y, st.underline);
     const w = Math.max(ctx.measureText(text).width, 30); setBox(id, p.x - w, p.y - sz*0.85, w, sz*1.1);
   };
   const drawWrappedCenter = (id, text, color, bold=false) => {
-    const p=pos(id), size=textSize(id), st=fontStyleOf(id,color); ctx.textAlign='center'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${size}px "${st.family}"`;
-    wrapText(ctx,text,p.x,p.y,570,size*1.4);
+    const p=pos(id), size=textSize(id), st=fontStyleOf(id,color); ctx.textAlign='center'; ctx.fillStyle=st.color; ctx.font=fontCss(st,size,bold); curUL=!!st.underline;
+    wrapText(ctx,text,p.x,p.y,570,size*1.4); curUL=false;
   };
   const drawWrappedRight = (id, text, color, bold=false) => {
-    const p=pos(id), size=textSize(id), st=fontStyleOf(id,color); ctx.textAlign='right'; ctx.fillStyle=st.color; ctx.font=`${bold?'bold ':''}${size}px "${st.family}"`;
-    const r = wrapTextRight(ctx,text,p.x,p.y,textWidths[id]||330,size*1.25);
+    const p=pos(id), size=textSize(id), st=fontStyleOf(id,color); ctx.textAlign='right'; ctx.fillStyle=st.color; ctx.font=fontCss(st,size,bold); curUL=!!st.underline;
+    const r = wrapTextRight(ctx,text,p.x,p.y,textWidths[id]||330,size*1.25); curUL=false;
     const bw = textWidths[id] || Math.max(r.maxW, 30); setBox(id, p.x - bw, p.y - size*0.85, bw, (r.lines-1)*size*1.25 + size*1.1);
   };
 
@@ -644,7 +690,7 @@ function renderCertificate() {
   ctx.beginPath(); ctx.moveTo(namePos.x-nameWidth/2,namePos.y+17); ctx.lineTo(namePos.x+nameWidth/2,namePos.y+17); ctx.strokeStyle='#075b3e'; ctx.lineWidth=2.5; ctx.stroke();
   let periodShift = 0;
   { const p=pos('body'), size=textSize('body'); const n=drawRichWrappedCenter(ctx,document.getElementById('body').value.trim(),p.x,p.y,textWidths.body||650,size*1.4,size,fontStyleOf('body','#075b3e').color,'body'); periodShift = Math.max(0, n - 3) * size * 1.4; const rr = drawRichWrappedCenter.last, bw = textWidths.body || Math.max(rr.w, 30); setBox('body', p.x - bw/2, p.y - size*0.85, bw, (n-1)*size*1.4 + size*1.1); }
-  { const p=pos('period'); ctx.textAlign='center'; { const st=fontStyleOf('period','#ed791d'); ctx.fillStyle=st.color; ctx.font=`bold ${textSize('period')}px "${st.family}"`; } const pt = document.getElementById('period').value; const psz = textSize('period'); if (textWidths.period) { const ls = wrapPlainLines(pt, textWidths.period), lh = psz*1.25; ls.forEach((l,i) => ctx.fillText(l, p.x, p.y + periodShift + i*lh)); setBox('period', p.x - textWidths.period/2, p.y + periodShift - psz*0.85, textWidths.period, (ls.length-1)*lh + psz*1.1); } else { ctx.fillText(pt, p.x, p.y + periodShift); const pw = Math.max(ctx.measureText(pt).width, 30); setBox('period', p.x - pw/2, p.y + periodShift - psz*0.85, pw, psz*1.1); } }
+  { const p=pos('period'); ctx.textAlign='center'; { const st=fontStyleOf('period','#ed791d'); ctx.fillStyle=st.color; ctx.font=fontCss(st,textSize('period'),true); } const pt = document.getElementById('period').value; const psz = textSize('period'); if (textWidths.period) { const ls = wrapPlainLines(pt, textWidths.period), lh = psz*1.25; ls.forEach((l,i) => fillU(ctx, l, p.x, p.y + periodShift + i*lh, fontStyleOf('period','#ed791d').underline)); setBox('period', p.x - textWidths.period/2, p.y + periodShift - psz*0.85, textWidths.period, (ls.length-1)*lh + psz*1.1); } else { fillU(ctx, pt, p.x, p.y + periodShift, fontStyleOf('period','#ed791d').underline); const pw = Math.max(ctx.measureText(pt).width, 30); setBox('period', p.x - pw/2, p.y + periodShift - psz*0.85, pw, psz*1.1); } }
   drawRight('tanggalTtd',document.getElementById('tanggalTtd').value.trim(),'#075b3e',false);
   drawWrappedRight('jabatanTtd',document.getElementById('jabatanTtd').value.trim(),'#075b3e',true);
   // Sediakan ruang TTE di tengah area tanda tangan, di antara jabatan dan nama penandatangan.
@@ -658,11 +704,11 @@ function renderCertificate() {
   drawRight('penandatangan',document.getElementById('penandatangan').value.trim(),'#075b3e',true);
   // Teks tambahan bebas.
   customTexts.forEach(t => {
-    const sz=textBaseSizes.custom * (t.size/100), st={family:t.fontFamily||'Arial',color:t.color||'#075b3e'};
+    const sz=textBaseSizes.custom * (t.size/100), st={family:t.fontFamily||'Arial',color:t.color||'#075b3e',bold:!!t.bold,italic:!!t.italic,underline:!!t.underline};
     ctx.save(); ctx.textAlign='center'; ctx.textBaseline='alphabetic'; ctx.fillStyle=st.color;
-    ctx.font=`${t.bold?'bold ':''}${sz}px "${st.family}"`;
+    ctx.font=fontCss(st,sz,false);
     const lines=t.width?wrapPlainLines(t.text||'',t.width):String(t.text||'').split(/\n/), lh=sz*1.25, widths=lines.map(line=>ctx.measureText(line).width), w=t.width||Math.max(30,...widths);
-    lines.forEach((line,i)=>ctx.fillText(line,t.x,t.y+i*lh));
+    lines.forEach((line,i)=>fillU(ctx,line,t.x,t.y+i*lh,st.underline));
     ctx.restore();
     setBox(t.id,t.x-w/2,t.y-sz*.9,w,Math.max(sz*1.1,lines.length*lh));
   });
@@ -715,7 +761,8 @@ function drawTransparentLogo(context, img, x, y, maxW, maxH) {
 // Teks rata tengah dengan pembungkusan baris; bagian dari tanda petik buka sampai tutup dicetak tebal.
 // Mendukung “...” dan "...".
 function drawRichWrappedCenter(context, text, cx, y, maxWidth, lineHeight, size, color, styleId='body') {
-  const fontOf = b => (b ? 'bold ' : '') + size + 'px "' + fontStyleOf(styleId, color).family + '"';
+  const bst = fontStyleOf(styleId, color);
+  const fontOf = b => (bst.italic ? 'italic ' : '') + (((bst.bold === undefined || bst.bold === null) ? b : bst.bold) ? 'bold ' : '') + size + 'px "' + bst.family + '"';
   const widthOf = (str, b) => { context.font = fontOf(b); return context.measureText(str).width; };
   let bold = false;
   const words = [];
@@ -743,7 +790,7 @@ function drawRichWrappedCenter(context, text, cx, y, maxWidth, lineHeight, size,
     let x = cx - ln.w / 2; const yy = y + li * lineHeight;
     ln.words.forEach((word, wi) => {
       if (wi > 0) x += space;
-      word.runs.forEach(r => { context.font = fontOf(r.b); context.fillText(r.t, x, yy); x += context.measureText(r.t).width; });
+      word.runs.forEach(r => { context.font = fontOf(r.b); fillU(context, r.t, x, yy, bst.underline); x += context.measureText(r.t).width; });
     });
   });
   context.textAlign = 'center';
@@ -755,7 +802,7 @@ function drawRichWrappedCenter(context, text, cx, y, maxWidth, lineHeight, size,
 function wrapTextRight(context, text, rightX, y, maxWidth, lineHeight) {
   const words = text.split(' ');
   let line = '', lines = 0, maxW = 0;
-  const put = str => { context.fillText(str, rightX, y); maxW = Math.max(maxW, context.measureText(str).width); lines++; };
+  const put = str => { fillU(context, str, rightX, y, curUL); maxW = Math.max(maxW, context.measureText(str).width); lines++; };
   for (let n = 0; n < words.length; n++) {
     const testLine = line + words[n] + ' ';
     if (context.measureText(testLine).width > maxWidth && n > 0) {
@@ -778,14 +825,14 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
     let metrics = context.measureText(testLine);
     let testWidth = metrics.width;
     if (testWidth > maxWidth && n > 0) {
-      context.fillText(line, x, y);
+      fillU(context, line.trim(), x, y, curUL);
       line = words[n] + ' ';
       y += lineHeight;
     } else {
       line = testLine;
     }
   }
-  context.fillText(line, x, y);
+  fillU(context, line.trim(), x, y, curUL);
 }
 
 // Penyimpanan lokal persisten: data disimpan di browser/perangkat ini.
@@ -834,8 +881,8 @@ function applyState(state) {
   Object.keys(textWidths).forEach(k => delete textWidths[k]);
   if (state.textWidths) Object.keys(state.textWidths).forEach(k => { const w = Number(state.textWidths[k]); if (w >= 40 && textSizes[k] !== undefined) textWidths[k] = w; });
   if (state.textPositions) Object.keys(textPositions).forEach(id => { const p=state.textPositions[id]; if(p){ textPositions[id].x=Number(p.x)||0; textPositions[id].y=Number(p.y)||0; } });
-  if (state.fontStyles) Object.keys(fontStyles).forEach(id => { if(state.fontStyles[id]) { fontStyles[id].family=state.fontStyles[id].family||'Arial'; fontStyles[id].color=state.fontStyles[id].color||fontStyles[id].color; } });
-  if (Array.isArray(state.customTexts)) customTexts = state.customTexts.map(t => ({id:t.id||('custom_'+(++customTextSeq)),text:t.text||'',x:Number(t.x)||688,y:Number(t.y)||500,size:Number(t.size)||100,fontFamily:t.fontFamily||'Arial',color:t.color||'#075b3e',bold:!!t.bold,width:Number(t.width)>=40?Number(t.width):undefined}));
+  if (state.fontStyles) Object.keys(fontStyles).forEach(id => { if(state.fontStyles[id]) { fontStyles[id].family=state.fontStyles[id].family||'Arial'; fontStyles[id].color=state.fontStyles[id].color||fontStyles[id].color; ['bold','italic','underline'].forEach(f => { if (typeof state.fontStyles[id][f] === 'boolean') fontStyles[id][f] = state.fontStyles[id][f]; else delete fontStyles[id][f]; }); } });
+  if (Array.isArray(state.customTexts)) customTexts = state.customTexts.map(t => ({id:t.id||('custom_'+(++customTextSeq)),text:t.text||'',x:Number(t.x)||688,y:Number(t.y)||500,size:Number(t.size)||100,fontFamily:t.fontFamily||'Arial',color:t.color||'#075b3e',bold:!!t.bold,italic:!!t.italic,underline:!!t.underline,width:Number(t.width)>=40?Number(t.width):undefined}));
   customTextSeq = Math.max(Number(state.customTextSeq)||0, customTexts.reduce((m,t)=>Math.max(m,Number(String(t.id).replace('custom_',''))||0),0));
   if (Array.isArray(state.layers)) setLayers(state.layers);
   renderCustomTextList();
@@ -1362,7 +1409,7 @@ function renderCustomTextList(){
   customTexts.forEach(t=>{
     const opt=document.createElement('option'); opt.value=t.id; opt.textContent='Teks tambahan: '+t.text.slice(0,32); opt.dataset.custom='1'; target.appendChild(opt);
     const row=document.createElement('div'); row.className='custom-text-item';
-    row.innerHTML=`<span title="${escapeHtml(t.text)}">${escapeHtml(t.text)}</span><button type="button" data-custom-select="${t.id}">Pilih</button><button type="button" data-custom-delete="${t.id}" title="Hapus">×</button>`;
+    row.innerHTML=`<span title="${escapeHtml(t.text)}">${escapeHtml(t.text)}</span><button type="button" class="ct-btn" data-custom-select="${t.id}">Pilih</button><button type="button" class="ct-btn" data-custom-edit="${t.id}" title="Edit tulisan">Edit</button><button type="button" class="ct-btn" data-custom-dup="${t.id}" title="Duplikat">&#10697;</button><button type="button" data-custom-delete="${t.id}" title="Hapus">×</button>`;
     list.appendChild(row);
   });
 }
@@ -1372,6 +1419,72 @@ function syncFontControls(){
   document.getElementById('fontFamily').value=st.fontFamily||st.family||'Arial';
   document.getElementById('fontColor').value=st.color||'#075b3e';
   document.getElementById('fontColorWheel').style.background=st.color||'#075b3e';
+  const boldOn=(st.bold===undefined||st.bold===null)?!!DEFAULT_BOLD[target]:!!st.bold;
+  const set=(id,on)=>{const b=document.getElementById(id); if(b) b.setAttribute('aria-pressed',String(!!on));};
+  set('btnBold',boldOn); set('btnItalic',st.italic); set('btnUnderline',st.underline);
+  const box=document.getElementById('customEditBox'), inp=document.getElementById('customEditInput'), isC=isCustomKey(target);
+  if(box){ box.hidden=!isC; if(isC && document.activeElement!==inp) inp.value=(customByKey(target)||{}).text||''; }
+}
+// Tebal / miring / garis bawah untuk teks terpilih (teks bawaan maupun teks tambahan).
+function styleObjOf(target){ return isCustomKey(target) ? customByKey(target) : fontStyles[target]; }
+function toggleStyleFlag(flag){
+  const target=document.getElementById('styleTarget').value, o=styleObjOf(target); if(!o) return;
+  const before=currentState();
+  if(flag==='bold'){ const cur=(o.bold===undefined||o.bold===null)?!!DEFAULT_BOLD[target]:!!o.bold; o.bold=!cur; }
+  else o[flag]=!o[flag];
+  syncFontControls(); renderCertificate(); drawOverlay(); commitHistory(before); saveState(false);
+}
+function resetTextStyle(){
+  const target=document.getElementById('styleTarget').value, o=styleObjOf(target); if(!o) return;
+  const before=currentState();
+  if(isCustomKey(target)){ o.bold=false; o.italic=false; o.underline=false; } else { delete o.bold; delete o.italic; delete o.underline; }
+  syncFontControls(); renderCertificate(); drawOverlay(); commitHistory(before); saveState(false);
+  setTextStatus('Gaya teks dikembalikan ke bawaan.');
+}
+let textClipboard=null, statusTimer=0;
+function setTextStatus(msg){ const el=document.getElementById('textActionStatus'); if(!el)return; el.textContent=msg; clearTimeout(statusTimer); statusTimer=setTimeout(()=>{el.textContent='';},3500); }
+function isCopyableKey(k){ return !!k && k!=='tte' && (isCustomKey(k) || fontStyles[k]!==undefined); }
+// Ambil salinan data teks (bawaan atau tambahan) sebagai objek teks tambahan.
+function snapshotText(key){
+  if(isCustomKey(key)){ const t=customByKey(key); return t?{...t}:null; }
+  const st=fontStyles[key], p=textPositions[key], el=document.getElementById(key); if(!st||!p||!el) return null;
+  const b=hitBoxes[key];
+  const snap={text:el.value.trim(), x:b?b.x+b.w/2:p.x, y:p.y, size:textSizes[key]*textBaseSizes[key]/textBaseSizes.custom, fontFamily:st.family, color:st.color,
+    bold:(st.bold===undefined||st.bold===null)?!!DEFAULT_BOLD[key]:!!st.bold, italic:!!st.italic, underline:!!st.underline};
+  const w=textWidths[key]||((key==='body'||key==='jabatanTtd')&&b?b.w:0); if(w>=40) snap.width=w;
+  return snap;
+}
+function addCustomFrom(src, offset){
+  const before=currentState(), id='custom_'+(++customTextSeq);
+  const t={id,text:src.text||'',x:Math.max(20,Math.min(canvas.width-20,(Number(src.x)||688)+offset)),y:Math.max(30,Math.min(canvas.height-10,(Number(src.y)||500)+offset)),
+    size:Number(src.size)||100,fontFamily:src.fontFamily||'Arial',color:src.color||'#075b3e',bold:!!src.bold,italic:!!src.italic,underline:!!src.underline,
+    width:Number(src.width)>=40?Number(src.width):undefined};
+  customTexts.push(t);
+  renderCustomTextList(); document.getElementById('styleTarget').value=id; select(id); syncFontControls();
+  renderCertificate(); commitHistory(before); saveState(false);
+  return t;
+}
+function duplicateSelected(){
+  const k=document.getElementById('styleTarget').value, key=isCopyableKey(selectedKey)?selectedKey:k;
+  const snap=isCopyableKey(key)?snapshotText(key):null;
+  if(!snap||!snap.text){ setTextStatus('Pilih teks yang berisi tulisan dulu.'); return; }
+  addCustomFrom(snap,26); setTextStatus('Teks digandakan. Geser di pratinjau untuk memindahkan.');
+}
+function copySelected(){
+  const k=document.getElementById('styleTarget').value, key=isCopyableKey(selectedKey)?selectedKey:k;
+  const snap=isCopyableKey(key)?snapshotText(key):null;
+  if(!snap||!snap.text){ setTextStatus('Pilih teks yang berisi tulisan dulu.'); return; }
+  textClipboard=snap;
+  try{ if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(snap.text).catch(()=>{}); }catch(e){}
+  setTextStatus('Teks disalin. Klik Tempel untuk membuat teks baru.');
+}
+async function pasteText(){
+  let sys=null;
+  try{ if(navigator.clipboard&&navigator.clipboard.readText) sys=await navigator.clipboard.readText(); }catch(e){}
+  sys=sys?sys.trim():'';
+  if(textClipboard && (!sys || sys===String(textClipboard.text).trim())){ addCustomFrom(textClipboard,26); setTextStatus('Teks ditempel.'); }
+  else if(sys){ addCustomFrom({text:sys,x:688,y:500,size:100,fontFamily:document.getElementById('fontFamily').value,color:document.getElementById('fontColor').value},0); setTextStatus('Teks dari clipboard ditempel.'); }
+  else setTextStatus('Belum ada teks yang disalin.');
 }
 function applyFontStyle(){
   const target=document.getElementById('styleTarget').value, family=document.getElementById('fontFamily').value, color=document.getElementById('fontColor').value;
@@ -1405,6 +1518,30 @@ document.getElementById('fontFile').addEventListener('change',async e=>{
   }catch(err){status.textContent='Font gagal dipasang. Gunakan TTF, OTF, WOFF, atau WOFF2 yang valid.';}
   e.target.value='';
 });
+document.getElementById('btnBold').addEventListener('click',()=>toggleStyleFlag('bold'));
+document.getElementById('btnItalic').addEventListener('click',()=>toggleStyleFlag('italic'));
+document.getElementById('btnUnderline').addEventListener('click',()=>toggleStyleFlag('underline'));
+document.getElementById('btnResetStyle').addEventListener('click',resetTextStyle);
+document.getElementById('btnDuplicate').addEventListener('click',duplicateSelected);
+document.getElementById('btnCopy').addEventListener('click',copySelected);
+document.getElementById('btnPaste').addEventListener('click',pasteText);
+document.getElementById('selDuplicate').addEventListener('click',duplicateSelected);
+(function(){
+  const inp=document.getElementById('customEditInput'); let before=null;
+  inp.addEventListener('focus',()=>{ before=currentState(); });
+  inp.addEventListener('input',()=>{
+    const t=customByKey(document.getElementById('styleTarget').value); if(!t) return;
+    if(!before) before=currentState();
+    t.text=inp.value; refreshCustomLabels();
+    const tgt=document.getElementById('styleTarget'), cur=tgt.value;
+    const opt=[...tgt.options].find(o=>o.value===cur); if(opt) opt.textContent='Teks tambahan: '+t.text.slice(0,32);
+    const row=document.querySelector('[data-custom-select="'+cur+'"]'); if(row){ const sp=row.parentElement.querySelector('span'); if(sp){ sp.textContent=t.text; sp.title=t.text; } }
+    if(document.getElementById('selLabel')) updateSelBar();
+    renderCertificate(); scheduleSave();
+  });
+  inp.addEventListener('change',()=>{ if(before){ commitHistory(before); before=null; } saveState(false); });
+  inp.addEventListener('blur',()=>{ if(before){ commitHistory(before); before=null; } });
+})();
 document.getElementById('addCustomText').addEventListener('click',()=>{
   const input=document.getElementById('customTextInput'), text=input.value.trim(); if(!text)return;
   const before=currentState(); const id='custom_'+(++customTextSeq);
@@ -1413,8 +1550,10 @@ document.getElementById('addCustomText').addEventListener('click',()=>{
   renderCertificate(); commitHistory(before); saveState(false);
 });
 document.getElementById('customTextList').addEventListener('click',e=>{
-  const sel=e.target.closest('[data-custom-select]'), del=e.target.closest('[data-custom-delete]');
+  const sel=e.target.closest('[data-custom-select]'), del=e.target.closest('[data-custom-delete]'), ed=e.target.closest('[data-custom-edit]'), dup=e.target.closest('[data-custom-dup]');
   if(sel){const id=sel.dataset.customSelect;document.getElementById('styleTarget').value=id;syncFontControls();select(id);}
+  if(ed){const id=ed.dataset.customEdit;document.getElementById('styleTarget').value=id;select(id);syncFontControls();const inp=document.getElementById('customEditInput');inp.focus();inp.setSelectionRange(inp.value.length,inp.value.length);}
+  if(dup){const id=dup.dataset.customDup, snap=snapshotText(id); if(snap) addCustomFrom(snap,26);}
   if(del)deleteCustomText(del.dataset.customDelete);
 });
 
@@ -1479,7 +1618,7 @@ function buildDocx(pngBytes, imgW, imgH, textLines) {
       const hs = Math.max(2, Math.round(r.size * PX_TO_PT * 2));
       const col = /^#[0-9a-f]{6}$/i.test(r.color) ? r.color.slice(1).toUpperCase() : '000000';
       const fn = escXml(r.family);
-      return '<w:r><w:rPr><w:rFonts w:ascii="' + fn + '" w:hAnsi="' + fn + '" w:cs="' + fn + '"/>' + (r.bold ? '<w:b/><w:bCs/>' : '') +
+      return '<w:r><w:rPr><w:rFonts w:ascii="' + fn + '" w:hAnsi="' + fn + '" w:cs="' + fn + '"/>' + (r.bold ? '<w:b/><w:bCs/>' : '') + (r.italic ? '<w:i/><w:iCs/>' : '') + (r.underline ? '<w:u w:val="single"/>' : '') +
         '<w:color w:val="' + col + '"/><w:sz w:val="' + hs + '"/><w:szCs w:val="' + hs + '"/></w:rPr><w:t xml:space="preserve">' + escXml(r.t) + '</w:t></w:r>';
     }).join('');
     const jc = 'left';
@@ -1522,18 +1661,18 @@ function captureTextRender() {
   const cap = [];
   ctx.fillText = function (t, x, y) {
     t = String(t); if (!t.length) return;
-    cap.push({ t, x, y, font: this.font, align: this.textAlign, base: this.textBaseline, color: String(this.fillStyle), w: this.measureText(t).width });
+    cap.push({ t, x, y, font: this.font, align: this.textAlign, base: this.textBaseline, color: String(this.fillStyle), ul: !!this._ul, w: this.measureText(t).width });
   };
   try { renderCertificate(); } finally { delete ctx.fillText; }
   const parseFont = f => {
     const sz = /([\d.]+)px/.exec(f); const fam = (/px\s+(.+)$/.exec(f) || [0, 'Arial'])[1].split(',')[0].replace(/["']/g, '').trim();
-    return { size: sz ? parseFloat(sz[1]) : 16, bold: /\bbold\b/.test(f), family: fam || 'Arial' };
+    return { size: sz ? parseFloat(sz[1]) : 16, bold: /\bbold\b/.test(f), italic: /\bitalic\b/.test(f), family: fam || 'Arial' };
   };
   const lines = [];
   cap.forEach(c => {
     const f = parseFont(c.font);
     let y = c.y; if (c.base === 'middle') y = c.y + f.size * 0.32; else if (c.base === 'top' || c.base === 'hanging') y = c.y + f.size * 0.8;
-    const run = { t: c.t, size: f.size, bold: f.bold, family: f.family, color: c.color };
+    const run = { t: c.t, size: f.size, bold: f.bold, italic: f.italic, underline: c.ul, family: f.family, color: c.color };
     const last = lines[lines.length - 1];
     if (last && last.align === 'left' && c.align === 'left' && Math.abs(last.baseline - y) < 0.6 && Math.abs(last.x1 - c.x) < 2) {
       last.runs.push(run); last.x1 = c.x + c.w; last.w += c.w; last.size = Math.max(last.size, f.size);
@@ -1692,6 +1831,7 @@ function updateSelBar() {
   document.getElementById('selLabel').textContent = selectedKey ? 'Terpilih: ' + SEL_LABELS[selectedKey] : 'Klik teks atau logo di sertifikat untuk memilih';
   ['selMinus', 'selPlus', 'selReset'].forEach(id => { document.getElementById(id).disabled = !selectedKey; });
   document.getElementById('selDelete').hidden = !(selectedKey && (isLogoKey(selectedKey)||isCustomKey(selectedKey)||isLayerKey(selectedKey)));
+  const sd = document.getElementById('selDuplicate'); if (sd) sd.hidden = !isCopyableKey(selectedKey);
 }
 function syncSidebar(k) {
   document.querySelectorAll('.field.active').forEach(f => f.classList.remove('active'));
@@ -1826,6 +1966,17 @@ document.getElementById('selReset').addEventListener('click', () => {
   if (!selectedKey) return;
   const before = currentState(), pos = getPos(selectedKey), d = defaultPos(selectedKey);
   pos.x = d.x; pos.y = d.y; if (isWidthKey(selectedKey)) setWidth(selectedKey, null); renderCertificate(); commitHistory(before);
+});
+
+// Pintasan teks: Ctrl+D duplikat, Ctrl+C salin, Ctrl+V tempel (hanya saat tidak sedang mengetik).
+document.addEventListener('keydown', e => {
+  const t = e.target;
+  if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;
+  if (!(e.ctrlKey || e.metaKey) || e.altKey || e.shiftKey) return;
+  const k = e.key.toLowerCase();
+  if (k === 'd' && isCopyableKey(selectedKey)) { e.preventDefault(); duplicateSelected(); }
+  else if (k === 'c' && isCopyableKey(selectedKey) && !String(window.getSelection()).length) { e.preventDefault(); copySelected(); }
+  else if (k === 'v' && (textClipboard || isCopyableKey(selectedKey))) { e.preventDefault(); pasteText(); }
 });
 
 // Keyboard: panah = geser (Shift = 10 px), + / − = ukuran, Esc = lepas pilihan.
